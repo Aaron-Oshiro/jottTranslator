@@ -1,7 +1,7 @@
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author 
+ * @author I added a test comment
  **/
 
 import java.util.ArrayList;

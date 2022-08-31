@@ -2,6 +2,7 @@
  * This class is responsible for tokenizing Jott code.
  * 
  * @author I added a test comment
+ * @author Aaron Oshiro
  **/
 
 import java.util.ArrayList;

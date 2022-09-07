@@ -150,6 +150,21 @@ public class JottTokenizer {
 				if (i < jottLine.length()) { i--; }
 
 			}
+			else if (currentCharacter == ' ') {
+			}
+			else if (currentCharacter == '#') {
+				return tokensInCurrentLine;
+			}
+			else if (currentCharacter == ',') {
+				tokensInCurrentLine.add(new Token(""+currentCharacter, fileName, lineNum, TokenType.COMMA));
+			}
+			else if (currentCharacter == '[') {
+				tokensInCurrentLine.add(new Token(""+currentCharacter, fileName, lineNum, TokenType.L_BRACKET));
+			}
+			else if (currentCharacter == ']') {
+				tokensInCurrentLine.add(new Token(""+currentCharacter, fileName, lineNum, TokenType.R_BRACKET));
+			}
+
 			else{
 				//throw error. for now i just print so I can see when this triggers
 				System.err.println("Syntax Error on line " + lineNum + ": Either invalid or not yet implemented character detected: " + currentCharacter);

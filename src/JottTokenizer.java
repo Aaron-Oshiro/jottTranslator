@@ -9,8 +9,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.xml.transform.Source;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -127,7 +125,7 @@ public class JottTokenizer {
 			} else if (currentCharacter == '!') {
 				if (i+1 < jottLine.length() && jottLine.charAt(i+1) == '=') {	// if '!' if followed by '='
 					i++;
-					tokensInCurrentLine.add(new Token("!=", fileName, lineNum, TokenType.NOTEQUALS));
+					tokensInCurrentLine.add(new Token("!=", fileName, lineNum, TokenType.REL_OP));
 				} else {
 					// Non-terminal state, requires an '=' after an '!'
 					throw invalidTokenException("!", fileName, lineNum);
@@ -148,7 +146,9 @@ public class JottTokenizer {
 				} else {
 					System.err.println("String token must have ending ' \" ': " + string);	// Error handling needs improvement
 				}
-				if (i < jottLine.length()) { i--; }
+				if (i < jottLine.length()) {
+					i--;
+				}
 
 			}
 			else if (currentCharacter == ' ') {

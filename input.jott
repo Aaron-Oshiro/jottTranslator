@@ -1,6 +1,6 @@
-# I like costco pizza
-#            ;.32;:;+-*/.93848.8384
-:-+-.384;.71:--
-# I like costco pizza
-,[[hello, world]] # I like food
-
+# this is an example
+main[]:Integer[
+  print[5];
+  # This is a comment
+  print[ "foo bar" ];
+]

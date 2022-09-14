@@ -28,20 +28,20 @@ public class JottTokenizer {
 		ArrayList<Token> tokens = new ArrayList<>();
 		try {
 			Scanner jottFile = new Scanner(new File(filename));
-			int lineNumber = 0; // I think this is a good way of knowing which line we are on
+			int lineNumber = 0;
 			while (jottFile.hasNextLine()) {
 				lineNumber++;
 				String jottLine = jottFile.nextLine();
 				ArrayList<Token> newTokens = createTokensPerLine(jottLine, filename, lineNumber);
 				tokens.addAll(newTokens);
-				System.out.println(jottLine); // test sout
 
 			}
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
 			return null;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			return null;
 		}
 
 		return tokens;
@@ -82,7 +82,7 @@ public class JottTokenizer {
 				} else {
 					// NON TERMINAL STATE - THROW ERROR HERE. This is a placeholder until we
 					// implement the error reporting.
-					System.err.println("Syntax Error on line " + lineNum + ": Expected digit after '.'");
+					throw new Exception("Syntax Error on line " + lineNum + ": Expected digit after '.'");
 					// execution should halt here, so we need to throw an error I think. To do
 					// later.
 				}
@@ -153,7 +153,7 @@ public class JottTokenizer {
 					i++;
 					tokensInCurrentLine.add(new Token(string + "\"", fileName, lineNum, TokenType.STRING));
 				} else {
-					System.err.println("String token must have ending ' \" ': " + string); // Error handling needs
+					throw new Exception("String token must have ending ' \" ': " + string); // Error handling needs
 																							// improvement
 				}
 				if (i < jottLine.length()) {
@@ -192,8 +192,8 @@ public class JottTokenizer {
 
 			else {
 				// throw error. for now i just print so I can see when this triggers
-				System.err.println("Syntax Error on line " + lineNum
-						+ ": Either invalid or not yet implemented character detected: " + currentCharacter);
+				throw new Exception("Syntax Error on line " + lineNum
+						+ ": Invalid character detected: " + currentCharacter);
 			}
 
 		}

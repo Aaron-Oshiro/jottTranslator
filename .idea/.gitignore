@@ -1,2 +1,4 @@
 # Default ignored files
 /workspace.xml
+/src/JottTokenizerTester.java
+../tokenizerTestCases/*.jott

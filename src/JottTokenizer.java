@@ -23,7 +23,7 @@ public class JottTokenizer {
 	 *                 path
 	 * @return an ArrayList of Jott Tokens
 	 */
-	public static ArrayList<Token> tokenize(String filename) throws Exception {
+	public static ArrayList<Token> tokenize(String filename) {
 
 		ArrayList<Token> tokens = new ArrayList<>();
 		try {
@@ -40,6 +40,8 @@ public class JottTokenizer {
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
 			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return tokens;
@@ -140,7 +142,7 @@ public class JottTokenizer {
 
 			} else if (currentCharacter == '"') { // if it's a "
 
-				String string = "";
+				String string = "\"";
 				i++;
 				while (i < jottLine.length() && isAlphaDigitOrSpace(jottLine.charAt(i))) {
 					currentCharacter = jottLine.charAt(i);
@@ -149,7 +151,7 @@ public class JottTokenizer {
 				}
 				if (i < jottLine.length() && jottLine.charAt(i) == '"') {
 					i++;
-					tokensInCurrentLine.add(new Token(string, fileName, lineNum, TokenType.STRING));
+					tokensInCurrentLine.add(new Token(string + "\"", fileName, lineNum, TokenType.STRING));
 				} else {
 					System.err.println("String token must have ending ' \" ': " + string); // Error handling needs
 																							// improvement

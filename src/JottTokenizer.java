@@ -6,6 +6,7 @@
  * @author Aaron Oshiro
  * @author Raman Zatsarenko
  * @author Michael Driscoll (mkd5329)
+ * @author Camille Decker (cid3081)
  **/
 
 import java.util.ArrayList;

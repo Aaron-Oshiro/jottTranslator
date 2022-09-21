@@ -18,4 +18,8 @@ public class JottParser {
     public static JottTree parse(ArrayList<Token> tokens){
 		return null;
     }
+
+    Node rootNode = new Node("program", null);
+    Node firstFuncList = new Node("function_list", rootNode);
+
 }

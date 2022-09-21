@@ -43,6 +43,7 @@ public class JottTokenizer {
 			return null;
 		} catch (Exception e) {
 //			e.printStackTrace();
+			System.err.println(e);
 			return null;
 		}
 

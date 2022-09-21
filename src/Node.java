@@ -3,10 +3,10 @@ import java.util.ArrayList;
 public class Node {
 
     private String data;
-    private Token parent;
+    private Node parent;
     private ArrayList<Token> children;
 
-    public Node(String data, Token parent) {
+    public Node(String data, Node parent) {
         this.data = data;
         this.parent = parent;
         this.children = new ArrayList<>();
@@ -20,11 +20,11 @@ public class Node {
         this.data = data;
     }
 
-    public Token getParent() {
+    public Node getParent() {
         return parent;
     }
 
-    public void setParent(Token parent) {
+    public void setParent(Node parent) {
         this.parent = parent;
     }
 

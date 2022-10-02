@@ -8,8 +8,8 @@ public class JottMain {
 
         //parse
         System.out.println("Now parsing tree...");
-        JottTree tree= JottParser.parse(tokens);
+        //JottTree tree= JottParser.parse(tokens);
 
-        System.out.println(tree);
+       //System.out.println(tree);
     }
 }

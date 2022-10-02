@@ -1,20 +1,25 @@
 import java.util.*;
-public class FunctionDefNode implements JottTree{
+public class OpNode implements JottTree{
 
 
-    private ArrayList<JottTree> children;
+    private String operation;
 
-    //this should not be token type, but too lazy to change it rn
-    private TokenType type;
+    public OpNode(ArrayList<Token> tokens)throws Exception{
+        Token tokenToCheck = tokens.get(0);
 
-    public FunctionDefNode(ArrayList<Token> tokens){
-        
+        if(tokenToCheck.getToken().equals("+")||tokenToCheck.getToken().equals("-")||tokenToCheck.getToken().equals("/")||tokenToCheck.getToken().equals("*")){
+            operation = tokenToCheck.getToken();
+            tokens.remove(0);
+        }
+        else{
+            throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a MathOp at line " + tokenToCheck.getLineNum());
+        }
     }
     
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
-        return null;
+        return operation;
     }
 
     @Override

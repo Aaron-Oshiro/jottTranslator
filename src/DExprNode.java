@@ -1,21 +1,25 @@
 import java.util.*;
-import java.util.function.Function;
-public class ProgramNode implements JottTree{
+public class DExprNode implements JottTree{
 
 
-    private FunctionListNode functionListNode;
+    //SignNode sign
 
+    //Digit
 
-    public ProgramNode(ArrayList<Token> tokens){
-        functionListNode = new FunctionListNode(tokens);
+    // I AM WAITING FOR SIGN AND DIGIT BEFORE I DO THIS ONE
+
+    public DExprNode(ArrayList<Token> tokens)throws Exception{
+        Token tokenToCheck = tokens.get(0);
+
+        //waiting until id and func call are skeletoned out before I do this one
+
+      
     }
-    //this should not be token type, but too lazy to change it rn
-    private TokenType type;
     
     @Override
     public String convertToJott() {
-        // I think this node doesn't have any printing, right?
-        return functionListNode.convertToJott();
+        // TODO Auto-generated method stub
+        return "";
     }
 
     @Override

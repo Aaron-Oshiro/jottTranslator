@@ -4,20 +4,34 @@ public class FunctionListNode implements JottTree{
 
     private FunctionDefNode functionDefNode;
     private FunctionListNode functionListNode;
+    private boolean hasFunctionDefinition;
 
     //this should not be token type, but too lazy to change it rn
     private TokenType type;
 
-    public FunctionListNode(FunctionDefNode def, FunctionListNode list){
+    public FunctionListNode(ArrayList<Token> tokens){
 
-        functionDefNode = def;
-        functionListNode = list;
+        if(tokens.size() == 0){
+            //case where func list = epsilon
+            hasFunctionDefinition = false;
+        }
+        else{
+            //case where func list is not epsilon. It is then func def and another func list
+            hasFunctionDefinition = true;
+        functionDefNode = new FunctionDefNode(tokens);
+
+        functionListNode = new FunctionListNode(tokens);
+        }
+
     }
     
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        // I think this node doesn't have any printing, right?
+        if(!hasFunctionDefinition){
+            return "";
+        }
+        return functionDefNode.convertToJott();
     }
 
     @Override

@@ -17,10 +17,13 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens){
-      //top level call in the stack.s
-		return createProgramNode(tokens);
+      //top level call in the stack.
+		return new ProgramNode(tokens);
     }
 
+    /* 
+
+    I am changing this a little bit because I think it should work a bit different. I think each child tokens should be created in the constructors, not in these static methods. Idk this can be discussed or changed.
     //Node rootNode = new Node("program", null);
     //Node firstFuncList = new Node("function_list", rootNode);
 
@@ -52,5 +55,7 @@ public class JottParser {
 
       return programNode;
     }
+
+    */
 }
 

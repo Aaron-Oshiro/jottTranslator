@@ -4,14 +4,14 @@ import java.util.ArrayList;
  * @author Raman Zatsarenko
  */
 public class IdNode implements JottTree{
-
+    private String id;
     public IdNode(ArrayList<Token> tokens) throws Exception{
-
+        this.id = tokens.get(0).getToken();
     }
 
     @Override
     public String convertToJott() {
-        return null;
+        return id;
     }
 
     @Override

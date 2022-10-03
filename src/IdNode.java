@@ -7,6 +7,7 @@ public class IdNode implements JottTree{
     private String id;
     public IdNode(ArrayList<Token> tokens) throws Exception{
         this.id = tokens.get(0).getToken();
+        tokens.remove(0);
     }
 
     @Override

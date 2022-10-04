@@ -25,8 +25,6 @@ public class AsmtNode implements JottTree{
         if (types.contains(currentTokenStr)) {
             hasType = true;
             type = tokens.get(0).getToken();
-            switch (currentTokenStr) {
-                case "Double":
                     // remove type token
                     tokens.remove(0);
                     // <id>
@@ -36,55 +34,19 @@ public class AsmtNode implements JottTree{
                     }
                     tokens.remove(0);
                     // <d_expr>
-                    dExpr = new DExprNode(tokens);
+                    //dExpr = new DExprNode(tokens);
+                    expr = new ExprNode(tokens);
                     endStmt = new EndStmtNode(tokens);
-                    break;
+                // <id>
+                // <s_expr>
+                    //sExpr = new StrExprNode(tokens);
+                // <id>
+                // <i_expr>
+                    //iExpr = new IExprNode(tokens);
+                // <id>
+                // <b_expr>
+                    //bExpr = new BExprNode(tokens);
 
-                case "String":
-                    // remove type token
-                    tokens.remove(0);
-                    // <id>
-                    id = new IdNode(tokens);
-                    if (!tokens.get(0).getToken().equals("=")) {
-                        throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a '=' at line " + tokens.get(0).getLineNum());
-                    }
-                    tokens.remove(0);
-                    // <s_expr>
-                    sExpr = new StrExprNode(tokens);
-                    endStmt = new EndStmtNode(tokens);
-                    break;
-
-                case "Integer":
-                    // remove type token
-                    tokens.remove(0);
-                    // <id>
-                    id = new IdNode(tokens);
-                    if (!tokens.get(0).getToken().equals("=")) {
-                        throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a '=' at line " + tokens.get(0).getLineNum());
-                    }
-                    tokens.remove(0);
-                    // <i_expr>
-                    iExpr = new IExprNode(tokens);
-                    endStmt = new EndStmtNode(tokens);
-                    break;
-
-                case "Boolean":
-                    // remove type token
-                    tokens.remove(0);
-                    // <id>
-                    id = new IdNode(tokens);
-                    if (!tokens.get(0).getToken().equals("=")) {
-                        throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a '=' at line " + tokens.get(0).getLineNum());
-                    }
-                    tokens.remove(0);
-                    // <b_expr>
-                    bExpr = new BExprNode(tokens);
-                    endStmt = new EndStmtNode(tokens);
-                    break;
-
-                default:
-                    throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a valid <asmt> at line " + tokens.get(0).getLineNum());
-            }
         }
         // <id> = <*_expr><end_stmt>
         else {
@@ -103,15 +65,7 @@ public class AsmtNode implements JottTree{
     @Override
     public String convertToJott() {
         if (hasType) {
-            switch (type) {
-                case "Double": return type + id.convertToJott() + " = " + dExpr.convertToJott() + endStmt.convertToJott();
-                case "String": return type + id.convertToJott() + " = " + sExpr.convertToJott() + endStmt.convertToJott();
-                case "Integer" : return type + id.convertToJott() + " = " + iExpr.convertToJott() + endStmt.convertToJott();
-                case "Boolean" : return type + id.convertToJott() + " = " + bExpr.convertToJott() + endStmt.convertToJott();
-
-                default:
-                   return "Unable to convert to Jott";
-            }
+            return type + id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
         }
         else {
             return id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();

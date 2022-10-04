@@ -11,8 +11,11 @@ public class AsmtNode implements JottTree{
     private IExprNode iExpr;
     private StrExprNode sExpr;
     private BExprNode bExpr;
+    private ExprNode expr;
 
     private ArrayList<String> types = new ArrayList<>(Arrays.asList("Double", "String", "Integer", "Boolean"));
+    private boolean hasType = false;
+    private String type;
 
     private EndStmtNode endStmt;
 
@@ -20,6 +23,8 @@ public class AsmtNode implements JottTree{
     public AsmtNode(ArrayList<Token> tokens) throws Exception{
         String currentTokenStr = tokens.get(0).getToken();
         if (types.contains(currentTokenStr)) {
+            hasType = true;
+            type = tokens.get(0).getToken();
             switch (currentTokenStr) {
                 case "Double":
                     // remove type token
@@ -89,14 +94,28 @@ public class AsmtNode implements JottTree{
             }
             tokens.remove(0);
 
-            //TODO I have no idea how to decide what kind of expression should be implemented
+            expr = new ExprNode(tokens);
+            endStmt = new EndStmtNode(tokens);
 
         }
     }
 
     @Override
     public String convertToJott() {
-        return null;
+        if (hasType) {
+            switch (type) {
+                case "Double": return type + id.convertToJott() + " = " + dExpr.convertToJott() + endStmt.convertToJott();
+                case "String": return type + id.convertToJott() + " = " + sExpr.convertToJott() + endStmt.convertToJott();
+                case "Integer" : return type + id.convertToJott() + " = " + iExpr.convertToJott() + endStmt.convertToJott();
+                case "Boolean" : return type + id.convertToJott() + " = " + bExpr.convertToJott() + endStmt.convertToJott();
+
+                default:
+                   return "Unable to convert to Jott";
+            }
+        }
+        else {
+            return id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
+        }
     }
 
     @Override

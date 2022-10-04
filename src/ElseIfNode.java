@@ -3,9 +3,9 @@ public class ElseIfNode implements JottTree{
 
     private boolean hasElse;
 
-    //private BodyNode b;
+    private BodyNode bodyNode;
 
-    //pri=vate bExpr Node bexp;
+    private ExprNode exprNode;
 
     public ElseIfNode(ArrayList<Token> tokens)throws Exception{
         Token tokenToCheck = tokens.get(0);
@@ -22,10 +22,9 @@ public class ElseIfNode implements JottTree{
             }
             tokens.remove(0);
 
-            /*
-            * hopefully uncomment when bExpr is implemented
-             * bExprNode b = new bExprNode(tokens);
-             */
+            //TODO KEEP IN MIND THIS SHOULD BE A BOOLEAN - DO WE NEED TO CHECK THIS IN THIS PHASE?
+             exprNode = new ExprNode(tokens);
+             
 
              //get rid of rbracket
             if(!tokens.get(0).getToken().equals("]")){
@@ -40,10 +39,8 @@ public class ElseIfNode implements JottTree{
             }
             tokens.remove(0);
 
-            /*
-            * hopefully uncomment when BodyNode is implemented
-             * BodyNode body = new BodyNode(tokens)
-             */
+             bodyNode = new BodyNode(tokens);
+             
 
              //get rid of rbracket
             if(!tokens.get(0).getToken().equals("}")){
@@ -56,7 +53,7 @@ public class ElseIfNode implements JottTree{
         }
         else{
                     hasElse = false;
-                    //TODO handle Empty string case. Do I need to look ahead? I think if the token is not else we assume it is the empty case.
+                    //TODO make sure I handle Empty string case correctly. Do I need to look ahead? I think if the token is not else we assume it is the empty case. Or do I need to use the follow set to see what can follow an elseIf?
             //throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a Else at line " + tokenToCheck.getLineNum());
         }
     }
@@ -67,7 +64,7 @@ public class ElseIfNode implements JottTree{
         if(!hasElse){
             return "";
         }
-        return "elseif[" /* + bExpr.convertToJott */  + "]{" /* + BodyNode.convertToJott */ + "}";
+        return "elseif[" +exprNode.convertToJott() + "]{"  + bodyNode.convertToJott()  + "}";
     }
 
     @Override

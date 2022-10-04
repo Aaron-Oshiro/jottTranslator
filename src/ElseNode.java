@@ -3,7 +3,7 @@ public class ElseNode implements JottTree{
 
     private boolean hasElse;
 
-    //private BodyNode b;
+    private BodyNode bodyNode;
 
     public ElseNode(ArrayList<Token> tokens)throws Exception{
         Token tokenToCheck = tokens.get(0);
@@ -20,10 +20,8 @@ public class ElseNode implements JottTree{
             }
             tokens.remove(0);
 
-            /*
-            * hopefully uncomment when BodyNode is implemented
-             * BodyNode body = new BodyNode(tokens)
-             */
+            bodyNode = new BodyNode(tokens);
+             
 
              //get rid of rbracket
             if(!tokens.get(0).getToken().equals("}")){
@@ -48,7 +46,7 @@ public class ElseNode implements JottTree{
         if(!hasElse){
             return "";
         }
-        return "else{" /* + BodyNode.convertToJott */ + "}";
+        return "else{"+ bodyNode.convertToJott() + "}";
     }
 
     @Override

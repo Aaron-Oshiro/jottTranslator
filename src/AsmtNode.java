@@ -28,6 +28,7 @@ public class AsmtNode implements JottTree{
                     // remove type token
                     tokens.remove(0);
                     // <id>
+                      //TODO add a check here - make sure the id node has the token type of ID/Keyword!
                     id = new IdNode(tokens);
                     if (!tokens.get(0).getToken().equals("=")) {
                         throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a '=' at line " + tokens.get(0).getLineNum());
@@ -50,6 +51,7 @@ public class AsmtNode implements JottTree{
         }
         // <id> = <*_expr><end_stmt>
         else {
+            //TODO add a check here - make sure the id node has the token type of ID/Keyword!
             id = new IdNode(tokens);
             if (!tokens.get(0).getToken().equals("=")) {
                 throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a '=' at line " + tokens.get(0).getLineNum());

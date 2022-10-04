@@ -30,6 +30,7 @@ public class FuncCallNode implements JottTree {
             Token thisToken = tokens.get(0);
             throw new Exception("Token "+ thisToken.getToken() + "cannot be parsed into a ] at line " + thisToken.getLineNum());
         }
+        tokens.remove(0);
 
     }
 

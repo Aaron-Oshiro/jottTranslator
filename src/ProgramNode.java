@@ -6,7 +6,7 @@ public class ProgramNode implements JottTree{
     private FunctionListNode functionListNode;
 
 
-    public ProgramNode(ArrayList<Token> tokens){
+    public ProgramNode(ArrayList<Token> tokens)throws Exception{
         functionListNode = new FunctionListNode(tokens);
     }
     //this should not be token type, but too lazy to change it rn

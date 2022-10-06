@@ -16,7 +16,7 @@ public class RelOpNode implements JottTree {
 
     public RelOpNode(ArrayList<Token> tokens) throws Exception {
         createRelOps();
-        if (relOps.contains(tokens.get(0).getToken()) && tokens.get(0).getTokenType() == TokenType.REL_OP) {
+        if (relOps.contains(tokens.get(0).getToken())) {
             Token newRelOp = tokens.remove(0);
             relationshipOperator = newRelOp.getToken();
         } else {

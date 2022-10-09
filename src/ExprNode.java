@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ExprNode implements JottTree {
 
@@ -9,7 +8,7 @@ public class ExprNode implements JottTree {
     private boolean idFlag;
     private ValueNode value;
     private boolean valueFlag;
-    private opNode op;
+    private OpNode op;
     private boolean opFlag;
     private FuncCallNode funcCall;
     private boolean funcCallFlag;
@@ -31,7 +30,7 @@ public class ExprNode implements JottTree {
                 id = new IdNode(tokens);
                 idFlag = true;
             }
-            op = new opNode(tokens);
+            op = new OpNode(tokens);
             opFlag = true;
 
             expr = new ExprNode(tokens);

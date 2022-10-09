@@ -1,7 +1,6 @@
 /**
  * This is the boolean node
  * Contains the boolean given
- * Because there is no TokenType of BOOLEAN, we assume it is an ID_KEYWORD
  *
  * @author Aaron Oshiro
  */
@@ -17,7 +16,7 @@ public class BooleanNode implements JottTree {
 
     public BooleanNode(ArrayList<Token> tokens) throws Exception {
         createBooleans();
-        if (boolOps.contains(tokens.get(0).getToken()) && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
+        if (boolOps.contains(tokens.get(0).getToken())) {
             Token newBoolNode = tokens.remove(0);
             boolNode = newBoolNode.getToken();
         } else {

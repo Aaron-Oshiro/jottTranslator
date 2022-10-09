@@ -16,13 +16,13 @@ public class FuncCallNode implements JottTree {
         if(Character.isLetter(tokens.get(0).getToken().charAt(0))) {    //
             throw new Exception("Token " + tokens.get(0).getToken() + " needs to start with a letter");
         }
-        this.idNode = new IdNode(tokens);   // should remove the id_keyword token
+        this.idNode = new IdNode(tokens);   // removes the id_keyword token
 
         if(!tokens.get(0).getToken().equals("[")) {
             Token thisToken = tokens.get(0);
             throw new Exception("Token "+ thisToken.getToken() + "cannot be parsed into a [ at line " + thisToken.getLineNum());
         }
-        tokens.remove(0);
+        tokens.remove(0);   // removes the '['
 
         paramsNode = new ParamsNode(tokens);
 
@@ -31,7 +31,6 @@ public class FuncCallNode implements JottTree {
             throw new Exception("Token "+ thisToken.getToken() + "cannot be parsed into a ] at line " + thisToken.getLineNum());
         }
         tokens.remove(0);
-
     }
 
     @Override

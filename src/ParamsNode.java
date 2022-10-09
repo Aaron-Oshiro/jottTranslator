@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ParamsNode implements JottTree {
 
     private boolean isEmpty;
-    private JottTree expressionNode;
+    private ExprNode expressionNode;
     private ParamsTNode paramsTNode;
 
     public ParamsNode(ArrayList<Token> tokens) throws Exception{
@@ -18,7 +18,7 @@ public class ParamsNode implements JottTree {
         // expression nodes require an id in front for all of them, so we check if the node in front is a lowercase letter
         if (Character.isLowerCase(tokens.get(0).getToken().charAt(0))) {
             this.isEmpty = false;
-            // this.expressionNode = new ExpressionNode(tokens);   // needs expressionNode to work, obviously
+            this.expressionNode = new ExprNode(tokens);
 
             this.paramsTNode = new ParamsTNode(tokens);
         } else {

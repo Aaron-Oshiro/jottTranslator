@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class opNode implements JottTree {
+public class OpNode implements JottTree {
 
     private String operator;
 
-    public opNode(ArrayList<Token> tokens) throws Exception{
+    public OpNode(ArrayList<Token> tokens) throws Exception{
         this.operator = tokens.get(0).getToken();
         tokens.remove(0);
     }

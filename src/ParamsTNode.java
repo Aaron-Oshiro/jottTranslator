@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class ParamsTNode implements JottTree {
 
     private boolean isEmpty;
-    private JottTree expressionNode;    // requires an expression node to be implemented
+    private ExprNode expressionNode;    // requires an expression node to be implemented
     private ParamsTNode paramsTNode;
 
     public ParamsTNode(ArrayList<Token> tokens) throws Exception {
@@ -12,7 +12,7 @@ public class ParamsTNode implements JottTree {
             this.isEmpty = false;
             tokens.remove(0);
 
-            // expressionNode = new ExpressionNode(tokens);    // need to finish this once expressionNode is implemented
+            expressionNode = new ExprNode(tokens);
 
             this.paramsTNode = new ParamsTNode(tokens);
 

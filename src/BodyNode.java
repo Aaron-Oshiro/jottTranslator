@@ -11,17 +11,17 @@ public class BodyNode implements JottTree {
 
     public BodyNode(ArrayList<Token> tokens) throws Exception {
         String t0 = tokens.get(0).getToken();
-        if (t0 == "}") {
+        if (t0.equals("}")) {
             epsilonFlag = true;
-        } else if (t0 == "return") {
+        } else if (t0.equals("return")) {
             rtrn = new ReturnNode(tokens);
             rtrnFlag = true;
 
         } else {
             bodyStatement = new BodyStmtNode(tokens);
             bodyStatementFlag = true;
-            while (t0 != "}") {
-                if (t0 == "return") {
+            while (!t0.equals("}")) {
+                if (t0.equals("return")) {
                     rtrn = new ReturnNode(tokens);
                     break;
                 } else {

@@ -2,22 +2,22 @@ import java.util.ArrayList;
 
 public class BodyStmtNode implements JottTree{
 
-    private JottTree bodyNode;
+    private JottTree bodyStmtNode;
 
     public BodyStmtNode(ArrayList<Token> tokens) throws Exception {
         // body statement can either be a while loop, an if statement, or a statement
         if (tokens.get(0).getToken().equals("while")){  // is a while loop
-            bodyNode = new WhileLoopNode(tokens);
+            bodyStmtNode = new WhileLoopNode(tokens);
         } else if (tokens.get(0).getToken().equals("if")) { // is an if statement
-            bodyNode = new IfStmtNode(tokens);   //TODO un-comment once If node is implemented
+            bodyStmtNode = new IfStmtNode(tokens);
         } else {    // is a statement
-            bodyNode = new StmtNode(tokens);
+            bodyStmtNode = new StmtNode(tokens);
         }
 
     }
     @Override
     public String convertToJott() {
-        return bodyNode.convertToJott();
+        return bodyStmtNode.convertToJott();
     }
 
     @Override

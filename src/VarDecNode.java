@@ -1,14 +1,19 @@
 import java.util.ArrayList;
 
-public class VarDecNode implements JottTree{
+public class VarDecNode implements JottTree {
+    private TypeNode type;
+    private IdNode id;
+    private EndStmtNode endStmt;
 
-    public VarDecNode(ArrayList<Token> tokens) {
-
+    public VarDecNode(ArrayList<Token> tokens) throws Exception {
+        type = new TypeNode(tokens);
+        id = new IdNode(tokens);
+        endStmt = new EndStmtNode(tokens);
     }
 
     @Override
     public String convertToJott() {
-        return null;
+        return type.convertToJott() + id.convertToJott() + endStmt.convertToJott();
     }
 
     @Override

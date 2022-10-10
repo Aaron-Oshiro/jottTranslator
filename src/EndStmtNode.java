@@ -1,14 +1,19 @@
 import java.util.ArrayList;
 
-public class EndStmtNode implements JottTree{
+public class EndStmtNode implements JottTree {
 
-
-    public EndStmtNode(ArrayList<Token> tokens) {
+    public EndStmtNode(ArrayList<Token> tokens) throws Exception {
+        Token t0 = tokens.get(0);
+        if (t0.getToken() == ";") {
+        } else {
+            throw new Exception(
+                    "Syntax error: Token " + t0.getToken() + "cannot be parsed into a ; at line " + t0.getLineNum());
+        }
     }
 
     @Override
     public String convertToJott() {
-        return null;
+        return ";";
     }
 
     @Override

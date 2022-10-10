@@ -36,16 +36,17 @@ public class ExprNode implements JottTree {
             expr = new ExprNode(tokens);
             exprFlag = true;
 
-        } else {
-            if (tt0 == TokenType.ID_KEYWORD) {
-                id = new IdNode(tokens);
-                idFlag = true;
-            }
+        } else if (tt0 == TokenType.ID_KEYWORD) {
+            id = new IdNode(tokens);
+            idFlag = true;
+        }
 
-            if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
-                value = new ValueNode(tokens);
-                valueFlag = true;
-            }
+        else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
+            value = new ValueNode(tokens);
+            valueFlag = true;
+        } else {
+            funcCall = new FuncCallNode(tokens);
+            funcCallFlag = true;
         }
 
     }
@@ -60,8 +61,11 @@ public class ExprNode implements JottTree {
         }
         if (idFlag) {
             return id.convertToJott();
+        } else if (valueFlag) {
+            return value.convertToJott();
+        } else {
+            return funcCall.convertToJott();
         }
-        return value.convertToJott();
     }
 
     @Override

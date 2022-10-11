@@ -11,5 +11,7 @@ public class JottMain {
         JottTree tree= JottParser.parse(tokens);
 
         System.out.println(tree);
+
+        System.out.println(tree.convertToJott());
     }
 }

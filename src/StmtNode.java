@@ -34,9 +34,9 @@ public class StmtNode implements JottTree{
 
     @Override
     public String convertToJott() {
-        if (asmtFlag) return asmt.convertToJott();
-        else if (varDecFlag) return varDec.convertToJott();
-        else if (funcCallFlag) return funcCall.convertToJott() + endStmt.convertToJott();
+        if (asmt != null) return asmt.convertToJott();
+        else if (varDec != null) return varDec.convertToJott();
+        else if (funcCall != null) return funcCall.convertToJott() + endStmt.convertToJott();
         else return "Could not convert to Jott";
     }
 

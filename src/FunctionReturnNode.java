@@ -8,7 +8,7 @@ public class FunctionReturnNode implements JottTree {
 
     public FunctionReturnNode(ArrayList<Token> tokens) throws Exception {
         String t0 = tokens.get(0).getToken();
-        if (t0 == "void") {
+        if (t0.equals("void")) {
             voidFlag = true;
         } else {
             returnTypeFlag = true;

@@ -1,23 +1,50 @@
 import java.util.ArrayList;
 
-public class BodyNode implements JottTree{
+public class BodyNode implements JottTree {
 
-    private JottTree bodyNode;
+    private ArrayList<BodyNode> bodyArrayList = new ArrayList<BodyNode>();
+    private ReturnNode rtrn;
+    private boolean rtrnFlag = false;
+    private boolean epsilonFlag = false;
+    private BodyStmtNode bodyStatement;
+    private boolean bodyStatementFlag = false;
 
     public BodyNode(ArrayList<Token> tokens) throws Exception {
-        // body statement can either be a while loop, an if statement, or a statement
-        if (tokens.get(0).getToken().equals("while")){  // is a while loop
-            bodyNode = new WhileLoopNode(tokens);
-        } else if (tokens.get(0).getToken().equals("if")) { // is an if statement
-            // bodyNode = new IfNode(tokens);   //TODO un-comment once If node is implemented
-        } else {    // is a statement
-            bodyNode = new StmtNode(tokens);
-        }
+        String t0 = tokens.get(0).getToken();
+        if (t0.equals("}")) {
+            epsilonFlag = true;
+        } else if (t0.equals("return")) {
+            rtrn = new ReturnNode(tokens);
+            rtrnFlag = true;
 
+        } else {
+            bodyStatement = new BodyStmtNode(tokens);
+            bodyStatementFlag = true;
+            while (!t0.equals("}")) {
+                if (t0.equals("return")) {
+                    rtrn = new ReturnNode(tokens);
+                    break;
+                } else {
+                    bodyArrayList.add(new BodyNode(tokens));
+                }
+            }
+        }
     }
+
     @Override
     public String convertToJott() {
-        return bodyNode.convertToJott();
+        if (epsilonFlag) {
+            return "";
+        }
+        if (rtrnFlag) {
+            return rtrn.convertToJott();
+        } else {
+            String allBodies = "";
+            for (int i = 0; i < bodyArrayList.size(); i++) {
+                allBodies += (bodyArrayList.get(i).convertToJott());
+            }
+            return bodyStatement.convertToJott() + allBodies;
+        }
     }
 
     @Override

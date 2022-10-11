@@ -10,9 +10,13 @@ public class BodyNode implements JottTree {
     private boolean bodyStatementFlag = false;
 
     public BodyNode(ArrayList<Token> tokens) throws Exception {
+        //System.out.println("AADASD");
+
         String t0 = tokens.get(0).getToken();
+        //System.out.println(t0);
         if (t0.equals("}")) {
             epsilonFlag = true;
+            tokens.remove(0);
         } else if (t0.equals("return")) {
             rtrn = new ReturnNode(tokens);
             rtrnFlag = true;
@@ -20,11 +24,12 @@ public class BodyNode implements JottTree {
         } else {
             bodyStatement = new BodyStmtNode(tokens);
             bodyStatementFlag = true;
-            while (!t0.equals("}")) {
+            while (!t0.equals("}") && (tokens.size() != 0)) {
                 if (t0.equals("return")) {
                     rtrn = new ReturnNode(tokens);
                     break;
                 } else {
+                    
                     bodyArrayList.add(new BodyNode(tokens));
                 }
             }

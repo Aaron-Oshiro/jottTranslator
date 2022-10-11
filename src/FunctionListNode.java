@@ -10,7 +10,7 @@ public class FunctionListNode implements JottTree{
     private TokenType type;
 
     public FunctionListNode(ArrayList<Token> tokens) throws Exception{
-
+        
         if(tokens.size() == 0){
             //case where func list = epsilon
             hasFunctionDefinition = false;

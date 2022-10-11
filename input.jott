@@ -1,6 +1,6 @@
 #this is an example
 main[]:Integer{
-print[51234];
+print[abc];
 #this is a comment
 print[ "foo bar" ];
 }

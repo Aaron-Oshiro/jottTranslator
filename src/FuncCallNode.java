@@ -31,6 +31,7 @@ public class FuncCallNode implements JottTree {
 
         if(!tokens.get(0).getToken().equals("]")) {
             Token thisToken = tokens.get(0);
+            //System.out.println("sss");
             throw new Exception("Token "+ thisToken.getToken() + "cannot be parsed into a ] at line " + thisToken.getLineNum());
         }
         tokens.remove(0);

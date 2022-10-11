@@ -32,6 +32,7 @@ public class FunctionDefNode implements JottTree{
 
 
         if(tokens.get(0).getTokenType()!= TokenType.R_BRACKET){
+          
             throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a ] for FunctionDef at line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
@@ -50,10 +51,10 @@ public class FunctionDefNode implements JottTree{
         
         bodyNode = new BodyNode(tokens);
         
-        if(tokens.get(0).getTokenType()!= TokenType.R_BRACE){
+       /*  if(tokens.get(0).getTokenType()!= TokenType.R_BRACE){
             throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a } for FunctionDef at line " + tokens.get(0).getLineNum());
         }
-        tokens.remove(0);
+        tokens.remove(0);*/
         
     }
     

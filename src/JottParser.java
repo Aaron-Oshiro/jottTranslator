@@ -19,9 +19,11 @@ public class JottParser {
     public static JottTree parse(ArrayList<Token> tokens){
       //top level call in the stack.
       try{
-		return new ProgramNode(tokens);}
+		return new ProgramNode(tokens);
+  }
     catch(Exception e){
       System.err.println(e.getMessage());
+      e.printStackTrace();
       return null;
     }
     }

@@ -14,6 +14,9 @@ public class ExprNode implements JottTree {
     private boolean funcCallFlag;
 
     public ExprNode(ArrayList<Token> tokens) throws Exception {
+        //System.out.println(tokens.get(0).getToken());
+        //System.out.println(tokens.get(0).getToken());
+        
         Token t0 = tokens.get(0);
         TokenType tt0 = (tokens.get(0).getTokenType());
         if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
@@ -23,7 +26,9 @@ public class ExprNode implements JottTree {
         }
         TokenType tt1 = (tokens.get(1).getTokenType());
         if (tt1 == TokenType.MATH_OP || tt1 == TokenType.REL_OP) {
+            
             if (tt0 == TokenType.NUMBER || tt0 == TokenType.STRING) {
+                
                 value = new ValueNode(tokens);
                 valueFlag = true;
             } else {
@@ -37,14 +42,16 @@ public class ExprNode implements JottTree {
             exprFlag = true;
 
         } else if (tt0 == TokenType.ID_KEYWORD) {
+
             id = new IdNode(tokens);
             idFlag = true;
         }
-
         else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
+            
             value = new ValueNode(tokens);
             valueFlag = true;
         } else {
+            
             funcCall = new FuncCallNode(tokens);
             funcCallFlag = true;
         }

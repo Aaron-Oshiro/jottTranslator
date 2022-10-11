@@ -16,6 +16,8 @@ public class ParamsNode implements JottTree {
 
         // param nodes requires an expression node at the front, or it's empty
         // expression nodes require an id in front for all of them, so we check if the node in front is a lowercase letter
+
+        //not necessarily true. exprs can start with ids, doubles, bools, etc. as well. oor even a string literal
         if (Character.isLowerCase(tokens.get(0).getToken().charAt(0))) {
             this.isEmpty = false;
             this.expressionNode = new ExprNode(tokens);

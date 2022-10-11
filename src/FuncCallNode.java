@@ -13,8 +13,11 @@ public class FuncCallNode implements JottTree {
 
     public FuncCallNode(ArrayList<Token> tokens) throws Exception {
         // Needs to check for id, '[' , params, and ']'
-        if(Character.isLetter(tokens.get(0).getToken().charAt(0))) {    //
-            throw new Exception("Token " + tokens.get(0).getToken() + " needs to start with a letter");
+        if(!Character.isLetter(tokens.get(0).getToken().charAt(0))) {    //
+            //dSystem.out.println(Character.isLetter(tokens.get(0).getToken().charAt(0)));
+            //System.out.println(tokens.get(0).getToken().charAt(0));
+            //System.out.println(tokens.get(0).getToken());
+            throw new Exception("Token " + tokens.get(0).getToken() + " needs to start with a letter at line " + tokens.get(0).getLineNum());
         }
         this.idNode = new IdNode(tokens);   // removes the id_keyword token
 

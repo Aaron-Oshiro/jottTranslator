@@ -21,7 +21,7 @@ public class StmtNode implements JottTree{
         if (types.contains(tokens.get(0).getToken()) && tokens.get(2).getToken().equals("=")) {
             asmt = new AsmtNode(tokens);
         }
-        else if (types.contains(tokens.get(0).getToken()) && tokens.get(1).getToken().equals("[")) {
+        else if (/*types.contains(tokens.get(0).getToken()) && */tokens.get(1).getToken().equals("[")) {
             funcCall = new FuncCallNode(tokens);
             endStmt = new EndStmtNode(tokens);
 

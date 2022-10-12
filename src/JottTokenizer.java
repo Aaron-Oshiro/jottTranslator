@@ -163,7 +163,7 @@ public class JottTokenizer {
 					i--;
 				}
 
-			} else if (currentCharacter == ' ') {
+			} else if (currentCharacter == ' ' || currentCharacter == '\t') {
 			} else if (currentCharacter == '#') {
 				return tokensInCurrentLine;
 			} else if (currentCharacter == ',') {

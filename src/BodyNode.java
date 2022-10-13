@@ -20,18 +20,21 @@ public class BodyNode implements JottTree {
         } else if (t0.equals("return")) {
             rtrn = new ReturnNode(tokens);
             rtrnFlag = true;
+//            tokens.remove(0);
 
         } else {
             bodyStatement = new BodyStmtNode(tokens);
             bodyStatementFlag = true;
-            while (!t0.equals("}") && (tokens.size() != 0)) {
-                if (t0.equals("return")) {
-                    rtrn = new ReturnNode(tokens);
-                    break;
-                } else {
+            while ( (tokens.size() != 0) && !tokens.get(0).getToken().equals("}") ) {
+//                if (tokens.get(0).getToken().equals("return")) {
+//                    rtrn = new ReturnNode(tokens);
+//                    rtrnFlag = true;
+//                    tokens.remove(0);
+//                    break;
+//                } else {
                     
                     bodyArrayList.add(new BodyNode(tokens));
-                }
+
             }
         }
     }
@@ -44,6 +47,9 @@ public class BodyNode implements JottTree {
         if (rtrnFlag) {
             return rtrn.convertToJott();
         } else {
+//            for (BodyNode bodyNode : bodyArrayList) {
+//                 bodyNode.convertToJott();
+//            }
             String allBodies = "";
             for (int i = 0; i < bodyArrayList.size(); i++) {
                 allBodies += (bodyArrayList.get(i).convertToJott());

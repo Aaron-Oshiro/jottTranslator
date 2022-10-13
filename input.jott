@@ -1,9 +1,7 @@
-#this should fail due to 1foo function name
-#should tokenize fine but fail parsing
-#no rule for <int><id> in <func_def>
-#Error: Expected <id> got <int>
+#this will pass phase 2 but fail phase 3 for foo not being defined
 
-1foo[]:Integer{
-    print[5];
-	return 5;
+main[]:Integer{
+    Integer x = foo[5];
+	print[x];
+	return x;
 }

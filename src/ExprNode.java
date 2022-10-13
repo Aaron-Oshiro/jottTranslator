@@ -19,12 +19,14 @@ public class ExprNode implements JottTree {
 
         Token t0 = tokens.get(0);
         TokenType tt0 = (tokens.get(0).getTokenType());
+
         if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
             throw new Exception(
                     "Syntax Error: Token " + t0.getToken() + "cannot be parsed into a value or id at line "
                             + t0.getLineNum());
         }
         TokenType tt1 = (tokens.get(1).getTokenType());
+
         if (tt1 == TokenType.MATH_OP || tt1 == TokenType.REL_OP) {
 
             if (tt0 == TokenType.NUMBER || tt0 == TokenType.STRING) {
@@ -41,7 +43,7 @@ public class ExprNode implements JottTree {
             expr = new ExprNode(tokens);
             exprFlag = true;
 
-        } else if (tt0 == TokenType.ID_KEYWORD) {
+        } else if (tt0 == TokenType.ID_KEYWORD && tt1 != TokenType.L_BRACKET) {
 
             id = new IdNode(tokens);
             idFlag = true;
@@ -50,6 +52,7 @@ public class ExprNode implements JottTree {
             value = new ValueNode(tokens);
             valueFlag = true;
         } else {
+
 
             funcCall = new FuncCallNode(tokens);
             funcCallFlag = true;

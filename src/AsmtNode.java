@@ -25,6 +25,7 @@ public class AsmtNode implements JottTree{
         if (types.contains(currentTokenStr)) {
             hasType = true;
             type = tokens.get(0).getToken();
+
                     // remove type token
                     tokens.remove(0);
                     // <id>
@@ -33,9 +34,8 @@ public class AsmtNode implements JottTree{
                     if (!tokens.get(0).getToken().equals("=")) {
                         throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a '=' at line " + tokens.get(0).getLineNum());
                     }
-                    tokens.remove(0);
-                    // <d_expr>
-                    //dExpr = new DExprNode(tokens);
+                    tokens.remove(0); // remove =
+
                     expr = new ExprNode(tokens);
                     endStmt = new EndStmtNode(tokens);
                 // <id>
@@ -67,7 +67,7 @@ public class AsmtNode implements JottTree{
     @Override
     public String convertToJott() {
         if (hasType) {
-            return type + id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
+            return type + " " + id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
         }
         else {
             return id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();

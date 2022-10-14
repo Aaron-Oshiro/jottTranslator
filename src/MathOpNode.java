@@ -12,7 +12,7 @@ public class MathOpNode implements JottTree{
             tokens.remove(0);
         }
         else{
-            throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a MathOp at line " + tokenToCheck.getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokenToCheck.toString() + " cannot be parsed into a MathOp at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
     }
     

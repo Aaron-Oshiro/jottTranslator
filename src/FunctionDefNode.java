@@ -17,14 +17,14 @@ public class FunctionDefNode implements JottTree{
     public FunctionDefNode(ArrayList<Token> tokens) throws Exception{
 
         if(tokens.get(0).getTokenType()!= TokenType.ID_KEYWORD){
-            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into an id for FunctionDef at line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into an id for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         idNode = new IdNode(tokens);
 
         //< function_def > -> <id >[ func_def_params ]: < function_return >{ < body >}
 
         if(tokens.get(0).getTokenType()!= TokenType.L_BRACKET){
-            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a [ for FunctionDef at line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a [ for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
@@ -33,26 +33,25 @@ public class FunctionDefNode implements JottTree{
 
         if(tokens.get(0).getTokenType()!= TokenType.R_BRACKET){
           
-            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a ] for FunctionDef at line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a ] for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
         if(tokens.get(0).getTokenType()!= TokenType.COLON){
-            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a : for FunctionDef at line " + tokens.get(0).getLineNum());
-        }
+            throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a : for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         tokens.remove(0);
 
         functionReturnNode = new FunctionReturnNode(tokens);
 
         if(tokens.get(0).getTokenType()!= TokenType.L_BRACE){
-            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a { for FunctionDef at line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a { for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
         
         bodyNode = new BodyNode(tokens);
         
        if(tokens.get(0).getTokenType()!= TokenType.R_BRACE){
-            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a } for FunctionDef at line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a } for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
         

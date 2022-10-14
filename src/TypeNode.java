@@ -12,7 +12,7 @@ public class TypeNode implements JottTree{
             tokens.remove(0);
         }
         else{
-            throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a Type at line " + tokenToCheck.getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + " cannot be parsed into a Type at " + tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
         }
     }
     

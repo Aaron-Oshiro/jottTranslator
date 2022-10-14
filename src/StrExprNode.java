@@ -31,7 +31,7 @@ public class StrExprNode implements JottTree{
 
         if(tokens.size() <2){
             //just for safety, ensuring next token exists.
-            throw new Exception("Unexpected end in the code at " + tokenToCheck.getLineNum());
+            throw new Exception("Syntax Error: Unexpected end in the code at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
 
         if(tokens.get(1).getTokenType() != TokenType.L_BRACKET){
@@ -47,7 +47,7 @@ public class StrExprNode implements JottTree{
        }
        else{
         //not an id or string literal. Throw error.
-        throw new Exception("Token "+ tokenToCheck.toString() + " was expected to be a string literal or id, but wasn't at line " + tokenToCheck.getLineNum());
+        throw new Exception("Syntax Error: Token "+ tokenToCheck.toString() + " was expected to be a string literal or id, but wasn't at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
        }
     }
     

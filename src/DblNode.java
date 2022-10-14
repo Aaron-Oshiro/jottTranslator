@@ -42,7 +42,7 @@ public class DblNode implements JottTree{
         value = Double.parseDouble(tokenToCheck.getToken());
         
         if(!tokenToCheck.getToken().contains(".")){
-            throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a Double (Did not have decimal) at line " + tokenToCheck.getLineNum());
+            throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + " cannot be parsed into a Double (Did not have decimal) at " +tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
         }
         else{
         tokens.remove(0);
@@ -53,7 +53,7 @@ public class DblNode implements JottTree{
         //not a double
         //throw error if we were expecting a double
 
-        throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a Double at line " + tokenToCheck.getLineNum());
+        throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + " cannot be parsed into a Double at at " +tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
     }
 
       

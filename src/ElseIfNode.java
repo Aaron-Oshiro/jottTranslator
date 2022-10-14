@@ -18,7 +18,7 @@ public class ElseIfNode implements JottTree{
 
             //get rid of lbracket
             if(!tokens.get(0).getToken().equals("[")){
-                throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a [ at line " + tokenToCheck.getLineNum());
+                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + " cannot be parsed into a [ at " +tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
@@ -28,14 +28,14 @@ public class ElseIfNode implements JottTree{
 
              //get rid of rbracket
             if(!tokens.get(0).getToken().equals("]")){
-                throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a ] at line " + tokenToCheck.getLineNum());
+                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + "cannot be parsed into a ] at at " +tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
 
             //get rid of lbracket
             if(!tokens.get(0).getToken().equals("{")){
-                throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a { at line " + tokenToCheck.getLineNum());
+                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + "cannot be parsed into a { at line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
@@ -44,7 +44,7 @@ public class ElseIfNode implements JottTree{
 
              //get rid of rbracket
             if(!tokens.get(0).getToken().equals("}")){
-                throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a } at line " + tokenToCheck.getLineNum());
+                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + "cannot be parsed into a } at line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 

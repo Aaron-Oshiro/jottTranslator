@@ -17,13 +17,13 @@ public class FuncCallNode implements JottTree {
             //dSystem.out.println(Character.isLetter(tokens.get(0).getToken().charAt(0)));
             //System.out.println(tokens.get(0).getToken().charAt(0));
             //System.out.println(tokens.get(0).getToken());
-            throw new Exception("Token " + tokens.get(0).getToken() + " needs to start with a letter at line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " needs to start with a letter at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         this.idNode = new IdNode(tokens);   // removes the id_keyword token
 
         if(!tokens.get(0).getToken().equals("[")) {
             Token thisToken = tokens.get(0);
-            throw new Exception("Token "+ thisToken.getToken() + " cannot be parsed into a [ at line " + thisToken.getLineNum());
+            throw new Exception("Syntax Error: Token "+ thisToken.getToken() + " cannot be parsed into a [ at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);   // removes the '['
 
@@ -32,7 +32,7 @@ public class FuncCallNode implements JottTree {
         if(!tokens.get(0).getToken().equals("]")) {
             Token thisToken = tokens.get(0);
             //System.out.println("sss");
-            throw new Exception("Token "+ thisToken.getToken() + " cannot be parsed into a ] at line " + thisToken.getLineNum());
+            throw new Exception("Syntax Error: Token "+ thisToken.getToken() + " cannot be parsed into a ] at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
     }

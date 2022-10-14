@@ -18,7 +18,7 @@ public class ExprNode implements JottTree {
 
         if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
             throw new Exception(
-                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at line "
+                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at " + t0.getFilename() + " line "
                             + t0.getLineNum());
         }
         firstExpr = new ExprNode(tokens, true);
@@ -34,7 +34,7 @@ public class ExprNode implements JottTree {
 
         if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
             throw new Exception(
-                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at line "
+                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at " + t0.getFilename() + " line "
                             + t0.getLineNum());
         }
         TokenType tt1 = (tokens.get(1).getTokenType());

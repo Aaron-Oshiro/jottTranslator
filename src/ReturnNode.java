@@ -11,7 +11,7 @@ public class ReturnNode implements JottTree {
 
     public ReturnNode(ArrayList<Token> tokens) throws Exception {
         if (!tokens.get(0).getToken().equals("return")) {
-            throw new Exception("Return statement must start with \"return\"");
+            throw new Exception("Syntax Error: Return statement must start with \"return\" but instead token " + tokens.get(0).getToken() + " was found at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);   // removes the 'return'
         this.exprNode = new ExprNode(tokens);

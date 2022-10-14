@@ -20,7 +20,7 @@ public class RelOpNode implements JottTree {
             Token newRelOp = tokens.remove(0);
             relationshipOperator = newRelOp.getToken();
         } else {
-            throw new Exception("Token given is not of type REL_OP");
+            throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " is not of type REL_OP at" + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
     }
 

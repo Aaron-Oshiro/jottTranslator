@@ -20,7 +20,7 @@ public class BooleanNode implements JottTree {
             Token newBoolNode = tokens.remove(0);
             boolNode = newBoolNode.getToken();
         } else {
-            throw new Exception("Token can not be parsed into a Boolean");
+            throw new Exception("Syntax Error: Token can not be parsed into a Boolean at " +tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
     }
 

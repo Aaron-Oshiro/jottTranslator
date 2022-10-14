@@ -9,14 +9,12 @@ public class IfStmtNode implements JottTree {
     public IfStmtNode(ArrayList<Token> tokens) throws Exception {
         Token t0 = tokens.get(0);
         if (!t0.getToken().equals("if")) {
-            throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into 'if' at line " +
-                    t0.getLineNum());
+            throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into 'if' at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         } else {
             tokens.remove(0);
             t0 = tokens.get(0);
             if (!t0.getToken().equals("[")) {
-                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a [ at line " +
-                        t0.getLineNum());
+                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a [ at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0);
 
@@ -24,21 +22,18 @@ public class IfStmtNode implements JottTree {
 
             t0 = tokens.get(0);
             if (!t0.getToken().equals("]")) {
-                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a ] at line " +
-                        t0.getLineNum());
+                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a ] at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0);
             t0 = tokens.get(0);
             if (!t0.getToken().equals("{")) {
-                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a { at line " +
-                        t0.getLineNum());
+                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a { at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0);
             t0 = tokens.get(0);
             body = new BodyNode(tokens);
             if (!t0.getToken().equals("}")) {
-                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a } at line " +
-                        t0.getLineNum());
+                throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a } at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             elseIfLst = new ElseIfNode(tokens);
             lse = new ElseNode(tokens);

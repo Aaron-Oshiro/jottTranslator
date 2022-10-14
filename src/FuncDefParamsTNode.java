@@ -19,7 +19,7 @@ public class FuncDefParamsTNode implements JottTree {
             tokens.remove(0);
             id = new IdNode(tokens);
             if(!tokens.get(0).getToken().equals(":")) {
-                throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a : at line " + tokens.get(0).getLineNum());
+                throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a : at line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0);
             type = new TypeNode(tokens);

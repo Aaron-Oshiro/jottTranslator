@@ -16,7 +16,7 @@ public class ElseNode implements JottTree{
 
             //get rid of lbracket
             if(!tokens.get(0).getToken().equals("{")){
-                throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a { at line " + tokenToCheck.getLineNum());
+                throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a { at line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 

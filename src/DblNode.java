@@ -21,13 +21,13 @@ public class DblNode implements JottTree{
         hasSign = false;
 
         //FIRST we need to check if there is a sign at the beginning.
-        if(tokenToCheck.equals("+")){
+        if(tokenToCheck.getToken().equals("+")){
             isNegative = false;
             tokens.remove(0);
             hasSign =true;
 
         }
-        else if (tokenToCheck.equals("-")){
+        else if (tokenToCheck.getToken().equals("-")){
             isNegative = true;
             tokens.remove(0);
             hasSign = true;
@@ -42,7 +42,7 @@ public class DblNode implements JottTree{
         value = Double.parseDouble(tokenToCheck.getToken());
         
         if(!tokenToCheck.getToken().contains(".")){
-            throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a Double (Did not have decimal) at line " + tokenToCheck.getLineNum());
+            throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a Double (Did not have decimal) at line " + tokenToCheck.getLineNum());
         }
         else{
         tokens.remove(0);
@@ -53,7 +53,7 @@ public class DblNode implements JottTree{
         //not a double
         //throw error if we were expecting a double
 
-        throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a Double at line " + tokenToCheck.getLineNum());
+        throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a Double at line " + tokenToCheck.getLineNum());
     }
 
       

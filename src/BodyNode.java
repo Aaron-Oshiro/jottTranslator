@@ -10,7 +10,6 @@ public class BodyNode implements JottTree {
     private boolean bodyStatementFlag = false;
 
     public BodyNode(ArrayList<Token> tokens) throws Exception {
-        //System.out.println("AADASD");
 
         String t0 = tokens.get(0).getToken();
         //System.out.println(t0);

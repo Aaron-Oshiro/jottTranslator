@@ -13,7 +13,7 @@ public class SignNode implements JottTree{
             tokens.remove(0);
         }
         else {
-            throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a sign at line " + tokenToCheck.getLineNum());
+            throw new Exception("Token "+ tokenToCheck.toString() + " cannot be parsed into a sign at line " + tokenToCheck.getLineNum());
         }
     }
 

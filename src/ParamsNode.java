@@ -14,19 +14,13 @@ public class ParamsNode implements JottTree {
 
     public ParamsNode(ArrayList<Token> tokens) throws Exception{
 
-        // param nodes requires an expression node at the front, or it's empty
-        // expression nodes require an id in front for all of them, so we check if the node in front is a lowercase letter
-
-        //not necessarily true. exprs can start with ids, doubles, bools, etc. as well. oor even a string literal
         TokenType thisToken = tokens.get(0).getTokenType();
         if (thisToken == TokenType.STRING || thisToken == TokenType.NUMBER || thisToken == TokenType.ID_KEYWORD) {
-//        if (Character.isLowerCase(tokens.get(0).getToken().charAt(0)) || tokens.get(0).getToken().charAt(0) == '"') {
             this.isEmpty = false;
             this.expressionNode = new ExprNode(tokens);
 
             this.paramsTNode = new ParamsTNode(tokens);
         } else {
-            //System.out.println("AAAAAAAA");
             this.isEmpty = true;
         }
 

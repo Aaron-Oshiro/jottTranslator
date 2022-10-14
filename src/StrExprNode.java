@@ -47,10 +47,8 @@ public class StrExprNode implements JottTree{
        }
        else{
         //not an id or string literal. Throw error.
-        throw new Exception("Token "+ tokenToCheck.toString() + "was expected to be a string literal or id, but wasn't at line " + tokenToCheck.getLineNum());
+        throw new Exception("Token "+ tokenToCheck.toString() + " was expected to be a string literal or id, but wasn't at line " + tokenToCheck.getLineNum());
        }
-
-      
     }
     
     @Override

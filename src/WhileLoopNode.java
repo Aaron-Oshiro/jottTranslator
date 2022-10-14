@@ -7,13 +7,13 @@ public class WhileLoopNode implements JottTree{
 
     public WhileLoopNode(ArrayList<Token> tokens) throws Exception {
         if (!tokens.get(0).getToken().equals("while")) {
-            throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into 'while' at line " +
+            throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into 'while' at line " +
                     tokens.get(0).getLineNum());
         }
         else {
             tokens.remove(0); // remove while
             if (!tokens.get(0).getToken().equals("[")) {
-                throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a [ at line " +
+                throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a [ at line " +
                         tokens.get(0).getLineNum());
             }
             tokens.remove(0); // remove [
@@ -21,18 +21,18 @@ public class WhileLoopNode implements JottTree{
             expr = new ExprNode(tokens);
 
             if (!tokens.get(0).getToken().equals("]")) {
-                throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a ] at line " +
+                throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a ] at line " +
                         tokens.get(0).getLineNum());
             }
             tokens.remove(0); // remove ]
             if (!tokens.get(0).getToken().equals("{")) {
-                throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a { at line " +
+                throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a { at line " +
                         tokens.get(0).getLineNum());
             }
             tokens.remove(0); // remove {
             body = new BodyNode(tokens);
             if (!tokens.get(0).getToken().equals("}")) {
-                throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a } at line " +
+                throw new Exception("Token "+ tokens.get(0).getToken() + " cannot be parsed into a } at line " +
                         tokens.get(0).getLineNum());
             }
             tokens.remove(0); // remove }

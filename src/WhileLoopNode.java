@@ -17,7 +17,9 @@ public class WhileLoopNode implements JottTree{
                         tokens.get(0).getLineNum());
             }
             tokens.remove(0); // remove [
+
             expr = new ExprNode(tokens);
+
             if (!tokens.get(0).getToken().equals("]")) {
                 throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a ] at line " +
                         tokens.get(0).getLineNum());

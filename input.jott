@@ -1,4 +1,6 @@
-#this will pass phase 2 and phase 3
+#this will pass phase 2 but fail phase 3
+#<i_expr> <rel_op> <d_expr>
+#does not know the return off foo until phase 3
 
 foo[x:Integer]:Integer{
     return x + 1;
@@ -6,8 +8,8 @@ foo[x:Integer]:Integer{
 
 main[]:Integer{
     Integer x = 0;
-	while[x<10]{
-	    #x = foo[x];
+	while[foo[x]<10.0]{
+	    x = foo[x];
 		print[x];
 	}
 	return x;

@@ -31,7 +31,7 @@ public class FunctionListNode implements JottTree{
         if(!hasFunctionDefinition){
             return "";
         }
-        return functionDefNode.convertToJott() + functionListNode.convertToJott();
+        return functionDefNode.convertToJott() + "\n" +  functionListNode.convertToJott();
     }
 
     @Override

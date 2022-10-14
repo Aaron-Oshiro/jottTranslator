@@ -18,7 +18,8 @@ public class StmtNode implements JottTree{
 
     public StmtNode(ArrayList<Token> tokens) throws Exception {
         // <type> <id> = ... (asmt)
-        if (types.contains(tokens.get(0).getToken()) && tokens.get(2).getToken().equals("=")) {
+        if (types.contains(tokens.get(0).getToken()) && tokens.get(2).getToken().equals("=") ||
+                (tokens.get(0).getTokenType() == TokenType.ID_KEYWORD && tokens.get(1).getToken().equals("="))) {
             asmt = new AsmtNode(tokens);
         }
         else if (/*types.contains(tokens.get(0).getToken()) && */tokens.get(1).getToken().equals("[")) {

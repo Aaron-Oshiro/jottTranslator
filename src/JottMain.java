@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class JottMain {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ArrayList<Token> tokens = new ArrayList<Token>(JottTokenizer.tokenize("input.jott"));
         System.out.println(tokens);
 
@@ -10,6 +10,9 @@ public class JottMain {
         System.out.println("Now parsing tree...");
         JottTree tree= JottParser.parse(tokens);
 
-        System.out.println(tree.convertToJott());
+        if (tree != null) {
+            System.out.println(tree.convertToJott());
+        }
+
     }
 }

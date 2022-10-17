@@ -57,7 +57,24 @@ public class FunctionDefNode implements JottTree{
         tokens.remove(0);
         
     }
-    
+
+    private Exception syntaxError(Token token, String parseString) {
+        String errorMessage = "Syntax Error: Token "+ token.getToken() + " cannot be parsed into a " + parseString + " for FunctionDef at " + token.getFilename() + " line " + token.getLineNum();
+        return new Exception(errorMessage);
+    }
+
+    public IdNode getIdNode() {
+        return idNode;
+    }
+
+    public FunctionReturnNode getFunctionReturnNode() {
+        return functionReturnNode;
+    }
+
+    public FuncDefParamsNode getFuncDefParamsNode() {
+        return funcDefParamsNode;
+    }
+
     @Override
     public String convertToJott() {
          //< function_def > -> <id >[ func_def_params ]: < function_return >{ < body >}

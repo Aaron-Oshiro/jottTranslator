@@ -5,16 +5,15 @@ public class ProgramNode implements JottTree{
 
     private FunctionListNode functionListNode;
 
+    private HashMap<String, FunctionDefNode> globalFunctions = new HashMap<>();
+
 
     public ProgramNode(ArrayList<Token> tokens)throws Exception{
-        functionListNode = new FunctionListNode(tokens);
+        functionListNode = new FunctionListNode(tokens, globalFunctions);
     }
-    //this should not be token type, but too lazy to change it rn
-    private TokenType type;
-    
+
     @Override
     public String convertToJott() {
-        // I think this node doesn't have any printing, right?
         return functionListNode.convertToJott();
     }
 

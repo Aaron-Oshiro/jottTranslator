@@ -6,10 +6,7 @@ public class FunctionListNode implements JottTree{
     private FunctionListNode functionListNode;
     private boolean hasFunctionDefinition;
 
-    //this should not be token type, but too lazy to change it rn
-    private TokenType type;
-
-    public FunctionListNode(ArrayList<Token> tokens) throws Exception{
+    public FunctionListNode(ArrayList<Token> tokens, HashMap<String, FunctionDefNode> globalFunctions) throws Exception{
         
         if(tokens.size() == 0){
             //case where func list = epsilon
@@ -19,15 +16,19 @@ public class FunctionListNode implements JottTree{
             //case where func list is not epsilon. It is then func def and another func list
             hasFunctionDefinition = true;
         functionDefNode = new FunctionDefNode(tokens);
+        if (globalFunctions.containsKey(functionDefNode.getIdNode().convertToJott())){
+            throw new Exception("Semantic Error: " + functionDefNode.getIdNode().convertToJott() + " function is already defined");
+        } else {
+            globalFunctions.put(functionDefNode.getIdNode().convertToJott(), functionDefNode);
+        }
 
-        functionListNode = new FunctionListNode(tokens);
+        functionListNode = new FunctionListNode(tokens, globalFunctions);
         }
 
     }
     
     @Override
     public String convertToJott() {
-        // I think this node doesn't have any printing, right?
         if(!hasFunctionDefinition){
             return "";
         }

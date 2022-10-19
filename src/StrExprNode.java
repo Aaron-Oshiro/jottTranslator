@@ -7,7 +7,7 @@ public class StrExprNode implements JottTree{
 
     private FuncCallNode funcCallNode;
 
-    private StrLiteralNode strLiteralNode;
+    private ValueNode strLiteralNode;
 
     public StrExprNode(ArrayList<Token> tokens)throws Exception{
         Token tokenToCheck = tokens.get(0);
@@ -22,7 +22,7 @@ public class StrExprNode implements JottTree{
 
        if(tokenToCheck.getTokenType()==TokenType.STRING){ 
             //string literal
-            strLiteralNode = new StrLiteralNode(tokens);
+            strLiteralNode = new ValueNode(tokens);
 
        }
        else if (tokenToCheck.getTokenType() == TokenType.ID_KEYWORD){

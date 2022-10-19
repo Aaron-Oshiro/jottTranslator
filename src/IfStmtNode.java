@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class IfStmtNode implements JottTree {
     private ExprNode expr;
     private BodyNode body;
-    private ElseIfNode elseIfLst; // need implemented
-    private ElseNode lse; // need implemented
+    private ElseIfNode elseIfLst;
+    private ElseNode lse;
 
     public IfStmtNode(ArrayList<Token> tokens) throws Exception {
         Token t0 = tokens.get(0);

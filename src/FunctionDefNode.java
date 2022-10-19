@@ -1,9 +1,6 @@
 import java.util.*;
 public class FunctionDefNode implements JottTree{
 
-
-    private ArrayList<JottTree> children;
-
     private IdNode idNode;
 
     private FuncDefParamsNode funcDefParamsNode;
@@ -11,8 +8,8 @@ public class FunctionDefNode implements JottTree{
     private FunctionReturnNode functionReturnNode;
     private BodyNode bodyNode;
 
-    //this should not be token type, but too lazy to change it rn
-    private TokenType type;
+    public HashSet<IdNode> symbolTable;
+
 
     public FunctionDefNode(ArrayList<Token> tokens) throws Exception{
 

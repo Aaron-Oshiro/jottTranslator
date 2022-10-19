@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class BodyNode implements JottTree {
 
-    private ArrayList<BodyNode> bodyArrayList = new ArrayList<BodyNode>();
+    private ArrayList<BodyNode> bodyArrayList = new ArrayList<>();
     private ReturnNode rtrn;
     private boolean rtrnFlag = false;
     private boolean epsilonFlag = false;
@@ -31,8 +31,7 @@ public class BodyNode implements JottTree {
 //                    tokens.remove(0);
 //                    break;
 //                } else {
-                    
-                    bodyArrayList.add(new BodyNode(tokens));
+                bodyArrayList.add(new BodyNode(tokens));
 
             }
         }
@@ -46,9 +45,6 @@ public class BodyNode implements JottTree {
         if (rtrnFlag) {
             return rtrn.convertToJott();
         } else {
-//            for (BodyNode bodyNode : bodyArrayList) {
-//                 bodyNode.convertToJott();
-//            }
             String allBodies = "";
             for (int i = 0; i < bodyArrayList.size(); i++) {
                 allBodies += (bodyArrayList.get(i).convertToJott());

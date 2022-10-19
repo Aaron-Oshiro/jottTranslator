@@ -5,11 +5,11 @@ public class ProgramNode implements JottTree{
 
     private FunctionListNode functionListNode;
 
-    private HashMap<String, FunctionDefNode> globalFunctions = new HashMap<>();
+    private HashMap<String, FunctionDefNode> functionTable = new HashMap<>();
 
 
     public ProgramNode(ArrayList<Token> tokens)throws Exception{
-        functionListNode = new FunctionListNode(tokens, globalFunctions);
+        functionListNode = new FunctionListNode(tokens, functionTable);
     }
 
     @Override

@@ -26,27 +26,27 @@ public class AsmtNode implements JottTree{
             hasType = true;
             type = tokens.get(0).getToken();
 
-                    // remove type token
-                    tokens.remove(0);
-                    // <id>
-                      //TODO add a check here - make sure the id node has the token type of ID/Keyword!
-                    id = new IdNode(tokens);
-                    if (!tokens.get(0).getToken().equals("=")) {
-                        throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a '=' at " + tokens.get(0).getFilename() + "  line " + tokens.get(0).getLineNum());
-                    }
-                    tokens.remove(0); // remove =
+            // remove type token
+            tokens.remove(0);
+            // <id>
+            //TODO add a check here - make sure the id node has the token type of ID/Keyword!
+            id = new IdNode(tokens);
+            if (!tokens.get(0).getToken().equals("=")) {
+                throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a '=' at " + tokens.get(0).getFilename() + "  line " + tokens.get(0).getLineNum());
+            }
+            tokens.remove(0); // remove =
 
-                    expr = new ExprNode(tokens);
-                    endStmt = new EndStmtNode(tokens);
-                // <id>
-                // <s_expr>
-                    //sExpr = new StrExprNode(tokens);
-                // <id>
-                // <i_expr>
-                    //iExpr = new IExprNode(tokens);
-                // <id>
-                // <b_expr>
-                    //bExpr = new BExprNode(tokens);
+            expr = new ExprNode(tokens);
+            endStmt = new EndStmtNode(tokens);
+        // <id>
+        // <s_expr>
+            //sExpr = new StrExprNode(tokens);
+        // <id>
+        // <i_expr>
+            //iExpr = new IExprNode(tokens);
+        // <id>
+        // <b_expr>
+            //bExpr = new BExprNode(tokens);
 
         }
         // <id> = <*_expr><end_stmt>

@@ -43,7 +43,7 @@ public class MathOpNode implements JottTree{
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     

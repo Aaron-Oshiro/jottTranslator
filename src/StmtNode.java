@@ -56,6 +56,8 @@ public class StmtNode implements JottTree{
 
     @Override
     public boolean validateTree() {
-        return false;
+        if (asmt != null) return asmt.validateTree();
+        else if (varDec != null) return varDec.validateTree();
+        else return funcCall.validateTree() && endStmt.validateTree();
     }
 }

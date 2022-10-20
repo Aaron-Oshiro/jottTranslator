@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BodyNode implements JottTree {
 
@@ -9,7 +10,7 @@ public class BodyNode implements JottTree {
     private BodyStmtNode bodyStatement;
     private boolean bodyStatementFlag = false;
 
-    public BodyNode(ArrayList<Token> tokens) throws Exception {
+    public BodyNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
 
         String t0 = tokens.get(0).getToken();
         //System.out.println(t0);
@@ -22,7 +23,7 @@ public class BodyNode implements JottTree {
 //            tokens.remove(0);
 
         } else {
-            bodyStatement = new BodyStmtNode(tokens);
+            bodyStatement = new BodyStmtNode(tokens, symbolTable);
             bodyStatementFlag = true;
             while ( (tokens.size() != 0) && !tokens.get(0).getToken().equals("}") ) {
 //                if (tokens.get(0).getToken().equals("return")) {
@@ -31,7 +32,7 @@ public class BodyNode implements JottTree {
 //                    tokens.remove(0);
 //                    break;
 //                } else {
-                bodyArrayList.add(new BodyNode(tokens));
+                bodyArrayList.add(new BodyNode(tokens, symbolTable));
 
             }
         }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * @author Raman Zatsarenko
@@ -20,7 +21,7 @@ public class AsmtNode implements JottTree{
     private EndStmtNode endStmt;
 
     // probably need lookahead of 1 or 2?
-    public AsmtNode(ArrayList<Token> tokens) throws Exception{
+    public AsmtNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception{
         String currentTokenStr = tokens.get(0).getToken();
         if (types.contains(currentTokenStr)) {
             hasType = true;
@@ -37,7 +38,15 @@ public class AsmtNode implements JottTree{
             tokens.remove(0); // remove =
 
             expr = new ExprNode(tokens);
+            id.setNull(false);
+            id.setType(type);
             endStmt = new EndStmtNode(tokens);
+            if (symbolTable.containsKey(id.convertToJott())) {
+                throw new Exception("VARIABLE ALREADY IN SYMBOL TABLE");
+            } else {
+                symbolTable.put(id.convertToJott(), id);
+            }
+
         // <id>
         // <s_expr>
             //sExpr = new StrExprNode(tokens);

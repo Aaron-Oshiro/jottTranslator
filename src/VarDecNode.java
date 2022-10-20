@@ -1,14 +1,22 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class VarDecNode implements JottTree {
     private TypeNode type;
     private IdNode id;
     private EndStmtNode endStmt;
 
-    public VarDecNode(ArrayList<Token> tokens) throws Exception {
+    public VarDecNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         type = new TypeNode(tokens);
         id = new IdNode(tokens);
         endStmt = new EndStmtNode(tokens);
+        if (symbolTable.containsKey(id.convertToJott())) {
+            throw new Exception("VARIABLE IS ALREADY DEFINED");
+        } else {
+            id.setType(type.convertToJott());
+            id.setNull(true);
+            symbolTable.put(id.convertToJott(), id);
+        }
     }
 
     @Override

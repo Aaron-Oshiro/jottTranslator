@@ -52,6 +52,9 @@ public class ParamsNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        return false;
+        if (this.isEmpty) {
+            return true;
+        }
+        return (this.expressionNode.validateTree() && this.paramsTNode.validateTree());
     }
 }

@@ -54,4 +54,13 @@ public class IdNode implements JottTree{
     public boolean validateTree() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "IdNode{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", isNull=" + isNull +
+                '}';
+    }
 }

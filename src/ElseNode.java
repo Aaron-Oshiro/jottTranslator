@@ -5,7 +5,7 @@ public class ElseNode implements JottTree{
 
     private BodyNode bodyNode;
 
-    public ElseNode(ArrayList<Token> tokens)throws Exception{
+    public ElseNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable)throws Exception{
         Token tokenToCheck = tokens.get(0);
 
 
@@ -20,7 +20,7 @@ public class ElseNode implements JottTree{
             }
             tokens.remove(0);
 
-            bodyNode = new BodyNode(tokens);
+            bodyNode = new BodyNode(tokens, symbolTable);
              
 
              //get rid of rbracket

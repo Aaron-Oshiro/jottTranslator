@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IfStmtNode implements JottTree {
     private ExprNode expr;
@@ -6,7 +7,7 @@ public class IfStmtNode implements JottTree {
     private ElseIfNode elseIfLst;
     private ElseNode lse;
 
-    public IfStmtNode(ArrayList<Token> tokens) throws Exception {
+    public IfStmtNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         Token t0 = tokens.get(0);
         if (!t0.getToken().equals("if")) {
             throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into 'if' at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
@@ -30,13 +31,14 @@ public class IfStmtNode implements JottTree {
                 throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a { at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0);
+            body = new BodyNode(tokens, symbolTable);
             t0 = tokens.get(0);
-            body = new BodyNode(tokens);
             if (!t0.getToken().equals("}")) {
                 throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into a } at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
-            elseIfLst = new ElseIfNode(tokens);
-            lse = new ElseNode(tokens);
+            tokens.remove(0);
+            elseIfLst = new ElseIfNode(tokens, symbolTable);
+            lse = new ElseNode(tokens, symbolTable);
         }
     }
 

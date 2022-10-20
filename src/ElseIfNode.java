@@ -7,7 +7,7 @@ public class ElseIfNode implements JottTree{
 
     private ExprNode exprNode;
 
-    public ElseIfNode(ArrayList<Token> tokens)throws Exception{
+    public ElseIfNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable)throws Exception{
         Token tokenToCheck = tokens.get(0);
 
 
@@ -39,7 +39,7 @@ public class ElseIfNode implements JottTree{
             }
             tokens.remove(0);
 
-             bodyNode = new BodyNode(tokens);
+             bodyNode = new BodyNode(tokens, symbolTable);
              
 
              //get rid of rbracket
@@ -48,7 +48,7 @@ public class ElseIfNode implements JottTree{
             }
             tokens.remove(0);
 
-            ElseIfNode elseIfNode = new ElseIfNode(tokens);
+            ElseIfNode elseIfNode = new ElseIfNode(tokens, symbolTable);
 
         }
         else{

@@ -8,7 +8,7 @@ public class FunctionDefNode implements JottTree{
     private FunctionReturnNode functionReturnNode;
     private BodyNode bodyNode;
 
-    public HashSet<IdNode> symbolTable;
+    public HashMap<String, IdNode> symbolTable = new HashMap<>();
 
 
     public FunctionDefNode(ArrayList<Token> tokens) throws Exception{
@@ -46,12 +46,13 @@ public class FunctionDefNode implements JottTree{
         }
         tokens.remove(0);
         
-        bodyNode = new BodyNode(tokens);
+        bodyNode = new BodyNode(tokens, symbolTable);
         
-       if(tokens.get(0).getTokenType()!= TokenType.R_BRACE){
+        if(tokens.get(0).getTokenType()!= TokenType.R_BRACE){
             throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a } for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
+        System.out.println(symbolTable);
         
     }
 

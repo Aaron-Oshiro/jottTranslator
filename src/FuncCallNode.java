@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class FuncCallNode implements JottTree {
 
-    private IdNode idNode;
+    private IdNode funcName;
     private ParamsNode paramsNode;
 
     public FuncCallNode(ArrayList<Token> tokens) throws Exception {
@@ -16,7 +16,7 @@ public class FuncCallNode implements JottTree {
         if(!Character.isLetter(tokens.get(0).getToken().charAt(0))) {
             throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " needs to start with a letter at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
-        this.idNode = new IdNode(tokens);   // removes the id_keyword token
+        this.funcName = new IdNode(tokens);   // removes the id_keyword token
 
         if(!tokens.get(0).getToken().equals("[")) {
             Token thisToken = tokens.get(0);
@@ -28,15 +28,14 @@ public class FuncCallNode implements JottTree {
 
         if(!tokens.get(0).getToken().equals("]")) {
             Token thisToken = tokens.get(0);
-            //System.out.println("sss");
             throw new Exception("Syntax Error: Token "+ thisToken.getToken() + " cannot be parsed into a ] at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
-        tokens.remove(0);
+        tokens.remove(0);   // removes the ']'
     }
 
     @Override
     public String convertToJott() {
-        return idNode.convertToJott() + "[" + paramsNode.convertToJott() + "]";
+        return funcName.convertToJott() + "[" + paramsNode.convertToJott() + "]";
     }
 
     @Override

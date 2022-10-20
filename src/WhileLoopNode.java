@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WhileLoopNode implements JottTree{
 
     private ExprNode expr;
     private BodyNode body;
 
-    public WhileLoopNode(ArrayList<Token> tokens) throws Exception {
+    public WhileLoopNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         if (!tokens.get(0).getToken().equals("while")) {
             throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into 'while' at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
@@ -26,7 +27,7 @@ public class WhileLoopNode implements JottTree{
                 throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a { at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0); // remove {
-            body = new BodyNode(tokens);
+            body = new BodyNode(tokens, symbolTable);
             if (!tokens.get(0).getToken().equals("}")) {
                 throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a } at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }

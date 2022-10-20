@@ -1,17 +1,18 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BodyStmtNode implements JottTree{
 
     private JottTree bodyStmtNode;
 
-    public BodyStmtNode(ArrayList<Token> tokens) throws Exception {
+    public BodyStmtNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         // body statement can either be a while loop, an if statement, or a statement
         if (tokens.get(0).getToken().equals("while")){  // is a while loop
-            bodyStmtNode = new WhileLoopNode(tokens);
+            bodyStmtNode = new WhileLoopNode(tokens, symbolTable);
         } else if (tokens.get(0).getToken().equals("if")) { // is an if statement
-            bodyStmtNode = new IfStmtNode(tokens);
+            bodyStmtNode = new IfStmtNode(tokens, symbolTable);
         } else {    // is a statement
-            bodyStmtNode = new StmtNode(tokens);
+            bodyStmtNode = new StmtNode(tokens, symbolTable);
         }
 
     }
@@ -37,6 +38,6 @@ public class BodyStmtNode implements JottTree{
 
     @Override
     public boolean validateTree() {
-        return false;
+        return bodyStmtNode.validateTree();
     }
 }

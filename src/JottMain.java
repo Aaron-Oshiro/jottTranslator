@@ -1,17 +1,60 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class JottMain {
 
     public static void main(String[] args) {
-        ArrayList<Token> tokens = new ArrayList<Token>(JottTokenizer.tokenize("input.jott"));
-        System.out.println(tokens);
-
-        //parse
-        System.out.println("Now parsing tree...");
+        // java Jott input.jott output.<> <language>
+        if (args.length != 3) {
+            System.err.println("Jott arguments must include an input file, output file, and translation language");
+            return;
+        }
+        String inputName = args[0];
+        String outputName = args[1];
+        String language = args[2].toLowerCase();
+        ArrayList<Token> tokens = new ArrayList<>(JottTokenizer.tokenize(inputName));
+        // tokenizer takes care of if the input.jott file does not exist
         JottTree tree= JottParser.parse(tokens);
 
         if (tree != null) {
-            System.out.println(tree.convertToJott());
+
+            tree.validateTree();
+
+            String newLanguage;
+
+            switch (language){
+                case "jott":
+                    newLanguage = tree.convertToJott();
+                    break;
+                case "python":
+                    newLanguage = tree.convertToPython();
+                    break;
+                case "java":
+                    newLanguage = tree.convertToJava();
+                    break;
+                case "c":
+                    newLanguage = tree.convertToC();
+                    break;
+                default:
+                    System.err.println("Language given has to be either Jott, Python, Java, or C");
+                    newLanguage = null;
+            }
+
+            try{
+                File outputFile = new File(outputName);
+                outputFile.createNewFile();
+
+                if (outputFile.canWrite() && newLanguage != null) {
+                    FileWriter outputWriter = new FileWriter(outputName);
+                    outputWriter.write(newLanguage);
+                    outputWriter.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Something went wrong");
+                e.printStackTrace();
+            }
         }
 
     }

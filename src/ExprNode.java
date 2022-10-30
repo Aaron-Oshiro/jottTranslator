@@ -82,6 +82,39 @@ public class ExprNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        return false;
+
+        // ALSO CHECK FOR TYPES AND THEIR EQUALITIES WHEN NEEDED!!! TODO!!!
+        if (id != null) {   // just an id_keyword - type don't matter.
+            return id.validateTree();
+        } else if (value != null) { // just a value/string/number - type don't matter.
+            return value.validateTree();
+        } else if (funcCall != null){   // just a function call - type don't matter.
+            return funcCall.validateTree();
+        } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression - type DO matter!!! todo!!!
+        //change the && true to be && (firstExpr.GetType() == secondExpr.getType()) once we have symbol table implemented
+            return (firstExpr.validateTree() && op.validateTree() && secondExpr.validateTree()) && (true);
+        } else {    // it's just the first expression, no (expr op expr) expression - type don't matter
+            return firstExpr.validateTree();
+        }
     }
+
+
+    /* this is pseduocode, prolly wont work until symbol table is up and running.
+     public IdType getType(){
+        if (id != null) {   // just an id_keyword - type don't matter.
+            return symbolTable.get(Id).getType();
+        } else if (value != null) { // just a value/string/number - type don't matter.
+            return value.getType();
+        } else if (funcCall != null){   // just a function call - type don't matter.
+            return symbolTable.get(funcCall).getType();
+        } else if (secondExpr == null) { 
+            return firstExpr.getType();
+        } else {    // we have inner exprs still. this should never be, right? they should get to the most atomic level before getting here, right? is this possible?
+            throw exception?
+        }
+
+     } 
+     
+     */
+    
 }

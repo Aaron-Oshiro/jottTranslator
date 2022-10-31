@@ -110,7 +110,15 @@ public class ExprNode implements JottTree {
         } else if (secondExpr == null) { 
             return firstExpr.getType();
         } else {    // we have inner exprs still. this should never be, right? they should get to the most atomic level before getting here, right? is this possible?
-            throw exception?
+            if(op.equals(RELOP)){
+                //if relop, then exprs can ONLY be bool exprs.
+                return BOOLEAN
+            }
+            else{
+                //should be int or double if op is an math op
+                return firstExpr.GetType();
+            }
+             
         }
 
      } 

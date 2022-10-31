@@ -8,7 +8,8 @@ public class EndStmtNode implements JottTree {
             tokens.remove(0);
         } else {
             throw new Exception(
-                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a ; at " +t0.getFilename() + " line " + t0.getLineNum());
+                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a ; at " + t0.getFilename()
+                            + " line " + t0.getLineNum());
         }
     }
 
@@ -34,6 +35,6 @@ public class EndStmtNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        return false;
+        return true;
     }
 }

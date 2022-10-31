@@ -10,7 +10,7 @@ public class FunctionReturnNode implements JottTree {
         String t0 = tokens.get(0).getToken();
         if (t0.equals("Void")) {
             voidFlag = true;
-            tokens.remove(0);   // removes 'Void'
+            tokens.remove(0); // removes 'Void'
         } else {
             returnTypeFlag = true;
             returnType = new TypeNode(tokens);
@@ -43,6 +43,9 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        return false;
+        if (voidFlag == true) {
+            return true;
+        }
+        return returnType.validateTree();
     }
 }

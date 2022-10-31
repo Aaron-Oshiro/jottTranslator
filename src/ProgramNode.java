@@ -1,14 +1,13 @@
 import java.util.*;
 import java.util.function.Function;
-public class ProgramNode implements JottTree{
 
+public class ProgramNode implements JottTree {
 
     private FunctionListNode functionListNode;
 
     private HashMap<String, FunctionDefNode> functionTable = new HashMap<>();
 
-
-    public ProgramNode(ArrayList<Token> tokens)throws Exception{
+    public ProgramNode(ArrayList<Token> tokens) throws Exception {
         functionListNode = new FunctionListNode(tokens, functionTable);
     }
 
@@ -37,10 +36,7 @@ public class ProgramNode implements JottTree{
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+        return functionListNode.validateTree();
     }
 
-    
-    
 }

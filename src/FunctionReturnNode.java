@@ -43,7 +43,7 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        if (voidFlag == true) {
+        if (voidFlag) {
             return true;
         }
         return returnType.validateTree();

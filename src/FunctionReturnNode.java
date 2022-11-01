@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FunctionReturnNode implements JottTree {
 
@@ -42,10 +43,10 @@ public class FunctionReturnNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (voidFlag) {
             return true;
         }
-        return returnType.validateTree();
+        return returnType.validateTree(functionTable, symbolTable);
     }
 }

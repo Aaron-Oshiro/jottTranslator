@@ -5,6 +5,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ParamsNode implements JottTree {
 
@@ -25,6 +26,13 @@ public class ParamsNode implements JottTree {
         }
 
 
+    }
+
+    public int getLength() {
+        if (isEmpty) {
+            return 0;
+        }
+        return 1 + paramsTNode.getLength();
     }
 
     @Override
@@ -51,10 +59,10 @@ public class ParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (this.isEmpty) {
             return true;
         }
-        return (this.expressionNode.validateTree() && this.paramsTNode.validateTree());
+        return (this.expressionNode.validateTree(functionTable, symbolTable) && this.paramsTNode.validateTree(functionTable, symbolTable));
     }
 }

@@ -55,11 +55,11 @@ public class FunctionListNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (!hasFunctionDefinition) {
             return true;
         }
-        return ((functionDefNode.validateTree()) && (functionListNode.validateTree()));
+        return ((functionDefNode.validateTree(functionTable, symbolTable)) && (functionListNode.validateTree(functionTable, symbolTable)));
     }
 
 }

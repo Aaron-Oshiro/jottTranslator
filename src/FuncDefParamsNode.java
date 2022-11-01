@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * FuncDefParamsNode
@@ -44,6 +45,13 @@ public class FuncDefParamsNode implements JottTree{
         }
     }
 
+    public int getLength() {
+        if (hasFuncDefParams) {
+            return 1 + funcDefParamsT.getLength();
+        }
+        return 0;
+    }
+
     @Override
     public String convertToJava() {
         return null;
@@ -60,7 +68,7 @@ public class FuncDefParamsNode implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return false;
     }
 }

@@ -98,9 +98,8 @@ public class FunctionDefNode implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        return bodyNode.validateTree(functionTable, symbolTable);
     }
 
     

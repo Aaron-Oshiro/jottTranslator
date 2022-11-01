@@ -6,6 +6,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class BooleanNode implements JottTree {
@@ -50,7 +51,7 @@ public class BooleanNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return true;
     }
 }

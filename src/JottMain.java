@@ -15,12 +15,13 @@ public class JottMain {
         String outputName = args[1];
         String language = args[2].toLowerCase();
         ArrayList<Token> tokens = new ArrayList<>(JottTokenizer.tokenize(inputName));
+//        System.out.println(tokens);
         // tokenizer takes care of if the input.jott file does not exist
         JottTree tree= JottParser.parse(tokens);
 
         if (tree != null) {
 
-            tree.validateTree();
+            tree.validateTree(null, null);
 
             String newLanguage;
 

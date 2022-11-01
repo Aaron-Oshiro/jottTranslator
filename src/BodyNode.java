@@ -70,7 +70,12 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return false;
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        for (int i = 0; i < bodyArrayList.size(); i++) {
+            if (!bodyArrayList.get(i).validateTree(functionTable, symbolTable)) {
+                return false;
+            }
+        }
+        return bodyStatement.validateTree(functionTable, symbolTable);
     }
 }

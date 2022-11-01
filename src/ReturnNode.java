@@ -3,6 +3,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ReturnNode implements JottTree {
 
@@ -39,7 +40,7 @@ public class ReturnNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return exprNode.validateTree() && endStmtNode.validateTree()                                                      ;
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        return exprNode.validateTree(functionTable, symbolTable) && endStmtNode.validateTree(functionTable, symbolTable)                                                      ;
     }
 }

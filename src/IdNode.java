@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author Raman Zatsarenko
@@ -11,6 +14,12 @@ public class IdNode implements JottTree{
 
     public IdNode(ArrayList<Token> tokens) throws Exception{
         this.id = tokens.get(0).getToken();
+        HashSet<String> keywords = new HashSet<>(Arrays.asList("while", "if", "default", "this", "new", "class", "try", "this"));
+        if (keywords.contains(this.id)) {
+            throw new Exception("Semantic Error\nid " + this.id + " is a keyword and cannot be used\n" +
+                    tokens.get(0).getFilename() + ":" + tokens.get(0).getLineNum());
+        }
+
         tokens.remove(0);
     }
 
@@ -51,7 +60,7 @@ public class IdNode implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return false;
     }
 

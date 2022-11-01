@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BExprNode implements JottTree{
     public BExprNode(ArrayList<Token> tokens) {
@@ -25,7 +26,7 @@ public class BExprNode implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return false;
     }
 }

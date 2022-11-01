@@ -60,7 +60,7 @@ public class WhileLoopNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return ((expr.validateTree()) && (body.validateTree()));
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        return ((expr.validateTree(functionTable, symbolTable)) && (body.validateTree(functionTable, symbolTable)));
     }
 }

@@ -87,7 +87,7 @@ public class StrExprNode implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         // TODO Auto-generated method stub
         return false;
     }

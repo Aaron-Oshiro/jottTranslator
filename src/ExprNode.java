@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ExprNode implements JottTree {
 
@@ -81,20 +82,20 @@ public class ExprNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
         // ALSO CHECK FOR TYPES AND THEIR EQUALITIES WHEN NEEDED!!! TODO!!!
         if (id != null) {   // just an id_keyword - type don't matter.
-            return id.validateTree();
+            return id.validateTree(functionTable, symbolTable);
         } else if (value != null) { // just a value/string/number - type don't matter.
-            return value.validateTree();
-        } else if (funcCall != null){   // just a function call - type don't matter.
-            return funcCall.validateTree();
+            return value.validateTree(functionTable, symbolTable);
+        } else if (funcCall != null) {   // just a function call - type don't matter.
+            return funcCall.validateTree(functionTable, symbolTable);
         } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression - type DO matter!!! todo!!!
-        //change the && true to be && (firstExpr.GetType() == secondExpr.getType()) once we have symbol table implemented
-            return (firstExpr.validateTree() && op.validateTree() && secondExpr.validateTree()) && (true);
+            //change the && true to be && (firstExpr.GetType() == secondExpr.getType()) once we have symbol table implemented
+            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable) && secondExpr.validateTree(functionTable, symbolTable)) && (true);
         } else {    // it's just the first expression, no (expr op expr) expression - type don't matter
-            return firstExpr.validateTree();
+            return firstExpr.validateTree(functionTable, symbolTable);
         }
     }
 
@@ -107,7 +108,7 @@ public class ExprNode implements JottTree {
             return value.getType();
         } else if (funcCall != null){   // just a function call - type don't matter.
             return symbolTable.get(funcCall).getType();
-        } else if (secondExpr == null) { 
+        } else if (secondExpr == null) {
             return firstExpr.getType();
         } else {    // we have inner exprs still. this should never be, right? they should get to the most atomic level before getting here, right? is this possible?
             if(op.equals(RELOP)){
@@ -121,8 +122,8 @@ public class ExprNode implements JottTree {
              
         }
 
-     } 
-     
+     }
+
      */
-    
+
 }

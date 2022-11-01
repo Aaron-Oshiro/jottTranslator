@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EndStmtNode implements JottTree {
 
@@ -34,7 +35,7 @@ public class EndStmtNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return true;
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        return false;
     }
 }

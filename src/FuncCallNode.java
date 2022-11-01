@@ -5,6 +5,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FuncCallNode implements JottTree {
 
@@ -54,7 +55,15 @@ public class FuncCallNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return false;
+    public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        if (!functionTable.containsKey(funcName.convertToJott())) {
+            System.err.println("Function " + funcName.convertToJott() + " is not defined");
+            return false;
+        }
+        if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode.getLength()) {
+            System.err.println("Function " + funcName.convertToJott() + " is not given correct number of parameters");
+            return false;
+        }
+        return true;
     }
 }

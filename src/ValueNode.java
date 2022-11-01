@@ -4,12 +4,16 @@ import java.util.HashMap;
 public class ValueNode implements JottTree {
 
     private String value;
+    private String type;
 
     public ValueNode(ArrayList<Token> tokens) throws Exception {
         this.value = tokens.get(0).getToken();
         tokens.remove(0);
     }
 
+    public String getType(){
+        return type;
+    }
     @Override
     public String convertToJott() {
         return value;

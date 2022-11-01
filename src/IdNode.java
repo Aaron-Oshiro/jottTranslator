@@ -23,6 +23,9 @@ public class IdNode implements JottTree{
         tokens.remove(0);
     }
 
+    public String getId(){
+        return id;
+    }
     public String getType() {
         return type;
     }

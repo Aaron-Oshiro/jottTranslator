@@ -91,39 +91,44 @@ public class ExprNode implements JottTree {
             return value.validateTree(functionTable, symbolTable);
         } else if (funcCall != null) {   // just a function call - type don't matter.
             return funcCall.validateTree(functionTable, symbolTable);
-        } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression - type DO matter!!! todo!!!
-            //change the && true to be && (firstExpr.GetType() == secondExpr.getType()) once we have symbol table implemented
-            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable) && secondExpr.validateTree(functionTable, symbolTable)) && (true);
+        } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression - type DO matter!!!
+            // make sure both trees are valid. then make sure their types equal each other.
+            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable) && secondExpr.validateTree(functionTable, symbolTable)) && (firstExpr.getType(functionTable, symbolTable).equals(secondExpr.getType(functionTable, symbolTable)));
         } else {    // it's just the first expression, no (expr op expr) expression - type don't matter
             return firstExpr.validateTree(functionTable, symbolTable);
         }
     }
 
 
-    /* this is pseduocode, prolly wont work until symbol table is up and running.
-     public IdType getType(){
+    // this is pseduocode, prolly wont work until symbol table is up and running.
+     public String getType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable){
         if (id != null) {   // just an id_keyword - type don't matter.
-            return symbolTable.get(Id).getType();
+            
+        if(!symbolTable.containsKey(id)){
+           //todo uncomment this once others add exceptions?
+            // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been declared, yet is used as a variable.\n");
+        }
+        return symbolTable.get(id.getId()).getType();
         } else if (value != null) { // just a value/string/number - type don't matter.
             return value.getType();
         } else if (funcCall != null){   // just a function call - type don't matter.
             return symbolTable.get(funcCall).getType();
         } else if (secondExpr == null) {
-            return firstExpr.getType();
-        } else {    // we have inner exprs still. this should never be, right? they should get to the most atomic level before getting here, right? is this possible?
-            if(op.equals(RELOP)){
-                //if relop, then exprs can ONLY be bool exprs.
-                return BOOLEAN
+            return firstExpr.getType(functionTable,symbolTable);
+        } else {    // use op to determine which it should be a type of.
+            if( (op.getOperator().equals(">")) || (op.getOperator().equals(">=")) ||(op.getOperator().equals("<"))||(op.getOperator().equals("<="))||(op.getOperator().equals("==")) || (op.getOperator().equals("!="))){
+                //if relop, then exprs can ONLY be bool exprs. todo make sure this matches our string type format.
+                return "boolean";
             }
             else{
                 //should be int or double if op is an math op
-                return firstExpr.GetType();
+                return firstExpr.getType(functionTable,symbolTable);
             }
              
         }
 
      }
 
-     */
+     
 
 }

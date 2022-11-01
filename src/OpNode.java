@@ -10,6 +10,9 @@ public class OpNode implements JottTree {
         tokens.remove(0);
     }
 
+    public String getOperator(){
+        return operator;
+    }
     @Override
     public String convertToJott() {
         return operator;

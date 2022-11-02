@@ -36,7 +36,7 @@ public class ProgramNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return functionListNode.validateTree(functionTable, symbolTable);
+        return functionListNode.validateTree(this.functionTable, null);
     }
 
 }

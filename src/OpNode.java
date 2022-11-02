@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class OpNode implements JottTree {
 
@@ -35,6 +37,7 @@ public class OpNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return true;
+        HashSet<String> operators = new HashSet<>(Arrays.asList(">", ">=", "<", "<=", "==", "!=", "+", "-", "/", "*"));
+        return operators.contains(operator);
     }
 }

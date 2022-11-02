@@ -38,6 +38,6 @@ public class BodyStmtNode implements JottTree{
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return bodyStmtNode.validateTree(functionTable, null);
+        return bodyStmtNode.validateTree(functionTable, symbolTable);
     }
 }

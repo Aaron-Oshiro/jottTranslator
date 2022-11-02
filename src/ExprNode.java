@@ -104,21 +104,21 @@ public class ExprNode implements JottTree {
      public String getType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable){
         if (id != null) {   // just an id_keyword - type don't matter.
             
-        if(!symbolTable.containsKey(id)){
-           //todo uncomment this once others add exceptions?
-            // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been declared, yet is used as a variable.\n");
-        }
-        return symbolTable.get(id.getId()).getType();
+            if(!symbolTable.containsKey(id.getId())){
+               //todo uncomment this once others add exceptions?
+                // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been declared, yet is used as a variable.\n");
+            }
+            return symbolTable.get(id.getId()).getType();
         } else if (value != null) { // just a value/string/number - type don't matter.
             return value.getType();
         } else if (funcCall != null){   // just a function call - type don't matter.
-            return symbolTable.get(funcCall).getType();
+            return functionTable.get(funcCall.convertToJott()).getType(functionTable);
         } else if (secondExpr == null) {
             return firstExpr.getType(functionTable,symbolTable);
         } else {    // use op to determine which it should be a type of.
             if( (op.getOperator().equals(">")) || (op.getOperator().equals(">=")) ||(op.getOperator().equals("<"))||(op.getOperator().equals("<="))||(op.getOperator().equals("==")) || (op.getOperator().equals("!="))){
                 //if relop, then exprs can ONLY be bool exprs. todo make sure this matches our string type format.
-                return "boolean";
+                return "Boolean";
             }
             else{
                 //should be int or double if op is an math op
@@ -128,7 +128,4 @@ public class ExprNode implements JottTree {
         }
 
      }
-
-     
-
 }

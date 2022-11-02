@@ -1,7 +1,6 @@
 import java.util.*;
 public class TypeNode implements JottTree{
 
-
     private String type;
 
     public TypeNode(ArrayList<Token> tokens)throws Exception{

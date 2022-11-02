@@ -1,7 +1,7 @@
 #this is an example
 foo[]:Integer{
-    Integer x =;
+    Integer x = 10;
     print[5];
     #this is a comment
-    print[ "foo bar" ]
+    print[ "foo bar" ];
 }

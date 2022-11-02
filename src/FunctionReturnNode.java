@@ -18,6 +18,14 @@ public class FunctionReturnNode implements JottTree {
         }
     }
 
+    public TypeNode getReturnType() {
+        return returnType;
+    }
+
+    public boolean isVoid() {
+        return voidFlag;
+    }
+
     @Override
     public String convertToJott() {
         if (voidFlag) {

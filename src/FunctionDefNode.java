@@ -52,7 +52,7 @@ public class FunctionDefNode implements JottTree{
             throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a } for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
-//        System.out.println(symbolTable);
+        // System.out.println(symbolTable);
         
     }
 
@@ -102,6 +102,18 @@ public class FunctionDefNode implements JottTree{
         return bodyNode.validateTree(functionTable, this.symbolTable);
     }
 
-    
-    
+
+    public String getType(HashMap<String, FunctionDefNode> functionTable) {
+
+        if(!functionTable.containsKey(this.idNode.convertToJott())) {
+            // throw new Exception("This function is not defined");
+            //TODO idk throw an exception or something
+        }
+        if (functionTable.get(this.idNode.convertToJott()).getFunctionReturnNode().isVoid()) {
+            return "Void";
+        } else {
+            return functionTable.get(this.idNode.convertToJott()).getFunctionReturnNode().getReturnType().convertToJott();
+        }
+    }
+
 }

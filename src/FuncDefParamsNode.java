@@ -69,6 +69,8 @@ public class FuncDefParamsNode implements JottTree{
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return false;
+        if (!hasFuncDefParams) return true;
+        else return id.validateTree(functionTable, symbolTable) && type.validateTree(functionTable, symbolTable)
+                && funcDefParamsT.validateTree(functionTable, symbolTable);
     }
 }

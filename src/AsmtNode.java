@@ -100,6 +100,20 @@ public class AsmtNode implements JottTree{
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return false;
+        // <id> = <expr><end_stmt>
+        if (!hasType) {
+            if (!symbolTable.containsKey(id.getId())) {
+                return false;
+            } else {
+                // Aaron asked for this
+                System.out.println(id.getType());
+                id.setType(expr.getType(functionTable, symbolTable));
+                return (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
+                        (id.getType().equals(expr.getType(functionTable, symbolTable))));
+            }
+        } else {
+            return (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
+                    type.equals(expr.getType(functionTable, symbolTable)));
+        }
     }
 }

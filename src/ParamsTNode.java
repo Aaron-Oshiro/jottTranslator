@@ -22,6 +22,18 @@ public class ParamsTNode implements JottTree {
         }
     }
 
+    public boolean isEmpty() {
+        return isEmpty;
+    }
+
+    public ExprNode getExpressionNode() {
+        return expressionNode;
+    }
+
+    public ParamsTNode getParamsTNode() {
+        return paramsTNode;
+    }
+
     public int getLength() {
         if (isEmpty) {
             return 0;
@@ -48,7 +60,7 @@ public class ParamsTNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int t) {
         return null;
     }
 

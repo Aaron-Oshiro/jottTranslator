@@ -14,6 +14,11 @@ public class ValueNode implements JottTree {
     public String getType(){
         return type;
     }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String convertToJott() {
         return value;
@@ -30,7 +35,7 @@ public class ValueNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int t) {
         return null;
     }
 

@@ -30,7 +30,7 @@ public class JottMain {
                     newLanguage = tree.convertToJott();
                     break;
                 case "python":
-                    newLanguage = tree.convertToPython();
+                    newLanguage = tree.convertToPython(0);
                     break;
                 case "java":
                     newLanguage = tree.convertToJava();

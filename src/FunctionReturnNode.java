@@ -46,7 +46,7 @@ public class FunctionReturnNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int t) {
         return null;
     }
 

@@ -29,6 +29,18 @@ public class FuncDefParamsTNode implements JottTree {
         }
     }
 
+    public boolean hasParamsT() {
+        return hasParamsT;
+    }
+
+    public TypeNode getType() {
+        return type;
+    }
+
+    public FuncDefParamsTNode getFuncDefParamsT() {
+        return funcDefParamsT;
+    }
+
     public int getLength() {
         if (hasParamsT) {
             return 1 + funcDefParamsT.getLength();
@@ -55,7 +67,7 @@ public class FuncDefParamsTNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int t) {
         return null;
     }
 

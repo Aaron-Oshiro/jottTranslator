@@ -58,13 +58,13 @@ public class IdNode implements JottTree{
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int t) {
         return null;
     }
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return false;
+        return true;
     }
 
     @Override

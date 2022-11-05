@@ -50,7 +50,7 @@ public class FuncCallNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int t) {
         return null;
     }
 
@@ -60,6 +60,7 @@ public class FuncCallNode implements JottTree {
             System.err.println("Function " + funcName.convertToJott() + " is not defined");
             return false;
         }
+        // calls a function with wrong number of params
         if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode.getLength()) {
             System.err.println("Function " + funcName.convertToJott() + " is not given correct number of parameters");
             return false;

@@ -8,6 +8,25 @@ public class ValueNode implements JottTree {
 
     public ValueNode(ArrayList<Token> tokens) throws Exception {
         this.value = tokens.get(0).getToken();
+
+        TokenType typeToCheck = tokens.get(0).getTokenType();
+
+        if(typeToCheck == TokenType.STRING){
+            type = "String";
+        }
+        else if (typeToCheck == TokenType.ID_KEYWORD){
+            //i think it can only be a boolean if the token is a keyword... right?!?
+            type = "Boolean";
+        }
+        else{
+            if(value.contains(".")){
+                type = "Double";
+            }
+            else{
+                type = "Integer";
+            }
+
+        }
         tokens.remove(0);
     }
 

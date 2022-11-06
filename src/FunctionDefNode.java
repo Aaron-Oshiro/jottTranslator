@@ -99,7 +99,14 @@ public class FunctionDefNode implements JottTree{
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return bodyNode.validateTree(functionTable, this.symbolTable);
+
+        if(!functionReturnNode.isVoid()){
+            if(bodyNode.isReturnable(this.getType(functionTable))){
+                return false;
+                //THROW ERROR HERE WITH MESSAGE? OR NO?
+            }
+        }
+        return idNode.validateTree(functionTable, symbolTable) &&functionReturnNode.validateTree(functionTable, symbolTable) &&  funcDefParamsNode.validateTree(functionTable, symbolTable) &&bodyNode.validateTree(functionTable, this.symbolTable);
     }
 
 

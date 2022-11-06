@@ -78,4 +78,10 @@ public class BodyNode implements JottTree {
         }
         return bodyStatement.validateTree(functionTable, symbolTable);
     }
+
+    public boolean isReturnable(String type){
+        //Todo, go through all bodies and body statements checking if there is a single return or not. Use that to determine this result. Used by FuncDef.
+        //Type is passed down to verify the returned thing is of the correct type? may not need it tbh
+        return true;
+    }
 }

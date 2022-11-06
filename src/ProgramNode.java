@@ -8,6 +8,11 @@ public class ProgramNode implements JottTree {
     private HashMap<String, FunctionDefNode> functionTable = new HashMap<>();
 
     public ProgramNode(ArrayList<Token> tokens) throws Exception {
+
+        functionTable.put("print", null);
+        functionTable.put("concat", null);
+        functionTable.put("length", null);
+
         functionListNode = new FunctionListNode(tokens, functionTable);
     }
 

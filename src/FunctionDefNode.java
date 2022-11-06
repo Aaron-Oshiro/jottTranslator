@@ -101,7 +101,8 @@ public class FunctionDefNode implements JottTree{
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
         if(!functionReturnNode.isVoid()){
-            if(bodyNode.isReturnable(this.getType(functionTable))){
+            if(!bodyNode.isReturnable(this.getType(functionTable))){
+                System.err.println("Function body does not have a return in all control flows for function " +idNode.getId());
                 return false;
                 //THROW ERROR HERE WITH MESSAGE? OR NO?
             }

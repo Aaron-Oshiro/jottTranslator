@@ -72,6 +72,13 @@ public class ElseNode implements JottTree{
         return true;
     }
 
+    public boolean isReturnable(String type){
+        if(hasElse){
+            return bodyNode.isReturnable(type);
+        }
+        return false;
+    }
+
     
     
 }

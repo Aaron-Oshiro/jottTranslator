@@ -7,6 +7,8 @@ public class ElseIfNode implements JottTree{
 
     private ExprNode exprNode;
 
+    private ElseIfNode elseIfNode;
+
     public ElseIfNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable)throws Exception{
         Token tokenToCheck = tokens.get(0);
 
@@ -48,7 +50,8 @@ public class ElseIfNode implements JottTree{
             }
             tokens.remove(0);
 
-            ElseIfNode elseIfNode = new ElseIfNode(tokens, symbolTable);
+            //I just added this in phase 3 - didnt we need this to be in convert to jott for phase 2?!?
+            elseIfNode = new ElseIfNode(tokens, symbolTable);
 
         }
         else{
@@ -90,6 +93,14 @@ public class ElseIfNode implements JottTree{
         return true;
     }
 
+    public boolean isReturnable(String type){
+
+        if(hasElse){
+
+            return bodyNode.isReturnable(type) && elseIfNode.isReturnable(type);
+        }
+        return false;
+    }
     
     
 }

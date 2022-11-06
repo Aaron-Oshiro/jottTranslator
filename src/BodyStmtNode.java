@@ -40,4 +40,16 @@ public class BodyStmtNode implements JottTree{
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return bodyStmtNode.validateTree(functionTable, symbolTable);
     }
+
+    public boolean isReturnable(String type){
+
+        //func call can while make no difference in the returnable status. we only need check the if node.
+        if( bodyStmtNode instanceof IfStmtNode){
+
+            IfStmtNode testReturnable = (IfStmtNode)bodyStmtNode;
+            return testReturnable.isReturnable(type);
+
+        }
+        return false;
+    }
 }

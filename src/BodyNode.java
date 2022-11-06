@@ -76,12 +76,38 @@ public class BodyNode implements JottTree {
                 return false;
             }
         }
+
+        if(epsilonFlag){
+            return true;
+        }
+        if(rtrnFlag){
+            return rtrn.validateTree(functionTable, symbolTable);
+        }
+        else{
         return bodyStatement.validateTree(functionTable, symbolTable);
+    }
     }
 
     public boolean isReturnable(String type){
         //Todo, go through all bodies and body statements checking if there is a single return or not. Use that to determine this result. Used by FuncDef.
         //Type is passed down to verify the returned thing is of the correct type? may not need it tbh
-        return true;
+
+
+        //should we check all bodies before statements? feel like this may cause an issue with the ifs and elses and outside returns?
+        if(rtrnFlag){
+            return true;
+        }
+        else if(bodyStatement.isReturnable(type)){
+            return true;
+        }
+        else{
+
+        for (int i = 0; i < bodyArrayList.size(); i++) {
+            if (bodyArrayList.get(i).isReturnable(type)) {
+                return true;
+            }
+        }
+        }
+        return false;
     }
 }

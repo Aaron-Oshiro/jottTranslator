@@ -63,7 +63,8 @@ public class ParamsNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (this.isEmpty) return "";
+        return this.expressionNode.convertToPython(t) + this.paramsTNode.convertToPython(t);
     }
 
     @Override

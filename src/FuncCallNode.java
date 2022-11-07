@@ -51,7 +51,7 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return funcName.convertToPython(t) + "(" + paramsNode.convertToPython(t) + ")";
     }
 
     @Override
@@ -63,6 +63,27 @@ public class FuncCallNode implements JottTree {
         // calls a function with wrong number of params
         if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode.getLength()) {
             System.err.println("Function " + funcName.convertToJott() + " is not given correct number of parameters");
+            return false;
+        }
+        if (this.paramsNode.getLength() == 0) {
+            return true;
+        }
+        // Checks types of each functionDefParam to the params
+        FuncDefParamsNode funcDefParams = functionTable.get(funcName.convertToJott()).getFuncDefParamsNode();
+        ParamsNode funcParams = this.paramsNode;
+//        System.out.println(funcDefParams.convertToJott());
+//        System.out.println(funcParams.convertToJott());
+        if (funcDefParams.getType().convertToJott().equals(funcParams.getExpressionNode().getType(functionTable, symbolTable))) {
+            FuncDefParamsTNode funcDefT = funcDefParams.getFuncDefParamsT();
+            ParamsTNode paramsT = funcParams.getParamsTNode();
+            while(funcDefT.hasParamsT()) {
+                if (!funcDefT.getType().convertToJott().equals(paramsT.getExpressionNode().getType(functionTable, symbolTable))) {
+                    return false;
+                }
+                funcDefT = funcDefT.getFuncDefParamsT();
+                paramsT = paramsT.getParamsTNode();
+            }
+        } else {
             return false;
         }
         return true;

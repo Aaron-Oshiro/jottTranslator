@@ -51,7 +51,10 @@ public class StmtNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (asmt != null) return asmt.convertToPython(t);
+        else if (varDec != null) return varDec.convertToPython(t);
+        else if (funcCall != null) return funcCall.convertToPython(t) + endStmt.convertToPython(t);
+        else return "Could not convert to Python";
     }
 
     @Override

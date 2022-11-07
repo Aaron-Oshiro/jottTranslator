@@ -55,7 +55,8 @@ public class ValueNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        System.out.println(value);
+        return value;
     }
 
     @Override

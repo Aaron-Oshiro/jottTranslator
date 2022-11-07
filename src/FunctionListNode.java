@@ -50,7 +50,8 @@ public class FunctionListNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (!hasFunctionDefinition) return "";
+        return functionDefNode.convertToPython(t) + "\n\n" + functionListNode.convertToPython(t);
     }
 
     @Override

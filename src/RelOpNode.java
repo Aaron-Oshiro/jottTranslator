@@ -51,7 +51,7 @@ public class RelOpNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return this.relationshipOperator;
     }
 
     @Override

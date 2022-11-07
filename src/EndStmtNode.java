@@ -31,7 +31,7 @@ public class EndStmtNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return "";
     }
 
     @Override

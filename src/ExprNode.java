@@ -42,9 +42,13 @@ public class ExprNode implements JottTree {
 
         if (tt0 == TokenType.ID_KEYWORD && tt1 != TokenType.L_BRACKET) {    // if it's not a function call
             id = new IdNode(tokens);
+//            System.out.println(id.convertToJott());
+//            System.out.println(tt0);
 
         } else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
             value = new ValueNode(tokens);
+//            System.out.println(value.convertToJott());
+//            System.out.println(tt0);
 
         } else {
             funcCall = new FuncCallNode(tokens);
@@ -78,7 +82,17 @@ public class ExprNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (id != null) {
+            return id.convertToPython(t);
+        } else if (value != null) {
+            return value.convertToPython(t);
+        } else if (funcCall != null) {
+            return funcCall.convertToPython(t);
+        } else if (secondExpr != null) {
+            return firstExpr.convertToPython(t) + " " + op.convertToPython(t) + " " + secondExpr.convertToPython(t);
+        } else {
+            return firstExpr.convertToPython(t);
+        }
     }
 
     @Override

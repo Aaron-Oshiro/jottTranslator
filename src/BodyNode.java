@@ -66,7 +66,13 @@ public class BodyNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (epsilonFlag) return "";
+        if (rtrnFlag) return rtrn.convertToPython(t);
+        String allBodies = "";
+        for (int i = 0; i < bodyArrayList.size(); i++) {
+            allBodies += (bodyArrayList.get(i).convertToPython(t));
+        }
+        return bodyStatement.convertToPython(t) + allBodies;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class TypeNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return type;
     }
 
     @Override

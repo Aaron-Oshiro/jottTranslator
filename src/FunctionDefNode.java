@@ -93,8 +93,7 @@ public class FunctionDefNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        // TODO Auto-generated method stub
-        return null;
+        return "def " + idNode.convertToPython(t) + "(" + funcDefParamsNode.convertToPython(t) + "):" + bodyNode.convertToPython(t+1);
     }
 
     @Override

@@ -36,7 +36,9 @@ public class ReturnNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        StringBuilder tabs = new StringBuilder();
+        tabs.append("\t".repeat(Math.max(0, t)));
+        return "\n" + tabs + "return " + exprNode.convertToPython(t) + endStmtNode.convertToPython(t);
     }
 
     @Override

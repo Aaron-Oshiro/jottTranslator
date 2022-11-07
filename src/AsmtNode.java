@@ -95,7 +95,7 @@ public class AsmtNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return id.convertToPython(t) + " = " + expr.convertToPython(t) + endStmt.convertToPython(t);
     }
 
     @Override

@@ -72,7 +72,10 @@ public class FuncDefParamsNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (!hasFuncDefParams) return "";
+        else {
+            return id.convertToPython(t) + funcDefParamsT.convertToPython(t);
+        }
     }
 
     @Override

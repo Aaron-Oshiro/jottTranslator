@@ -55,12 +55,20 @@ public class ValueNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        System.out.println(value);
+        // System.out.println(value);
         return value;
     }
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ValueNode{" +
+                "value='" + value + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

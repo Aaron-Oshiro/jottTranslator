@@ -106,7 +106,7 @@ public class AsmtNode implements JottTree{
                 return false;
             } else {
                 // Aaron asked for this
-                System.out.println(id.getType());
+                // System.out.println(id.getType());
                 id.setType(expr.getType(functionTable, symbolTable));
                 return (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
                         (id.getType().equals(expr.getType(functionTable, symbolTable))));

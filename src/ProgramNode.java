@@ -29,8 +29,8 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        return "#include <stdio.h>\n#include <string.h>\n" +
+                "#include <stdlib.h>\n" + functionListNode.convertToC();
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 /**
  * func_call Node
  *
@@ -14,24 +15,27 @@ public class FuncCallNode implements JottTree {
 
     public FuncCallNode(ArrayList<Token> tokens) throws Exception {
         // Needs to check for id, '[' , params, and ']'
-        if(!Character.isLetter(tokens.get(0).getToken().charAt(0))) {
-            throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " needs to start with a letter at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+        if (!Character.isLetter(tokens.get(0).getToken().charAt(0))) {
+            throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " needs to start with a letter at "
+                    + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
-        this.funcName = new IdNode(tokens);   // removes the id_keyword token
+        this.funcName = new IdNode(tokens); // removes the id_keyword token
 
-        if(!tokens.get(0).getToken().equals("[")) {
+        if (!tokens.get(0).getToken().equals("[")) {
             Token thisToken = tokens.get(0);
-            throw new Exception("Syntax Error: Token "+ thisToken.getToken() + " cannot be parsed into a [ at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token " + thisToken.getToken() + " cannot be parsed into a [ at "
+                    + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
-        tokens.remove(0);   // removes the '['
+        tokens.remove(0); // removes the '['
 
         paramsNode = new ParamsNode(tokens);
 
-        if(!tokens.get(0).getToken().equals("]")) {
+        if (!tokens.get(0).getToken().equals("]")) {
             Token thisToken = tokens.get(0);
-            throw new Exception("Syntax Error: Token "+ thisToken.getToken() + " cannot be parsed into a ] at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token " + thisToken.getToken() + " cannot be parsed into a ] at "
+                    + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
-        tokens.remove(0);   // removes the ']'
+        tokens.remove(0); // removes the ']'
     }
 
     @Override
@@ -46,7 +50,7 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        return funcName.convertToC() + "(" + paramsNode.convertToC() + ")";
     }
 
     @Override
@@ -61,7 +65,8 @@ public class FuncCallNode implements JottTree {
             return false;
         }
         // calls a function with wrong number of params
-        if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode.getLength()) {
+        if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode
+                .getLength()) {
             System.err.println("Function " + funcName.convertToJott() + " is not given correct number of parameters");
             return false;
         }
@@ -71,13 +76,15 @@ public class FuncCallNode implements JottTree {
         // Checks types of each functionDefParam to the params
         FuncDefParamsNode funcDefParams = functionTable.get(funcName.convertToJott()).getFuncDefParamsNode();
         ParamsNode funcParams = this.paramsNode;
-//        System.out.println(funcDefParams.convertToJott());
-//        System.out.println(funcParams.convertToJott());
-        if (funcDefParams.getType().convertToJott().equals(funcParams.getExpressionNode().getType(functionTable, symbolTable))) {
+        // System.out.println(funcDefParams.convertToJott());
+        // System.out.println(funcParams.convertToJott());
+        if (funcDefParams.getType().convertToJott()
+                .equals(funcParams.getExpressionNode().getType(functionTable, symbolTable))) {
             FuncDefParamsTNode funcDefT = funcDefParams.getFuncDefParamsT();
             ParamsTNode paramsT = funcParams.getParamsTNode();
-            while(funcDefT.hasParamsT()) {
-                if (!funcDefT.getType().convertToJott().equals(paramsT.getExpressionNode().getType(functionTable, symbolTable))) {
+            while (funcDefT.hasParamsT()) {
+                if (!funcDefT.getType().convertToJott()
+                        .equals(paramsT.getExpressionNode().getType(functionTable, symbolTable))) {
                     return false;
                 }
                 funcDefT = funcDefT.getFuncDefParamsT();

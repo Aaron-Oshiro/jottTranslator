@@ -1,1 +1,18 @@
-foo[]:Integer{Integer x = 10;print[5];print["foo bar"];}
+def foo(x):
+	return x + 1
+
+def main():
+	x = 0
+	hi = 0
+	while x < 10: 
+		if x < 3: 
+			hi = 1
+		elif x < 5: 
+			hi = 2
+		elif x < 7: 
+			hi = 3
+		else: 
+			hi = 4
+		x = foo(x)
+
+main()

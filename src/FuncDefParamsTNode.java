@@ -48,6 +48,14 @@ public class FuncDefParamsTNode implements JottTree {
         return 0;
     }
 
+    public void addToSymbolTable(HashMap<String, IdNode> symbolTable) {
+        if (hasParamsT) {
+            this.id.setType(type.convertToJott());
+            symbolTable.put(id.getId(), id);
+            this.funcDefParamsT.addToSymbolTable(symbolTable);
+        }
+    }
+
     @Override
     public String convertToJott() {
         if(!hasParamsT) return "";

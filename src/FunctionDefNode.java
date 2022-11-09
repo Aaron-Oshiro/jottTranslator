@@ -27,6 +27,8 @@ public class FunctionDefNode implements JottTree{
 
         funcDefParamsNode = new FuncDefParamsNode(tokens);
 
+        funcDefParamsNode.addToSymbolTable(this.symbolTable);
+
 
         if(tokens.get(0).getTokenType()!= TokenType.R_BRACKET){
           
@@ -52,7 +54,7 @@ public class FunctionDefNode implements JottTree{
             throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a } for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
         tokens.remove(0);
-        // System.out.println(symbolTable);
+         System.out.println(symbolTable);
         
     }
 

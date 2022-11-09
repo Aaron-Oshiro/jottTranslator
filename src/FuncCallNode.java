@@ -38,6 +38,10 @@ public class FuncCallNode implements JottTree {
         tokens.remove(0); // removes the ']'
     }
 
+    public String getFuncName() {
+        return funcName.getId();
+    }
+
     @Override
     public String convertToJott() {
         return funcName.convertToJott() + "[" + paramsNode.convertToJott() + "]";
@@ -60,7 +64,7 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        if (!functionTable.containsKey(funcName.convertToJott())) {
+        if (!functionTable.containsKey(funcName.convertToJott())) {     // tries to call function that does not exist
             System.err.println("Function " + funcName.convertToJott() + " is not defined");
             return false;
         }
@@ -71,6 +75,9 @@ public class FuncCallNode implements JottTree {
             return false;
         }
         if (this.paramsNode.getLength() == 0) {
+            return true;
+        }
+        if (funcName.convertToJott().equals("print")) {
             return true;
         }
         // Checks types of each functionDefParam to the params

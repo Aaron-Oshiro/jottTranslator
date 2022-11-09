@@ -63,7 +63,8 @@ public class ElseNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (!hasElse) return "";
+        return "\n" + "\t".repeat(Math.max(0, t)) + "else: " + bodyNode.convertToPython(t+1);
     }
 
     @Override

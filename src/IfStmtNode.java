@@ -60,7 +60,8 @@ public class IfStmtNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return "if " + expr.convertToPython(t) + ": " + body.convertToPython(t+1)
+                 + elseIfLst.convertToPython(t) + lse.convertToPython(t);
     }
 
     @Override

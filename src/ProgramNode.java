@@ -12,6 +12,7 @@ public class ProgramNode implements JottTree {
         functionTable.put("print", null);
         functionTable.put("concat", null);
         functionTable.put("length", null);
+        functionTable.put("input", null);
 
         functionListNode = new FunctionListNode(tokens, functionTable);
     }
@@ -35,12 +36,23 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return functionListNode.convertToPython(t);
+        String functionList = functionListNode.convertToPython(t);
+        return functionList + "main()";
     }
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return functionListNode.validateTree(this.functionTable, null);
+        if (!functionListNode.validateTree(this.functionTable, null)) return false;
+//        System.out.println(this.functionTable);
+        if (!this.functionTable.containsKey("main")) {
+            System.err.println("Semantic Error\nmain function is not defined");
+            return false;
+        }
+        if (!this.functionTable.get("main").getFunctionReturnNode().isVoid()){
+            System.err.println("Semantic Error\nmain function does not return Void");
+            return false;
+        }
+        return true;
     }
 
 }

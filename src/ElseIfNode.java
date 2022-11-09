@@ -67,7 +67,7 @@ public class ElseIfNode implements JottTree{
         if(!hasElse){
             return "";
         }
-        return "elseif[" +exprNode.convertToJott() + "]{"  + bodyNode.convertToJott()  + "}";
+        return "elseif[" +exprNode.convertToJott() + "]{"  + bodyNode.convertToJott()  + "}" + elseIfNode.convertToJott();
     }
 
     @Override
@@ -84,7 +84,8 @@ public class ElseIfNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        if (!hasElse) return "";
+        return "\n" + "\t".repeat(Math.max(0, t)) + "elif " + exprNode.convertToPython(t) + ": " + bodyNode.convertToPython(t+1) + elseIfNode.convertToPython(t);
     }
 
     @Override

@@ -126,7 +126,7 @@ public class ExprNode implements JottTree {
         } else if (value != null) { // just a value/string/number - type don't matter.
             return value.getType();
         } else if (funcCall != null){   // just a function call - type don't matter.
-            return functionTable.get(funcCall.convertToJott()).getType(functionTable);
+            return functionTable.get(funcCall.getFuncName()).getType(functionTable);
         } else if (secondExpr == null) {
             return firstExpr.getType(functionTable,symbolTable);
         } else {    // use op to determine which it should be a type of.

@@ -22,6 +22,12 @@ public class IdNode implements JottTree{
 
         tokens.remove(0);
     }
+    // Id's type is the expected type of the input; not the output type!
+    public IdNode(String id, String type) {
+        this.id = id;
+        this.isNull = false;
+        this.type = type;
+    }
 
     public String getId(){
         return id;

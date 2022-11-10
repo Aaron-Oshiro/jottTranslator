@@ -9,10 +9,10 @@ public class ProgramNode implements JottTree {
 
     public ProgramNode(ArrayList<Token> tokens) throws Exception {
 
-        functionTable.put("print", null);
-        functionTable.put("concat", null);
-        functionTable.put("length", null);
-        functionTable.put("input", null);
+        functionTable.put("print", new FunctionDefNode("print"));
+        functionTable.put("concat", new FunctionDefNode("concat"));
+        functionTable.put("length", new FunctionDefNode("length"));
+        functionTable.put("input", new FunctionDefNode("input"));
 
         functionListNode = new FunctionListNode(tokens, functionTable);
     }

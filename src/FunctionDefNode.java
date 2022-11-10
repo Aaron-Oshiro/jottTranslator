@@ -58,6 +58,29 @@ public class FunctionDefNode implements JottTree{
         
     }
 
+    /**
+     * constructor for predefined functions
+     * @param functionName
+     */
+    public FunctionDefNode(String functionName) throws Exception {
+        switch (functionName) {
+            case "print":
+                this.idNode = new IdNode("print", "any");
+                break;
+            case "concat":
+                this.idNode = new IdNode("concat", "String");
+                break;
+            case "length":
+                this.idNode = new IdNode("length", "String");
+                break;
+            case "input":
+                this.idNode = new IdNode("input", "String");
+                break;
+            default:
+                throw new Exception("Unrecognized function " + functionName);
+        }
+    }
+
     private Exception syntaxError(Token token, String parseString) {
         String errorMessage = "Syntax Error: Token "+ token.getToken() + " cannot be parsed into a " + parseString + " for FunctionDef at " + token.getFilename() + " line " + token.getLineNum();
         return new Exception(errorMessage);

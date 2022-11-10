@@ -95,6 +95,18 @@ public class ExprNode implements JottTree {
         }
     }
 
+    public ExprNode getFirstExpr() {
+        return firstExpr;
+    }
+
+    public IdNode getId() {
+        return id;
+    }
+
+    public ValueNode getValue() {
+        return value;
+    }
+
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 

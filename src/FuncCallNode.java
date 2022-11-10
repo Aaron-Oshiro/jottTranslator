@@ -62,11 +62,44 @@ public class FuncCallNode implements JottTree {
         return funcName.convertToPython(t) + "(" + paramsNode.convertToPython(t) + ")";
     }
 
+    public boolean validateBuiltIn(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        if (funcName.convertToJott().equals("print")) {
+            if (!paramsNode.isEmpty()) {
+                // since print only accepts one argument
+                 if ((paramsNode.getExpressionNode().getFirstExpr().getId() != null) &&
+                         (!symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
+                                 !functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()))){
+                     System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
+                             " undefined for built-in function print");
+                     return false;
+                 }
+                 return true;
+            }
+            else {
+                System.err.println("built-in function print called with no parameters");
+            }
+        }
+        else if (funcName.convertToJott().equals("concat")) {
+            if (!paramsNode.getParamsTNode().getParamsTNode().isEmpty()) {
+                System.err.println("built-in function concat expects two strings as arguments");
+                return false;
+            }
+            System.out.println(paramsNode.getExpressionNode().getFirstExpr().getValue());
+            System.out.println(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue());
+        }
+        return false;
+    }
+
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (!functionTable.containsKey(funcName.convertToJott())) {     // tries to call function that does not exist
             System.err.println("Function " + funcName.convertToJott() + " is not defined");
             return false;
+        }
+        // check if the function is built-in
+        if (funcName.convertToJott().equals("print") || funcName.convertToJott().equals("concat") ||
+                funcName.convertToJott().equals("length") || funcName.convertToJott().equals("input")) {
+            return validateBuiltIn(functionTable, symbolTable);
         }
         // calls a function with wrong number of params
         if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode
@@ -75,9 +108,6 @@ public class FuncCallNode implements JottTree {
             return false;
         }
         if (this.paramsNode.getLength() == 0) {
-            return true;
-        }
-        if (funcName.convertToJott().equals("print")) {
             return true;
         }
         // Checks types of each functionDefParam to the params

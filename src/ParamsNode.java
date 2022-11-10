@@ -28,6 +28,10 @@ public class ParamsNode implements JottTree {
 
     }
 
+    public boolean isEmpty() {
+        return isEmpty;
+    }
+
     public ExprNode getExpressionNode() {
         return expressionNode;
     }

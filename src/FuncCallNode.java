@@ -80,12 +80,48 @@ public class FuncCallNode implements JottTree {
             }
         }
         else if (funcName.convertToJott().equals("concat")) {
+            boolean firstParamValid = false;
+            boolean secondParamValid = false;
             if (!paramsNode.getParamsTNode().getParamsTNode().isEmpty()) {
                 System.err.println("built-in function concat expects two strings as arguments");
                 return false;
             }
-            System.out.println(paramsNode.getExpressionNode().getFirstExpr().getValue());
-            System.out.println(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue());
+            else {
+                // check to see if the first param is a function call or a value
+                // id is null, so we have a value like "foo"
+                if (paramsNode.getExpressionNode().getFirstExpr().getId()==null) {
+                    if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
+                        firstParamValid = true;
+                    }
+                }
+                // id is not null == func call like foo[x]
+                // check that the function is defined & returns a String
+                else {
+                    if (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
+                            functionTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
+                        firstParamValid = true;
+                    }
+                    else {
+                        System.err.println("error occurred when validating first param for concat");
+                    }
+                }
+                // same checks for second param
+                if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId()==null) {
+                    if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
+                        secondParamValid = true;
+                    }
+                }
+                else {
+                    if (functionTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
+                    functionTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()).getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
+                        return secondParamValid = true;
+                    }
+                    else {
+                        System.err.println("error occurred when validating second param for concat");
+                    }
+                }
+                return firstParamValid && secondParamValid;
+            }
         }
         return false;
     }

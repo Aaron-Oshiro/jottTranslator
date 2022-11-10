@@ -129,7 +129,7 @@ public class FuncCallNode implements JottTree {
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (!functionTable.containsKey(funcName.convertToJott())) {     // tries to call function that does not exist
-            System.err.println("Function " + funcName.convertToJott() + " is not defined");
+            System.err.println("Semantic Error: Function " + funcName.convertToJott() + " is not defined");
             return false;
         }
         // check if the function is built-in
@@ -140,7 +140,7 @@ public class FuncCallNode implements JottTree {
         // calls a function with wrong number of params
         if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode
                 .getLength()) {
-            System.err.println("Function " + funcName.convertToJott() + " is not given correct number of parameters");
+            System.err.println("Semantic Error: Function " + funcName.convertToJott() + " is not given correct number of parameters");
             return false;
         }
         if (this.paramsNode.getLength() == 0) {
@@ -158,12 +158,14 @@ public class FuncCallNode implements JottTree {
             while (funcDefT.hasParamsT()) {
                 if (!funcDefT.getType().convertToJott()
                         .equals(paramsT.getExpressionNode().getType(functionTable, symbolTable))) {
+                            System.err.println("Semantic Error: The function's accepted parameters and the given parameters are not of the same type at line and file: Not yet implemented");
                     return false;
                 }
                 funcDefT = funcDefT.getFuncDefParamsT();
                 paramsT = paramsT.getParamsTNode();
             }
         } else {
+            System.err.println("Semantic Error: The stored table parameters do not match the types of the given parameters in the function call at file and line: Not Yet implemented");
             return false;
         }
         return true;

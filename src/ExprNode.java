@@ -119,7 +119,15 @@ public class ExprNode implements JottTree {
             return funcCall.validateTree(functionTable, symbolTable);
         } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression - type DO matter!!!
             // make sure both trees are valid. then make sure their types equal each other.
-            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable) && secondExpr.validateTree(functionTable, symbolTable)) && (firstExpr.getType(functionTable, symbolTable).equals(secondExpr.getType(functionTable, symbolTable)));
+
+            boolean isSameType = firstExpr.getType(functionTable, symbolTable).equals(secondExpr.getType(functionTable, symbolTable));
+
+            if(!isSameType){
+                System.err.println("Semantic Error: Two expressions are operated upon, but have different types at file and line: to be implemented");
+                return false;
+            }
+
+            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable) && secondExpr.validateTree(functionTable, symbolTable));
         } else {    // it's just the first expression, no (expr op expr) expression - type don't matter
             return firstExpr.validateTree(functionTable, symbolTable);
         }

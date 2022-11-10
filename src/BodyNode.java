@@ -79,6 +79,7 @@ public class BodyNode implements JottTree {
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         for (int i = 0; i < bodyArrayList.size(); i++) {
             if (!bodyArrayList.get(i).validateTree(functionTable, symbolTable)) {
+                //would report an error, but if a child is not valid, that will report its error itself.
                 return false;
             }
         }
@@ -86,6 +87,7 @@ public class BodyNode implements JottTree {
         if(epsilonFlag){
             return true;
         }
+        //again, when we are just return children validations, we can postpone error reporting until the root cause is found.
         if(rtrnFlag){
             return rtrn.validateTree(functionTable, symbolTable);
         }

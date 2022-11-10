@@ -103,17 +103,28 @@ public class AsmtNode implements JottTree{
         // <id> = <expr><end_stmt>
         if (!hasType) {
             if (!symbolTable.containsKey(id.getId())) {
+                System.err.println("Semantic Error: Symbol '" + id + "' was not found in the Symbol Table at File and Line:To be Implemented");
                 return false;
             } else {
                 // Aaron asked for this
                 // System.out.println(id.getType());
                 id.setType(expr.getType(functionTable, symbolTable));
-                return (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
-                        (id.getType().equals(expr.getType(functionTable, symbolTable))));
+                if(id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
+                        (id.getType().equals(expr.getType(functionTable, symbolTable))))
+                        return true;
+                    else{
+                        System.err.println("Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: To be implemented");
+                        return false;
+                    }
             }
         } else {
-            return (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
-                    type.equals(expr.getType(functionTable, symbolTable)));
+            if(id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
+                    type.equals(expr.getType(functionTable, symbolTable)))
+                    return true;
+                    else{
+                        System.err.println("Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: To be implemented");
+                        return false;
+                    }
         }
     }
 }

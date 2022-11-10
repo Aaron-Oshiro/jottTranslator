@@ -38,6 +38,13 @@ public class OpNode implements JottTree {
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         HashSet<String> operators = new HashSet<>(Arrays.asList(">", ">=", "<", "<=", "==", "!=", "+", "-", "/", "*"));
-        return operators.contains(operator);
+        
+        if (operators.contains(operator)){
+            return true;
+        }
+        else{
+            System.err.println("Math operator is not a valid operator at line and file: not yet implemented");
+            return false;
+        }
     }
 }

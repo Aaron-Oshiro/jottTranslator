@@ -91,7 +91,22 @@ public class ElseIfNode implements JottTree{
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         // TODO Auto-generated method stub
-        return true;
+
+        /*
+         * 
+         *     private boolean hasElse;
+
+    private BodyNode bodyNode;
+
+    private ExprNode exprNode;
+
+    private ElseIfNode elseIfNode;
+         */
+         if(!hasElse){
+            return true;
+        }
+        return (bodyNode.validateTree(functionTable, symbolTable) & exprNode.validateTree(functionTable, symbolTable) && elseIfNode.validateTree(functionTable, symbolTable));
+        
     }
 
     public boolean isReturnable(String type){

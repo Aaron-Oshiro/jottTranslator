@@ -126,7 +126,7 @@ public class FunctionDefNode implements JottTree{
 
         if(!functionReturnNode.isVoid()){
             if(!bodyNode.isReturnable(this.getType(functionTable))){
-                System.err.println("Function body does not have a return in all control flows for function " +idNode.getId());
+                System.err.println("Function body does not have a return in all control flows for function " +idNode.getId() + " at line and file: not yet implemented");
                 return false;
                 //THROW ERROR HERE WITH MESSAGE? OR NO?
             }

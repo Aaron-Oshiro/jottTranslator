@@ -6,15 +6,16 @@ import java.util.HashSet;
 /**
  * @author Raman Zatsarenko
  */
-public class IdNode implements JottTree{
+public class IdNode implements JottTree {
 
     private String id;
     private String type;
     private boolean isNull;
 
-    public IdNode(ArrayList<Token> tokens) throws Exception{
+    public IdNode(ArrayList<Token> tokens) throws Exception {
         this.id = tokens.get(0).getToken();
-        HashSet<String> keywords = new HashSet<>(Arrays.asList("while", "if", "default", "this", "new", "class", "try", "this"));
+        HashSet<String> keywords = new HashSet<>(
+                Arrays.asList("while", "if", "default", "this", "new", "class", "try", "this"));
         if (keywords.contains(this.id)) {
             throw new Exception("Semantic Error\nid " + this.id + " is a keyword and cannot be used\n" +
                     tokens.get(0).getFilename() + ":" + tokens.get(0).getLineNum());
@@ -22,6 +23,7 @@ public class IdNode implements JottTree{
 
         tokens.remove(0);
     }
+
     // Id's type is the expected type of the input; not the output type!
     public IdNode(String id, String type) {
         this.id = id;
@@ -29,9 +31,10 @@ public class IdNode implements JottTree{
         this.type = type;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
+
     public String getType() {
         return type;
     }
@@ -42,6 +45,12 @@ public class IdNode implements JottTree{
 
     public boolean isNull() {
         return isNull;
+    }
+
+    // returns true if the id is the string "print"
+    // used as helper function for convertToC
+    public boolean isPrint() {
+        return id.equals("print");
     }
 
     public void setNull(boolean aNull) {

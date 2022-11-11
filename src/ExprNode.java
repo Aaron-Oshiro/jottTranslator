@@ -86,7 +86,17 @@ public class ExprNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        if (id != null) {
+            return id.convertToC();
+        } else if (value != null) {
+            return value.convertToC();
+        } else if (funcCall != null) {
+            return funcCall.convertToC();
+        } else if (secondExpr != null) {
+            return firstExpr.convertToC() + " " + op.convertToC() + " " + secondExpr.convertToC();
+        } else {
+            return firstExpr.convertToC();
+        }
     }
 
     @Override

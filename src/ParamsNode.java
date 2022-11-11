@@ -1,3 +1,4 @@
+
 /**
  * params node
  *
@@ -13,7 +14,7 @@ public class ParamsNode implements JottTree {
     private ExprNode expressionNode;
     private ParamsTNode paramsTNode;
 
-    public ParamsNode(ArrayList<Token> tokens) throws Exception{
+    public ParamsNode(ArrayList<Token> tokens) throws Exception {
 
         TokenType thisToken = tokens.get(0).getTokenType();
         if (thisToken == TokenType.STRING || thisToken == TokenType.NUMBER || thisToken == TokenType.ID_KEYWORD) {
@@ -24,7 +25,6 @@ public class ParamsNode implements JottTree {
         } else {
             this.isEmpty = true;
         }
-
 
     }
 
@@ -65,9 +65,14 @@ public class ParamsNode implements JottTree {
         return null;
     }
 
+    public String convertToCPrint() {
+        return null;
+    }
+
     @Override
     public String convertToPython(int t) {
-        if (this.isEmpty) return "";
+        if (this.isEmpty)
+            return "";
         return this.expressionNode.convertToPython(t) + this.paramsTNode.convertToPython(t);
     }
 
@@ -76,6 +81,7 @@ public class ParamsNode implements JottTree {
         if (this.isEmpty) {
             return true;
         }
-        return (this.expressionNode.validateTree(functionTable, symbolTable) && this.paramsTNode.validateTree(functionTable, symbolTable));
+        return (this.expressionNode.validateTree(functionTable, symbolTable)
+                && this.paramsTNode.validateTree(functionTable, symbolTable));
     }
 }

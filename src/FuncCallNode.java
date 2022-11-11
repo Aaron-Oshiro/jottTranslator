@@ -54,6 +54,9 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToC() {
+        if (funcName.isPrint()) {
+            return funcName.convertToC() + "(" + paramsNode.convertToCPrint() + ")";
+        }
         return funcName.convertToC() + "(" + paramsNode.convertToC() + ")";
     }
 
@@ -62,34 +65,33 @@ public class FuncCallNode implements JottTree {
         return funcName.convertToPython(t) + "(" + paramsNode.convertToPython(t) + ")";
     }
 
-    public boolean validateBuiltIn(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+    public boolean validateBuiltIn(HashMap<String, FunctionDefNode> functionTable,
+            HashMap<String, IdNode> symbolTable) {
         if (funcName.convertToJott().equals("print")) {
             if (!paramsNode.isEmpty()) {
                 // since print only accepts one argument
-                 if ((paramsNode.getExpressionNode().getFirstExpr().getId() != null) &&
-                         (!symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
-                                 !functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()))){
-                     System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
-                             " undefined for built-in function print");
-                     return false;
-                 }
-                 return paramsNode.validateTree(functionTable, symbolTable);
-            }
-            else {
+                if ((paramsNode.getExpressionNode().getFirstExpr().getId() != null) &&
+                        (!symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
+                                !functionTable
+                                        .containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()))) {
+                    System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
+                            " undefined for built-in function print");
+                    return false;
+                }
+                return paramsNode.validateTree(functionTable, symbolTable);
+            } else {
                 System.err.println("built-in function print called with no parameters");
             }
-        }
-        else if (funcName.convertToJott().equals("concat")) {
+        } else if (funcName.convertToJott().equals("concat")) {
             boolean firstParamValid = false;
             boolean secondParamValid = false;
             if (!paramsNode.getParamsTNode().getParamsTNode().isEmpty()) {
                 System.err.println("built-in function concat expects two strings as arguments");
                 return false;
-            }
-            else {
+            } else {
                 // check to see if the first param is a function call or a value
                 // id is null, so we have a value like "foo"
-                if (paramsNode.getExpressionNode().getFirstExpr().getId()==null) {
+                if (paramsNode.getExpressionNode().getFirstExpr().getId() == null) {
                     if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                         firstParamValid = true;
                     }
@@ -98,32 +100,42 @@ public class FuncCallNode implements JottTree {
                 // check that the function is defined & returns a String
                 else {
                     if (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
-                            functionTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
+                            functionTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId())
+                                    .getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
                         firstParamValid = true;
-                    }
-                    else {
+                    } else {
                         // make sure variable is defined & type is string
                         if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
-                        symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType().equals("String")) {
+                                symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType()
+                                        .equals("String")) {
                             firstParamValid = true;
-                        } else{
+                        } else {
                             System.err.println("error occurred when validating first param for concat");
                         }
                     }
                 }
                 // same checks for second param
-                if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId()==null) {
-                    if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
+                if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) {
+                    if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
+                            .equals("String")) {
                         secondParamValid = true;
                     }
-                }
-                else {
-                    if (functionTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
-                            functionTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()).getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
+                } else {
+                    if (functionTable
+                            .containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
+                            &&
+                            functionTable
+                                    .get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
+                                    .getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
                         secondParamValid = true;
                     } else {
-                        if (symbolTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
-                                symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()).getType().equals("String")) {
+                        if (symbolTable
+                                .containsKey(
+                                        paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
+                                &&
+                                symbolTable.get(
+                                        paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
+                                        .getType().equals("String")) {
                             secondParamValid = true;
                         } else {
                             System.err.println("error occurred when validating second param for concat");
@@ -132,70 +144,67 @@ public class FuncCallNode implements JottTree {
                 }
                 return firstParamValid && secondParamValid;
             }
-        }
-        else if (funcName.convertToJott().equals("length")) {
+        } else if (funcName.convertToJott().equals("length")) {
             if (!paramsNode.getParamsTNode().isEmpty()) {
                 System.err.println("Error: built-in function length expects only one parameter");
                 return false;
             }
-            if (paramsNode.getExpressionNode().getFirstExpr().getId()==null) {
+            if (paramsNode.getExpressionNode().getFirstExpr().getId() == null) {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     return true;
-                }
-                else {
+                } else {
                     System.err.println("Error: the input param should be a String for built-in function length");
                     return false;
                 }
-            }
-            else {
+            } else {
                 // make sure variable is defined & type is string
                 if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
-                        symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType().equals("String")) {
-                        return true;
-                } else{
+                        symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType()
+                                .equals("String")) {
+                    return true;
+                } else {
                     System.err.println("Error: the input param should be a String for built-in function length");
                     return false;
                 }
             }
-        }
-        else if (funcName.convertToJott().equals("input")) {
+        } else if (funcName.convertToJott().equals("input")) {
             boolean firstParamValid = false;
             boolean secondParamValid = false;
 
             // input params can be variables or raw values
             // check if it's a raw value
-            if (paramsNode.getExpressionNode().getFirstExpr().getId()==null) {
+            if (paramsNode.getExpressionNode().getFirstExpr().getId() == null) {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     firstParamValid = true;
-                }
-                else {
+                } else {
                     System.err.println("Error: the first param for input should be a String");
                 }
-            }
-            else {
+            } else {
                 // make sure variable is defined & type is string
                 if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
-                        symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType().equals("String")) {
+                        symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType()
+                                .equals("String")) {
                     firstParamValid = true;
-                } else{
+                } else {
                     System.err.println("Error: the first param for input should be a String ");
                 }
             }
 
             // same checks but for second input
-            if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId()==null) {
-                if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType().equals("Integer")) {
+            if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) {
+                if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
+                        .equals("Integer")) {
                     secondParamValid = true;
-                }
-                else {
+                } else {
                     System.err.println("Error: the second param for input should be an Integer");
                 }
-            }
-            else {
-                if (symbolTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
-                        symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()).getType().equals("Integer")) {
+            } else {
+                if (symbolTable
+                        .containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
+                        symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
+                                .getType().equals("Integer")) {
                     secondParamValid = true;
-                } else{
+                } else {
                     System.err.println("Error: the second param for input should be an Integer");
                 }
             }
@@ -206,7 +215,7 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        if (!functionTable.containsKey(funcName.convertToJott())) {     // tries to call function that does not exist
+        if (!functionTable.containsKey(funcName.convertToJott())) { // tries to call function that does not exist
             System.err.println("Semantic Error: Function " + funcName.convertToJott() + " is not defined");
             return false;
         }
@@ -218,7 +227,8 @@ public class FuncCallNode implements JottTree {
         // calls a function with wrong number of params
         if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode
                 .getLength()) {
-            System.err.println("Semantic Error: Function " + funcName.convertToJott() + " is not given correct number of parameters");
+            System.err.println("Semantic Error: Function " + funcName.convertToJott()
+                    + " is not given correct number of parameters");
             return false;
         }
         if (this.paramsNode.getLength() == 0) {
@@ -236,14 +246,16 @@ public class FuncCallNode implements JottTree {
             while (funcDefT.hasParamsT()) {
                 if (!funcDefT.getType().convertToJott()
                         .equals(paramsT.getExpressionNode().getType(functionTable, symbolTable))) {
-                            System.err.println("Semantic Error: The function's accepted parameters and the given parameters are not of the same type at line and file: Not yet implemented");
+                    System.err.println(
+                            "Semantic Error: The function's accepted parameters and the given parameters are not of the same type at line and file: Not yet implemented");
                     return false;
                 }
                 funcDefT = funcDefT.getFuncDefParamsT();
                 paramsT = paramsT.getParamsTNode();
             }
         } else {
-            System.err.println("Semantic Error: The stored table parameters do not match the types of the given parameters in the function call at file and line: Not Yet implemented");
+            System.err.println(
+                    "Semantic Error: The stored table parameters do not match the types of the given parameters in the function call at file and line: Not Yet implemented");
             return false;
         }
         return true;

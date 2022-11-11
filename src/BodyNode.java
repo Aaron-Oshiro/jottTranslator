@@ -13,25 +13,25 @@ public class BodyNode implements JottTree {
     public BodyNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
 
         String t0 = tokens.get(0).getToken();
-        //System.out.println(t0);
+        // System.out.println(t0);
         if (t0.equals("}")) {
             epsilonFlag = true;
             tokens.remove(0);
         } else if (t0.equals("return")) {
             rtrn = new ReturnNode(tokens);
             rtrnFlag = true;
-//            tokens.remove(0);
+            // tokens.remove(0);
 
         } else {
             bodyStatement = new BodyStmtNode(tokens, symbolTable);
             bodyStatementFlag = true;
-            while ( (tokens.size() != 0) && !tokens.get(0).getToken().equals("}") ) {
-//                if (tokens.get(0).getToken().equals("return")) {
-//                    rtrn = new ReturnNode(tokens);
-//                    rtrnFlag = true;
-//                    tokens.remove(0);
-//                    break;
-//                } else {
+            while ((tokens.size() != 0) && !tokens.get(0).getToken().equals("}")) {
+                // if (tokens.get(0).getToken().equals("return")) {
+                // rtrn = new ReturnNode(tokens);
+                // rtrnFlag = true;
+                // tokens.remove(0);
+                // break;
+                // } else {
                 bodyArrayList.add(new BodyNode(tokens, symbolTable));
 
             }
@@ -61,13 +61,26 @@ public class BodyNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        if (epsilonFlag) {
+            return "";
+        }
+        if (rtrnFlag) {
+            return rtrn.convertToC();
+        } else {
+            String allBodies = "";
+            for (int i = 0; i < bodyArrayList.size(); i++) {
+                allBodies += (bodyArrayList.get(i).convertToC());
+            }
+            return bodyStatement.convertToC() + allBodies;
+        }
     }
 
     @Override
     public String convertToPython(int t) {
-        if (epsilonFlag) return "";
-        if (rtrnFlag) return rtrn.convertToPython(t);
+        if (epsilonFlag)
+            return "";
+        if (rtrnFlag)
+            return rtrn.convertToPython(t);
         String allBodies = "";
         for (int i = 0; i < bodyArrayList.size(); i++) {
             allBodies += (bodyArrayList.get(i).convertToPython(t));
@@ -79,42 +92,43 @@ public class BodyNode implements JottTree {
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         for (int i = 0; i < bodyArrayList.size(); i++) {
             if (!bodyArrayList.get(i).validateTree(functionTable, symbolTable)) {
-                //would report an error, but if a child is not valid, that will report its error itself.
+                // would report an error, but if a child is not valid, that will report its
+                // error itself.
                 return false;
             }
         }
 
-        if(epsilonFlag){
+        if (epsilonFlag) {
             return true;
         }
-        //again, when we are just return children validations, we can postpone error reporting until the root cause is found.
-        if(rtrnFlag){
+        // again, when we are just return children validations, we can postpone error
+        // reporting until the root cause is found.
+        if (rtrnFlag) {
             return rtrn.validateTree(functionTable, symbolTable);
+        } else {
+            return bodyStatement.validateTree(functionTable, symbolTable);
         }
-        else{
-        return bodyStatement.validateTree(functionTable, symbolTable);
     }
-    }
 
-    public boolean isReturnable(String type){
-        //Todo, go through all bodies and body statements checking if there is a single return or not. Use that to determine this result. Used by FuncDef.
-        //Type is passed down to verify the returned thing is of the correct type? may not need it tbh
+    public boolean isReturnable(String type) {
+        // Todo, go through all bodies and body statements checking if there is a single
+        // return or not. Use that to determine this result. Used by FuncDef.
+        // Type is passed down to verify the returned thing is of the correct type? may
+        // not need it tbh
 
-
-        //should we check all bodies before statements? feel like this may cause an issue with the ifs and elses and outside returns?
-        if(rtrnFlag){
+        // should we check all bodies before statements? feel like this may cause an
+        // issue with the ifs and elses and outside returns?
+        if (rtrnFlag) {
             return true;
-        }
-        else if(bodyStatement.isReturnable(type)){
+        } else if (bodyStatement.isReturnable(type)) {
             return true;
-        }
-        else{
+        } else {
 
-        for (int i = 0; i < bodyArrayList.size(); i++) {
-            if (bodyArrayList.get(i).isReturnable(type)) {
-                return true;
+            for (int i = 0; i < bodyArrayList.size(); i++) {
+                if (bodyArrayList.get(i).isReturnable(type)) {
+                    return true;
+                }
             }
-        }
         }
         return false;
     }

@@ -62,7 +62,10 @@ public class ParamsNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        if (this.isEmpty) {
+            return "";
+        }
+        return this.expressionNode.convertToC() + this.paramsTNode.convertToC();
     }
 
     public String convertToCPrint() {

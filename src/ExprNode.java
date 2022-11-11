@@ -19,7 +19,8 @@ public class ExprNode implements JottTree {
 
         if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
             throw new Exception(
-                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at " + t0.getFilename() + " line "
+                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at "
+                            + t0.getFilename() + " line "
                             + t0.getLineNum());
         }
         firstExpr = new ExprNode(tokens, true);
@@ -35,20 +36,21 @@ public class ExprNode implements JottTree {
 
         if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
             throw new Exception(
-                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at " + t0.getFilename() + " line "
+                    "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at "
+                            + t0.getFilename() + " line "
                             + t0.getLineNum());
         }
         TokenType tt1 = (tokens.get(1).getTokenType());
 
-        if (tt0 == TokenType.ID_KEYWORD && tt1 != TokenType.L_BRACKET) {    // if it's not a function call
+        if (tt0 == TokenType.ID_KEYWORD && tt1 != TokenType.L_BRACKET) { // if it's not a function call
             id = new IdNode(tokens);
-//            System.out.println(id.convertToJott());
-//            System.out.println(tt0);
+            // System.out.println(id.convertToJott());
+            // System.out.println(tt0);
 
         } else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
             value = new ValueNode(tokens);
-//            System.out.println(value.convertToJott());
-//            System.out.println(tt0);
+            // System.out.println(value.convertToJott());
+            // System.out.println(tt0);
 
         } else {
             funcCall = new FuncCallNode(tokens);
@@ -57,15 +59,15 @@ public class ExprNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        if (id != null) {   // just an id_keyword
+        if (id != null) { // just an id_keyword
             return id.convertToJott();
         } else if (value != null) { // just a value/string/number
             return value.convertToJott();
-        } else if (funcCall != null){   // just a function call
+        } else if (funcCall != null) { // just a function call
             return funcCall.convertToJott();
-        } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression
+        } else if (secondExpr != null) { // if there is a second Expression, then it's an (expr op expr) expression
             return firstExpr.convertToJott() + " " + op.convertToJott() + " " + secondExpr.convertToJott();
-        } else {    // it's just the first expression, no (expr op expr) expression
+        } else { // it's just the first expression, no (expr op expr) expression
             return firstExpr.convertToJott();
         }
     }
@@ -73,6 +75,13 @@ public class ExprNode implements JottTree {
     @Override
     public String convertToJava() {
         return null;
+    }
+
+    // returns true if the operation is of the
+    // expr (op) expr structure
+    // used as helper function for convertToC
+    public Boolean isOperationExpression() {
+        return !(secondExpr == null);
     }
 
     @Override
@@ -115,55 +124,62 @@ public class ExprNode implements JottTree {
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
         // ALSO CHECK FOR TYPES AND THEIR EQUALITIES WHEN NEEDED!!! TODO!!!
-        if (id != null) {   // just an id_keyword - type don't matter.
+        if (id != null) { // just an id_keyword - type don't matter.
             return id.validateTree(functionTable, symbolTable);
         } else if (value != null) { // just a value/string/number - type don't matter.
             return value.validateTree(functionTable, symbolTable);
-        } else if (funcCall != null) {   // just a function call - type don't matter.
+        } else if (funcCall != null) { // just a function call - type don't matter.
             return funcCall.validateTree(functionTable, symbolTable);
-        } else if (secondExpr != null) {    // if there is a second Expression, then it's an (expr op expr) expression - type DO matter!!!
+        } else if (secondExpr != null) { // if there is a second Expression, then it's an (expr op expr) expression -
+                                         // type DO matter!!!
             // make sure both trees are valid. then make sure their types equal each other.
 
-            boolean isSameType = firstExpr.getType(functionTable, symbolTable).equals(secondExpr.getType(functionTable, symbolTable));
+            boolean isSameType = firstExpr.getType(functionTable, symbolTable)
+                    .equals(secondExpr.getType(functionTable, symbolTable));
 
-            if(!isSameType){
-                System.err.println("Semantic Error: Two expressions are operated upon, but have different types at file and line: to be implemented");
+            if (!isSameType) {
+                System.err.println(
+                        "Semantic Error: Two expressions are operated upon, but have different types at file and line: to be implemented");
                 return false;
             }
 
-            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable) && secondExpr.validateTree(functionTable, symbolTable));
-        } else {    // it's just the first expression, no (expr op expr) expression - type don't matter
+            return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable)
+                    && secondExpr.validateTree(functionTable, symbolTable));
+        } else { // it's just the first expression, no (expr op expr) expression - type don't
+                 // matter
             return firstExpr.validateTree(functionTable, symbolTable);
         }
     }
 
-
     // this is pseduocode, prolly wont work until symbol table is up and running.
-     public String getType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable){
-        if (id != null) {   // just an id_keyword - type don't matter.
-            
-            if(!symbolTable.containsKey(id.getId())){
-               //todo uncomment this once others add exceptions?
-                // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been declared, yet is used as a variable.\n");
+    public String getType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        if (id != null) { // just an id_keyword - type don't matter.
+
+            if (!symbolTable.containsKey(id.getId())) {
+                // todo uncomment this once others add exceptions?
+                // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been
+                // declared, yet is used as a variable.\n");
             }
             return symbolTable.get(id.getId()).getType();
         } else if (value != null) { // just a value/string/number - type don't matter.
             return value.getType();
-        } else if (funcCall != null){   // just a function call - type don't matter.
+        } else if (funcCall != null) { // just a function call - type don't matter.
             return functionTable.get(funcCall.getFuncName()).getType(functionTable);
         } else if (secondExpr == null) {
-            return firstExpr.getType(functionTable,symbolTable);
-        } else {    // use op to determine which it should be a type of.
-            if( (op.getOperator().equals(">")) || (op.getOperator().equals(">=")) ||(op.getOperator().equals("<"))||(op.getOperator().equals("<="))||(op.getOperator().equals("==")) || (op.getOperator().equals("!="))){
-                //if relop, then exprs can ONLY be bool exprs. todo make sure this matches our string type format.
+            return firstExpr.getType(functionTable, symbolTable);
+        } else { // use op to determine which it should be a type of.
+            if ((op.getOperator().equals(">")) || (op.getOperator().equals(">=")) || (op.getOperator().equals("<"))
+                    || (op.getOperator().equals("<=")) || (op.getOperator().equals("=="))
+                    || (op.getOperator().equals("!="))) {
+                // if relop, then exprs can ONLY be bool exprs. todo make sure this matches our
+                // string type format.
                 return "Boolean";
+            } else {
+                // should be int or double if op is an math op
+                return firstExpr.getType(functionTable, symbolTable);
             }
-            else{
-                //should be int or double if op is an math op
-                return firstExpr.getType(functionTable,symbolTable);
-            }
-             
+
         }
 
-     }
+    }
 }

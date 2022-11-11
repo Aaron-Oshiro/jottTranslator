@@ -26,7 +26,7 @@ public class EndStmtNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        return ";";
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.HashMap;
  *
  * @author Raman Zatsarenko
  */
-public class FuncDefParamsNode implements JottTree{
+public class FuncDefParamsNode implements JottTree {
     private boolean hasFuncDefParams;
     private IdNode id;
     private TypeNode type;
@@ -14,20 +14,21 @@ public class FuncDefParamsNode implements JottTree{
 
     public FuncDefParamsNode(ArrayList<Token> tokens) throws Exception {
         // func params is [], so list is empty
-        if(tokens.get(0).getToken().equals("]")) {
+        if (tokens.get(0).getToken().equals("]")) {
             hasFuncDefParams = false;
-        }
-        else {
+        } else {
             hasFuncDefParams = true;
             // The bracket check should be in FuncDefNode
-            //if(!tokens.get(0).getToken().equals("[")) {
-            //    throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed into a [ at line " + tokens.get(0).getLineNum());
-            //}
+            // if(!tokens.get(0).getToken().equals("[")) {
+            // throw new Exception("Token "+ tokens.get(0).getToken() + "cannot be parsed
+            // into a [ at line " + tokens.get(0).getLineNum());
+            // }
             // remove [
-            //tokens.remove(0);
+            // tokens.remove(0);
             id = new IdNode(tokens);
-            if(!tokens.get(0).getToken().equals(":")) {
-                throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a : at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+            if (!tokens.get(0).getToken().equals(":")) {
+                throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " cannot be parsed into a : at "
+                        + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             // remove ":"
             tokens.remove(0);
@@ -55,7 +56,8 @@ public class FuncDefParamsNode implements JottTree{
 
     @Override
     public String convertToJott() {
-        if (!hasFuncDefParams) return "";
+        if (!hasFuncDefParams)
+            return "";
         else {
             return id.convertToJott() + ":" + type.convertToJott() + funcDefParamsT.convertToJott();
         }
@@ -75,12 +77,17 @@ public class FuncDefParamsNode implements JottTree{
 
     @Override
     public String convertToC() {
-        return null;
+        if (!hasFuncDefParams) {
+            return "void";
+        }
+        return type.convertToC() + " " + id.convertToC()
+                + funcDefParamsT.convertToC();
     }
 
     @Override
     public String convertToPython(int t) {
-        if (!hasFuncDefParams) return "";
+        if (!hasFuncDefParams)
+            return "";
         else {
             return id.convertToPython(t) + funcDefParamsT.convertToPython(t);
         }
@@ -88,8 +95,10 @@ public class FuncDefParamsNode implements JottTree{
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        if (!hasFuncDefParams) return true;
-        else return id.validateTree(functionTable, symbolTable) && type.validateTree(functionTable, symbolTable)
-                && funcDefParamsT.validateTree(functionTable, symbolTable);
+        if (!hasFuncDefParams)
+            return true;
+        else
+            return id.validateTree(functionTable, symbolTable) && type.validateTree(functionTable, symbolTable)
+                    && funcDefParamsT.validateTree(functionTable, symbolTable);
     }
 }

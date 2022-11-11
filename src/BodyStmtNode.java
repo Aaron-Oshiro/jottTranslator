@@ -1,21 +1,22 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BodyStmtNode implements JottTree{
+public class BodyStmtNode implements JottTree {
 
     private JottTree bodyStmtNode;
 
     public BodyStmtNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         // body statement can either be a while loop, an if statement, or a statement
-        if (tokens.get(0).getToken().equals("while")){  // is a while loop
+        if (tokens.get(0).getToken().equals("while")) { // is a while loop
             bodyStmtNode = new WhileLoopNode(tokens, symbolTable);
         } else if (tokens.get(0).getToken().equals("if")) { // is an if statement
             bodyStmtNode = new IfStmtNode(tokens, symbolTable);
-        } else {    // is a statement
+        } else { // is a statement
             bodyStmtNode = new StmtNode(tokens, symbolTable);
         }
 
     }
+
     @Override
     public String convertToJott() {
         return bodyStmtNode.convertToJott();
@@ -28,7 +29,7 @@ public class BodyStmtNode implements JottTree{
 
     @Override
     public String convertToC() {
-        return null;
+        return bodyStmtNode.convertToJott();
     }
 
     @Override
@@ -43,12 +44,13 @@ public class BodyStmtNode implements JottTree{
         return bodyStmtNode.validateTree(functionTable, symbolTable);
     }
 
-    public boolean isReturnable(String type){
+    public boolean isReturnable(String type) {
 
-        //func call can while make no difference in the returnable status. we only need check the if node.
-        if( bodyStmtNode instanceof IfStmtNode){
+        // func call can while make no difference in the returnable status. we only need
+        // check the if node.
+        if (bodyStmtNode instanceof IfStmtNode) {
 
-            IfStmtNode testReturnable = (IfStmtNode)bodyStmtNode;
+            IfStmtNode testReturnable = (IfStmtNode) bodyStmtNode;
             return testReturnable.isReturnable(type);
 
         }

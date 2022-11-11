@@ -67,6 +67,7 @@ public class ParamsTNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        if (isEmpty) return true;
         return (this.expressionNode.validateTree(functionTable, symbolTable) && this.paramsTNode.validateTree(functionTable, symbolTable));
     }
 }

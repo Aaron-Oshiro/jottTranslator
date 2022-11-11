@@ -95,6 +95,10 @@ public class ExprNode implements JottTree {
         }
     }
 
+    public FuncCallNode getFuncCall() {
+        return funcCall;
+    }
+
     public ExprNode getFirstExpr() {
         return firstExpr;
     }

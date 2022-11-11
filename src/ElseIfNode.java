@@ -1,5 +1,6 @@
 import java.util.*;
-public class ElseIfNode implements JottTree{
+
+public class ElseIfNode implements JottTree {
 
     private boolean hasElse;
 
@@ -9,65 +10,70 @@ public class ElseIfNode implements JottTree{
 
     private ElseIfNode elseIfNode;
 
-    public ElseIfNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable)throws Exception{
+    public ElseIfNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         Token tokenToCheck = tokens.get(0);
 
-
-        if(tokenToCheck.getToken().equals("elseif")){
-            //get rid of the else
+        if (tokenToCheck.getToken().equals("elseif")) {
+            // get rid of the else
             tokens.remove(0);
             hasElse = true;
 
-            //get rid of lbracket
-            if(!tokens.get(0).getToken().equals("[")){
-                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + " cannot be parsed into a [ at " +tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
+            // get rid of lbracket
+            if (!tokens.get(0).getToken().equals("[")) {
+                throw new Exception("Syntax Error: Token " + tokenToCheck.getToken() + " cannot be parsed into a [ at "
+                        + tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
-            //TODO KEEP IN MIND THIS SHOULD BE A BOOLEAN - DO WE NEED TO CHECK THIS IN THIS PHASE?
-             exprNode = new ExprNode(tokens);
-             
+            // TODO KEEP IN MIND THIS SHOULD BE A BOOLEAN - DO WE NEED TO CHECK THIS IN THIS
+            // PHASE?
+            exprNode = new ExprNode(tokens);
 
-             //get rid of rbracket
-            if(!tokens.get(0).getToken().equals("]")){
-                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + "cannot be parsed into a ] at at " +tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
+            // get rid of rbracket
+            if (!tokens.get(0).getToken().equals("]")) {
+                throw new Exception(
+                        "Syntax Error: Token " + tokenToCheck.getToken() + "cannot be parsed into a ] at at "
+                                + tokenToCheck.getFilename() + " line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
-
-            //get rid of lbracket
-            if(!tokens.get(0).getToken().equals("{")){
-                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + "cannot be parsed into a { at line " + tokenToCheck.getLineNum());
+            // get rid of lbracket
+            if (!tokens.get(0).getToken().equals("{")) {
+                throw new Exception("Syntax Error: Token " + tokenToCheck.getToken()
+                        + "cannot be parsed into a { at line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
-             bodyNode = new BodyNode(tokens, symbolTable);
-             
+            bodyNode = new BodyNode(tokens, symbolTable);
 
-             //get rid of rbracket
-            if(!tokens.get(0).getToken().equals("}")){
-                throw new Exception("Syntax Error: Token "+ tokenToCheck.getToken() + "cannot be parsed into a } at line " + tokenToCheck.getLineNum());
+            // get rid of rbracket
+            if (!tokens.get(0).getToken().equals("}")) {
+                throw new Exception("Syntax Error: Token " + tokenToCheck.getToken()
+                        + "cannot be parsed into a } at line " + tokenToCheck.getLineNum());
             }
             tokens.remove(0);
 
-            //I just added this in phase 3 - didnt we need this to be in convert to jott for phase 2?!?
+            // I just added this in phase 3 - didnt we need this to be in convert to jott
+            // for phase 2?!?
             elseIfNode = new ElseIfNode(tokens, symbolTable);
 
-        }
-        else{
-                    hasElse = false;
-                    //TODO make sure I handle Empty string case correctly. Do I need to look ahead? I think if the token is not else we assume it is the empty case. Or do I need to use the follow set to see what can follow an elseIf?
-            //throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed into a Else at line " + tokenToCheck.getLineNum());
+        } else {
+            hasElse = false;
+            // TODO make sure I handle Empty string case correctly. Do I need to look ahead?
+            // I think if the token is not else we assume it is the empty case. Or do I need
+            // to use the follow set to see what can follow an elseIf?
+            // throw new Exception("Token "+ tokenToCheck.toString() + "cannot be parsed
+            // into a Else at line " + tokenToCheck.getLineNum());
         }
     }
-    
+
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        if(!hasElse){
+        if (!hasElse) {
             return "";
         }
-        return "elseif[" +exprNode.convertToJott() + "]{"  + bodyNode.convertToJott()  + "}" + elseIfNode.convertToJott();
+        return "elseif[" + exprNode.convertToJott() + "]{" + bodyNode.convertToJott() + "}"
+                + elseIfNode.convertToJott();
     }
 
     @Override
@@ -78,14 +84,18 @@ public class ElseIfNode implements JottTree{
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        if (!hasElse) {
+            return "";
+        }
+        return "else if(" + exprNode.convertToC() + "){" + bodyNode.convertToC() + "}" + elseIfNode.convertToC();
     }
 
     @Override
     public String convertToPython(int t) {
-        if (!hasElse) return "";
-        return "\n" + "\t".repeat(Math.max(0, t)) + "elif " + exprNode.convertToPython(t) + ": " + bodyNode.convertToPython(t+1) + elseIfNode.convertToPython(t);
+        if (!hasElse)
+            return "";
+        return "\n" + "\t".repeat(Math.max(0, t)) + "elif " + exprNode.convertToPython(t) + ": "
+                + bodyNode.convertToPython(t + 1) + elseIfNode.convertToPython(t);
     }
 
     @Override
@@ -94,29 +104,29 @@ public class ElseIfNode implements JottTree{
 
         /*
          * 
-         *     private boolean hasElse;
-
-    private BodyNode bodyNode;
-
-    private ExprNode exprNode;
-
-    private ElseIfNode elseIfNode;
+         * private boolean hasElse;
+         * 
+         * private BodyNode bodyNode;
+         * 
+         * private ExprNode exprNode;
+         * 
+         * private ElseIfNode elseIfNode;
          */
-         if(!hasElse){
+        if (!hasElse) {
             return true;
         }
-        return (bodyNode.validateTree(functionTable, symbolTable) & exprNode.validateTree(functionTable, symbolTable) && elseIfNode.validateTree(functionTable, symbolTable));
-        
+        return (bodyNode.validateTree(functionTable, symbolTable) & exprNode.validateTree(functionTable, symbolTable)
+                && elseIfNode.validateTree(functionTable, symbolTable));
+
     }
 
-    public boolean isReturnable(String type){
+    public boolean isReturnable(String type) {
 
-        if(hasElse){
+        if (hasElse) {
 
             return bodyNode.isReturnable(type) && elseIfNode.isReturnable(type);
         }
         return false;
     }
-    
-    
+
 }

@@ -127,7 +127,7 @@ public class ElseIfNode implements JottTree {
 
             return bodyNode.isReturnable(type) && elseIfNode.isReturnable(type);
         }
-        return false;
+        return true;
     }
 
 }

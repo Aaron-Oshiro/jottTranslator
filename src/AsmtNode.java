@@ -127,22 +127,35 @@ public class AsmtNode implements JottTree {
                 // Aaron asked for this
                 // System.out.println(id.getType());
                 id.setType(expr.getType(functionTable, symbolTable));
-                if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
-                        (id.getType().equals(expr.getType(functionTable, symbolTable))))
+                if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable)){
+
+                    if(id.getType().equals(expr.getType(functionTable, symbolTable))){
                     return true;
+                }
+                    else{
+                        System.err.println(
+                            "Semantic Error: The types of the two parts of the asmt did not match at File and Line: To be implemented.");
+                            return false;
+                    }
+                }
                 else {
-                    System.err.println(
-                            "Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: To be implemented");
+                   // System.err.println(
+                    //        "Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: To be implemented");
                     return false;
                 }
             }
         } else {
-            if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) &&
-                    type.equals(expr.getType(functionTable, symbolTable)))
+            if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable)){
+                if(type.equals(expr.getType(functionTable, symbolTable))){
                 return true;
-            else {
+            }
+            else{
                 System.err.println(
-                        "Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: To be implemented");
+                    "Semantic Error: The types of the two parts of the asmt did not match at File and Line: To be implemented");
+                    return false;
+            }
+            }
+            else {
                 return false;
             }
         }

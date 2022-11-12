@@ -66,7 +66,8 @@ public class FuncDefParamsTNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (!hasParamsT) return "";
+        return ", " + type.convertToJava() + " " + id.convertToJava() + funcDefParamsT.convertToJava();
     }
 
     @Override

@@ -41,7 +41,7 @@ public class RelOpNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return this.relationshipOperator;
     }
 
     @Override

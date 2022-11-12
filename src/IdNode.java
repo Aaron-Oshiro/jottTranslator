@@ -64,7 +64,7 @@ public class IdNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return id;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class ValueNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return value;
     }
 
     @Override

@@ -37,7 +37,8 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (voidFlag) return "void";
+        return returnType.convertToJava();
     }
 
     @Override

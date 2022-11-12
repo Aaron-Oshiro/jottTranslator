@@ -106,8 +106,10 @@ public class FunctionDefNode implements JottTree{
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        if (idNode.getId().equals("main")) {
+            return "public static " + functionReturnNode.convertToJava() + " " + idNode.convertToJava() + "(String[] args) {" + bodyNode.convertToJava() + "}";
+        }
+        return "public static " + functionReturnNode.convertToJava() + " " + idNode.convertToJava() + "(" + funcDefParamsNode.convertToJava() + ") {" + bodyNode.convertToJava() + "}";
     }
 
     @Override

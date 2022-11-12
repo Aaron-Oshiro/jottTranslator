@@ -49,7 +49,7 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return funcName.convertToJava() + "(" + paramsNode.convertToJava() + ")";
     }
 
     @Override

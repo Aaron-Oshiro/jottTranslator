@@ -41,7 +41,10 @@ public class StmtNode implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        if (asmt != null) return asmt.convertToJava();
+        else if (varDec != null) return varDec.convertToJava();
+        else if (funcCall != null) return funcCall.convertToJava() + endStmt.convertToJava();
+        else return "Could not convert to Java";
     }
 
     @Override

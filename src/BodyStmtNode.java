@@ -24,7 +24,7 @@ public class BodyStmtNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return "\n" + bodyStmtNode.convertToJava();
     }
 
     @Override

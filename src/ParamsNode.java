@@ -57,7 +57,8 @@ public class ParamsNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (this.isEmpty) return "";
+        return this.expressionNode.convertToJava() + this.paramsTNode.convertToJava();
     }
 
     @Override

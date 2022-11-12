@@ -78,8 +78,9 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        if (!hasElse) return "";
+        return "else if (" + exprNode.convertToJava() + ") {" + bodyNode.convertToJava()
+                + "}" + elseIfNode.convertToJava();
     }
 
     @Override

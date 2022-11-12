@@ -90,7 +90,11 @@ public class AsmtNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        // has the same issue as convertToC with type
+        if (hasType) {
+            return type + " " + id.convertToJava() + " = " + expr.convertToJava() + endStmt.convertToJava();
+        }
+        return id.convertToJava() + " = " + expr.convertToJava() + endStmt.convertToJava();
     }
 
     @Override

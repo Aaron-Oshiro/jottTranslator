@@ -26,7 +26,7 @@ public class VarDecNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return type.convertToJava() + id.convertToJava() + endStmt.convertToJava();
     }
 
     @Override

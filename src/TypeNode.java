@@ -24,8 +24,16 @@ public class TypeNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        switch (type){
+            case "Integer":
+                return "int";
+            case "Double":
+                return "double";
+            case "String":
+                return "String";
+            default:
+                return "boolean";
+        }
     }
 
     @Override

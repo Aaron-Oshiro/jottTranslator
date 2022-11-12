@@ -26,7 +26,7 @@ public class ReturnNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return "\nreturn " + exprNode.convertToJava() + endStmtNode.convertToJava();
     }
 
     @Override

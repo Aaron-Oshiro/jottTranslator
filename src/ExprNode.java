@@ -74,7 +74,14 @@ public class ExprNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (id != null) return id.convertToJava();
+        else if (value != null) return value.convertToJava();
+        else if (funcCall != null) return funcCall.convertToJava();
+        else if (secondExpr != null) {
+            return firstExpr.convertToJava() + " " + op.convertToJava() + " " + secondExpr.convertToJava();
+        } else {
+            return firstExpr.convertToJava();
+        }
     }
 
     // returns true if the operation is of the

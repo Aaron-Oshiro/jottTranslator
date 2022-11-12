@@ -24,8 +24,7 @@ public class MathOpNode implements JottTree{
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        return operation;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class MathOpNode implements JottTree{
 
     @Override
     public String convertToPython(int t) {
-        return null;
+        return operation;
     }
 
     @Override

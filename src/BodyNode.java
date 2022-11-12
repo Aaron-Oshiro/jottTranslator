@@ -56,7 +56,13 @@ public class BodyNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (epsilonFlag) return "";
+        if (rtrnFlag) return rtrn.convertToJava();
+        String allBodies = "";
+        for (int i = 0; i < bodyArrayList.size(); i++) {
+            allBodies += (bodyArrayList.get(i).convertToJava());
+        }
+        return bodyStatement.convertToJava() + allBodies;
     }
 
     @Override

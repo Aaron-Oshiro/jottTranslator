@@ -50,7 +50,8 @@ public class IfStmtNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return "if (" + expr.convertToJava() + ") {" + body.convertToJava() + "}"
+                + elseIfLst.convertToJava() + lse.convertToJava();
     }
 
     @Override

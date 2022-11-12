@@ -22,7 +22,7 @@ public class OpNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return operator;
     }
 
     @Override

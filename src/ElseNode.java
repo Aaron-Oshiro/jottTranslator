@@ -50,8 +50,8 @@ public class ElseNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        if (!hasElse) return "";
+        return "else {" + bodyNode.convertToJava() + "}";
     }
 
     @Override

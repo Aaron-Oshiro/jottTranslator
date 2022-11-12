@@ -38,8 +38,8 @@ public class FunctionListNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        if (!hasFunctionDefinition) return "";
+        return functionDefNode.convertToJava() + "\n" + functionListNode.convertToJava();
     }
 
     @Override

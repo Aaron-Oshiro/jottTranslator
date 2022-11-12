@@ -46,7 +46,7 @@ public class WhileLoopNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        return "while (" + expr.convertToJava() + ") {" + body.convertToJava() + "}";
     }
 
     @Override

@@ -11,6 +11,9 @@ public class ExprNode implements JottTree {
     private OpNode op;
     private ExprNode secondExpr;
 
+    private String fileName;
+    private int lineNumber;
+
     public ExprNode(ArrayList<Token> tokens) throws Exception {
         // can be an id, funcCall, value, or expr op expr
 
@@ -23,6 +26,9 @@ public class ExprNode implements JottTree {
                             + t0.getFilename() + " line "
                             + t0.getLineNum());
         }
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
+
         firstExpr = new ExprNode(tokens, true);
         if (tokens.get(0).getTokenType() == TokenType.REL_OP || tokens.get(0).getTokenType() == TokenType.MATH_OP) {
             op = new OpNode(tokens);
@@ -156,7 +162,7 @@ public class ExprNode implements JottTree {
 
             if (!isSameType) {
                 System.err.println(
-                        "Semantic Error: Two expressions are operated upon, but have different types at file and line: to be implemented");
+                        "Semantic Error: Two expressions are operated upon, but have different types at file and line: " + fileName +":" + lineNumber);
                 return false;
             }
 

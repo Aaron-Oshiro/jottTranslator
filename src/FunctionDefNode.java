@@ -7,7 +7,8 @@ public class FunctionDefNode implements JottTree{
 
     private FunctionReturnNode functionReturnNode;
     private BodyNode bodyNode;
-
+    private String fileName;
+    private int lineNumber;
     public HashMap<String, IdNode> symbolTable = new HashMap<>();
 
 
@@ -16,6 +17,8 @@ public class FunctionDefNode implements JottTree{
         if(tokens.get(0).getTokenType()!= TokenType.ID_KEYWORD){
             throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into an id for FunctionDef at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
         idNode = new IdNode(tokens);
 
         //< function_def > -> <id >[ func_def_params ]: < function_return >{ < body >}
@@ -128,7 +131,7 @@ public class FunctionDefNode implements JottTree{
 
         if(!functionReturnNode.isVoid()){
             if(!bodyNode.isReturnable(this.getType(functionTable))){
-                System.err.println("Function body does not have a return in all control flows for function " +idNode.getId() + " at line and file: not yet implemented");
+                System.err.println("Function body does not have a return in all control flows for function " +idNode.getId() + " at file and line: " + fileName +":" + lineNumber);
                 return false;
                 //THROW ERROR HERE WITH MESSAGE? OR NO?
             }

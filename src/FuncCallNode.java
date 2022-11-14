@@ -13,12 +13,17 @@ public class FuncCallNode implements JottTree {
     private IdNode funcName;
     private ParamsNode paramsNode;
 
+    private String fileName;
+    private int lineNumber;
+
     public FuncCallNode(ArrayList<Token> tokens) throws Exception {
         // Needs to check for id, '[' , params, and ']'
         if (!Character.isLetter(tokens.get(0).getToken().charAt(0))) {
             throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " needs to start with a letter at "
                     + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
         this.funcName = new IdNode(tokens); // removes the id_keyword token
 
         if (!tokens.get(0).getToken().equals("[")) {
@@ -216,7 +221,7 @@ public class FuncCallNode implements JottTree {
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (!functionTable.containsKey(funcName.convertToJott())) { // tries to call function that does not exist
-            System.err.println("Semantic Error: Function " + funcName.convertToJott() + " is not defined");
+            System.err.println("Semantic Error: Function " + funcName.convertToJott() + " is not defined at file and line : " + fileName +":" + lineNumber);
             return false;
         }
         // check if the function is built-in
@@ -228,7 +233,7 @@ public class FuncCallNode implements JottTree {
         if (functionTable.get(funcName.convertToJott()).getFuncDefParamsNode().getLength() != this.paramsNode
                 .getLength()) {
             System.err.println("Semantic Error: Function " + funcName.convertToJott()
-                    + " is not given correct number of parameters");
+                    + " is not given correct number of parameters at file and line: "+ fileName +":" + lineNumber);
             return false;
         }
         if (this.paramsNode.getLength() == 0) {
@@ -247,7 +252,7 @@ public class FuncCallNode implements JottTree {
                 if (!funcDefT.getType().convertToJott()
                         .equals(paramsT.getExpressionNode().getType(functionTable, symbolTable))) {
                     System.err.println(
-                            "Semantic Error: The function's accepted parameters and the given parameters are not of the same type at line and file: Not yet implemented");
+                            "Semantic Error: The function's accepted parameters and the given parameters are not of the same type at file and line: "+ fileName +":" + lineNumber);
                     return false;
                 }
                 funcDefT = funcDefT.getFuncDefParamsT();
@@ -255,7 +260,7 @@ public class FuncCallNode implements JottTree {
             }
         } else {
             System.err.println(
-                    "Semantic Error: The stored table parameters do not match the types of the given parameters in the function call at file and line: Not Yet implemented");
+                    "Semantic Error: The expected parameter types do not match the types of the given parameters in the function call at file and line: "+ fileName +":" + lineNumber);
             return false;
         }
         return true;

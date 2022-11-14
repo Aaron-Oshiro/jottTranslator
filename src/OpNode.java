@@ -6,9 +6,12 @@ import java.util.HashSet;
 public class OpNode implements JottTree {
 
     private String operator;
-
+    private String fileName;
+    private int lineNumber;
     public OpNode(ArrayList<Token> tokens) throws Exception{
         this.operator = tokens.get(0).getToken();
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
         tokens.remove(0);
     }
 
@@ -43,7 +46,7 @@ public class OpNode implements JottTree {
             return true;
         }
         else{
-            System.err.println("Math operator is not a valid operator at line and file: not yet implemented");
+            System.err.println("Math operator is not a valid operator at file and line: " + fileName +":" + lineNumber);
             return false;
         }
     }

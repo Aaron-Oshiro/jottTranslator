@@ -20,12 +20,17 @@ public class AsmtNode implements JottTree {
 
     private EndStmtNode endStmt;
 
+    private String fileName;
+    private int lineNumber;
+
     // probably need lookahead of 1 or 2?
     public AsmtNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         String currentTokenStr = tokens.get(0).getToken();
         if (types.contains(currentTokenStr)) {
             hasType = true;
             type = tokens.get(0).getToken();
+            fileName = tokens.get(0).getFilename();
+            lineNumber = tokens.get(0).getLineNum();
 
             // remove type token
             tokens.remove(0);
@@ -121,7 +126,7 @@ public class AsmtNode implements JottTree {
         if (!hasType) {
             if (!symbolTable.containsKey(id.getId())) {
                 System.err.println("Semantic Error: Symbol '" + id
-                        + "' was not found in the Symbol Table at File and Line:To be Implemented");
+                        + "' was not found in the Symbol Table at File and Line: "  + fileName +":" + lineNumber);
                 return false;
             } else {
                 // Aaron asked for this
@@ -134,13 +139,13 @@ public class AsmtNode implements JottTree {
                 }
                     else{
                         System.err.println(
-                            "Semantic Error: The types of the two parts of the asmt did not match at File and Line: To be implemented.");
+                            "Semantic Error: The types of the two parts of the asmt did not match at File and Line: " + fileName +":" + lineNumber);
                             return false;
                     }
                 }
                 else {
                    // System.err.println(
-                    //        "Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: To be implemented");
+                    //        "Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: ");
                     return false;
                 }
             }
@@ -151,7 +156,7 @@ public class AsmtNode implements JottTree {
             }
             else{
                 System.err.println(
-                    "Semantic Error: The types of the two parts of the asmt did not match at File and Line: To be implemented");
+                    "Semantic Error: The types of the two parts of the asmt did not match at File and Line: "  + fileName +":" + lineNumber);
                     return false;
             }
             }

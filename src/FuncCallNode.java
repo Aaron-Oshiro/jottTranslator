@@ -80,12 +80,12 @@ public class FuncCallNode implements JottTree {
                                 !functionTable
                                         .containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()))) {
                     System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
-                            " undefined for built-in function print");
+                            " undefined for built-in function print at file and line: " + fileName + ": " + lineNumber );
                     return false;
                 }
                 return paramsNode.validateTree(functionTable, symbolTable);
             } else {
-                System.err.println("built-in function print called with no parameters");
+                System.err.println("built-in function print called with no parameters at file and line: "  + fileName +": " +  lineNumber);
             }
         } else if (funcName.convertToJott().equals("concat")) {
             boolean firstParamValid = false;
@@ -107,7 +107,7 @@ public class FuncCallNode implements JottTree {
                     if (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
                             functionTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId())
                                     .getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
-                        firstParamValid = true;
+                        firstParamValid = paramsNode.validateTree(functionTable, symbolTable);
                     } else {
                         // make sure variable is defined & type is string
                         if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&

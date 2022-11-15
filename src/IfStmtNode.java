@@ -70,11 +70,11 @@ public class IfStmtNode implements JottTree {
         return true;
     }
 
-    public boolean isReturnable(String type){
+    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable){
         //this is true only if the body is returnable, and all elseIfs have returnable, and there is an else with a returnable value.
 
 
         
-        return body.isReturnable(type) && elseIfLst.isReturnable(type) && lse.isReturnable(type);
+        return body.isReturnable(type, functionTable, symbolTable) && elseIfLst.isReturnable(type, functionTable, symbolTable) && lse.isReturnable(type, functionTable, symbolTable);
     }
 }

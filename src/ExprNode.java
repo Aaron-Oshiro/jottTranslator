@@ -179,6 +179,9 @@ public class ExprNode implements JottTree {
         if (id != null) { // just an id_keyword - type don't matter.
 
             if (!symbolTable.containsKey(id.getId())) {
+
+                System.err.println("Semantic error: variable " + id.getId() + " was not found to be defined at file and line: " + fileName + ":" + lineNumber);
+                System.out.println(symbolTable.keySet());
                 // todo uncomment this once others add exceptions?
                 // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been
                 // declared, yet is used as a variable.\n");

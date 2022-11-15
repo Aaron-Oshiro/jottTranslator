@@ -45,4 +45,8 @@ public class ReturnNode implements JottTree {
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return exprNode.validateTree(functionTable, symbolTable) && endStmtNode.validateTree(functionTable, symbolTable)                                                      ;
     }
+
+    public String getReturnedType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable){
+        return exprNode.getType(functionTable, symbolTable);
+    }
 }

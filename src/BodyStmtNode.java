@@ -44,14 +44,19 @@ public class BodyStmtNode implements JottTree {
         return bodyStmtNode.validateTree(functionTable, symbolTable);
     }
 
-    public boolean isReturnable(String type) {
+    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
         // func call can while make no difference in the returnable status. we only need
         // check the if node.
         if (bodyStmtNode instanceof IfStmtNode) {
 
             IfStmtNode testReturnable = (IfStmtNode) bodyStmtNode;
-            return testReturnable.isReturnable(type);
+            return testReturnable.isReturnable(type, functionTable, symbolTable);
+
+        }
+        else if (bodyStmtNode instanceof WhileLoopNode){
+
+            //i want somewhere to check the returns in a while loop. TODO.
 
         }
         return false;

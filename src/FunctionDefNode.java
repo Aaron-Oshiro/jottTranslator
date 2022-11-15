@@ -130,13 +130,22 @@ public class FunctionDefNode implements JottTree{
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
         if(!functionReturnNode.isVoid()){
-            if(!bodyNode.isReturnable(this.getType(functionTable))){
-                System.err.println("Function body does not have a return in all control flows for function " +idNode.getId() + " at file and line: " + fileName +":" + lineNumber);
+            if(!bodyNode.isReturnable(this.getType(functionTable), functionTable, this.symbolTable)){
+
+                
+                System.err.println("Semantic Error: Function body does not have valid returns in all control flows for function " +idNode.getId() + " at file and line: " + fileName +":" + lineNumber + ". See additional output if return types do not match the expected types.");
                 return false;
                 //THROW ERROR HERE WITH MESSAGE? OR NO?
             }
+            //else{
+            //if(functionReturnNode.isVoid()){
+
+             //   return false;
+
+           // }
         }
-        return idNode.validateTree(functionTable, symbolTable) &&functionReturnNode.validateTree(functionTable, symbolTable) &&  funcDefParamsNode.validateTree(functionTable, symbolTable) &&bodyNode.validateTree(functionTable, this.symbolTable);
+        //}
+        return idNode.validateTree(functionTable, this.symbolTable) &&functionReturnNode.validateTree(functionTable, this.symbolTable) &&  funcDefParamsNode.validateTree(functionTable, this.symbolTable) &&bodyNode.validateTree(functionTable, this.symbolTable);
     }
 
 

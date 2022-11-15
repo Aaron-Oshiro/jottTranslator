@@ -121,11 +121,11 @@ public class ElseIfNode implements JottTree {
 
     }
 
-    public boolean isReturnable(String type) {
+    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
         if (hasElse) {
 
-            return bodyNode.isReturnable(type) && elseIfNode.isReturnable(type);
+            return bodyNode.isReturnable(type, functionTable, symbolTable) && elseIfNode.isReturnable(type, functionTable, symbolTable);
         }
         return true;
     }

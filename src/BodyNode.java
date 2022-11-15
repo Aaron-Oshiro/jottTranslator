@@ -10,9 +10,14 @@ public class BodyNode implements JottTree {
     private BodyStmtNode bodyStatement;
     private boolean bodyStatementFlag = false;
 
+    private String fileName;
+    private int lineNumber;
+
     public BodyNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
 
         String t0 = tokens.get(0).getToken();
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
         // System.out.println(t0);
         if (t0.equals("}")) {
             epsilonFlag = true;
@@ -116,7 +121,7 @@ public class BodyNode implements JottTree {
         }
     }
 
-    public boolean isReturnable(String type) {
+    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         // Todo, go through all bodies and body statements checking if there is a single
         // return or not. Use that to determine this result. Used by FuncDef.
         // Type is passed down to verify the returned thing is of the correct type? may
@@ -125,13 +130,26 @@ public class BodyNode implements JottTree {
         // should we check all bodies before statements? feel like this may cause an
         // issue with the ifs and elses and outside returns?
         if (rtrnFlag) {
+            if(type.equals("Void")){
+                System.err.println("Semantic Error: Void function has return at file and line: " + fileName +":" +lineNumber);
+                return true;
+            }
+
+            //todo. how do I gesymbol and func table here? guess I have to pass it ;_;
+            String returnedType = rtrn.getReturnedType(functionTable, symbolTable);
+            if(!type.equals(returnedType)){
+                System.err.println("Semantic Error: Function return expected type " + type +" but instead got a return of type " +returnedType +" at file and line: " + fileName +":" +lineNumber);
+                return false;
+            }
+
+
             return true;
-        } else if (bodyStatement.isReturnable(type)) {
+        } else if (bodyStatement.isReturnable(type, functionTable, symbolTable)) {
             return true;
         } else {
 
             for (int i = 0; i < bodyArrayList.size(); i++) {
-                if (bodyArrayList.get(i).isReturnable(type)) {
+                if (bodyArrayList.get(i).isReturnable(type, functionTable, symbolTable)) {
                     return true;
                 }
             }

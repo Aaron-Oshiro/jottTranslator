@@ -155,7 +155,7 @@ public class FunctionDefNode implements JottTree{
             return false;
         }
         //}
-        return idNode.validateTree(functionTable, this.symbolTable) &&functionReturnNode.validateTree(functionTable, this.symbolTable) &&  funcDefParamsNode.validateTree(functionTable, this.symbolTable) &&bodyNode.validateTree(functionTable, this.symbolTable);
+        return /*idNode.validateTree(functionTable, this.symbolTable) &&*/functionReturnNode.validateTree(functionTable, this.symbolTable) &&  funcDefParamsNode.validateTree(functionTable, this.symbolTable) &&bodyNode.validateTree(functionTable, this.symbolTable);
     }
 
 

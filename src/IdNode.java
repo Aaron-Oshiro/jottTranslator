@@ -11,9 +11,13 @@ public class IdNode implements JottTree {
     private String id;
     private String type;
     private boolean isNull;
+    private String fileName;
+    private int lineNumber;
 
     public IdNode(ArrayList<Token> tokens) throws Exception {
         this.id = tokens.get(0).getToken();
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
         HashSet<String> keywords = new HashSet<>(
                 Arrays.asList("while", "if", "default", "this", "new", "class", "try", "this"));
         if (keywords.contains(this.id)) {
@@ -79,6 +83,10 @@ public class IdNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+        if (!symbolTable.containsKey(id)) {
+            System.err.println("Error: undefined id " + id + " at file and line : " + fileName + ":" + lineNumber);
+            return false;
+        }
         return true;
     }
 

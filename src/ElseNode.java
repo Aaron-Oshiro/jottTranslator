@@ -79,6 +79,14 @@ public class ElseNode implements JottTree {
         return (bodyNode.validateTree(functionTable, symbolTable));
     }
 
+    public boolean hasAnyReturns(){
+
+        if (hasElse) {
+            return bodyNode.hasAnyReturns();
+        }
+        return false;
+    }
+
     public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         if (hasElse) {
             return bodyNode.isReturnable(type, functionTable, symbolTable);

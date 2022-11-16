@@ -59,6 +59,15 @@ public class WhileLoopNode implements JottTree {
         return "while " + expr.convertToPython(t) + ": " + body.convertToPython(t+1);
     }
 
+    public boolean hasAnyReturns(){
+        return body.hasAnyReturns();
+    }
+
+    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+
+        return body.isReturnable(type, functionTable, symbolTable);
+    }
+
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return ((expr.validateTree(functionTable, symbolTable)) && (body.validateTree(functionTable, symbolTable)));

@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class ParamsTNode implements JottTree {
 
     private boolean isEmpty;
-    private ExprNode expressionNode;    // requires an expression node to be implemented
+    private ExprNode expressionNode; // requires an expression node to be implemented
     private ParamsTNode paramsTNode;
 
     public ParamsTNode(ArrayList<Token> tokens) throws Exception {
@@ -51,24 +51,30 @@ public class ParamsTNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        if (this.isEmpty) return "";
+        if (this.isEmpty)
+            return "";
         return ", " + this.expressionNode.convertToJava() + this.paramsTNode.convertToJava();
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if (this.isEmpty)
+            return "";
+        return ", " + this.expressionNode.convertToC() + this.paramsTNode.convertToC();
     }
 
     @Override
     public String convertToPython(int t) {
-        if (this.isEmpty) return "";
+        if (this.isEmpty)
+            return "";
         return ", " + this.expressionNode.convertToPython(t) + this.paramsTNode.convertToPython(t);
     }
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        if (isEmpty) return true;
-        return (this.expressionNode.validateTree(functionTable, symbolTable) && this.paramsTNode.validateTree(functionTable, symbolTable));
+        if (isEmpty)
+            return true;
+        return (this.expressionNode.validateTree(functionTable, symbolTable)
+                && this.paramsTNode.validateTree(functionTable, symbolTable));
     }
 }

@@ -24,8 +24,8 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        //TODO somehow get the file name to name the class the same thing
-        return "public class output {\n" + functionListNode.convertToJava() + "\n}";
+        String fileName = JottMain.FILENAME;
+        return "import java.util.Scanner;\n\npublic class " + fileName + " {\n" + functionListNode.convertToJava() + "\n}";
     }
 
     @Override

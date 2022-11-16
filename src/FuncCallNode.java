@@ -72,6 +72,11 @@ public class FuncCallNode implements JottTree {
 
     public boolean validateBuiltIn(HashMap<String, FunctionDefNode> functionTable,
             HashMap<String, IdNode> symbolTable) {
+        if (paramsNode.isEmpty()) {
+            System.err.println("Error: built-in function " + funcName.getId() + " called without parameters at file and line: " +
+                    fileName + ": " + lineNumber);
+            return false;
+        }
         if (funcName.convertToJott().equals("print")) {
             if (!paramsNode.isEmpty()) {
                 // since print only accepts one argument
@@ -79,19 +84,20 @@ public class FuncCallNode implements JottTree {
                         (!symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
                                 !functionTable
                                         .containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()))) {
-                    System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
+                    System.err.println("Error: argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
                             " undefined for built-in function print at file and line: " + fileName + ": " + lineNumber );
                     return false;
                 }
                 return paramsNode.validateTree(functionTable, symbolTable);
             } else {
-                System.err.println("built-in function print called with no parameters at file and line: "  + fileName +": " +  lineNumber);
+                System.err.println("Error: built-in function print called with no parameters at file and line: "  + fileName +": " +  lineNumber);
+                return false;
             }
         } else if (funcName.convertToJott().equals("concat")) {
             boolean firstParamValid = false;
             boolean secondParamValid = false;
-            if (!paramsNode.getParamsTNode().getParamsTNode().isEmpty()) {
-                System.err.println("built-in function concat expects two strings as arguments at file and line : " + fileName +":" + lineNumber);
+            if (paramsNode.getParamsTNode().isEmpty() || !paramsNode.getParamsTNode().getParamsTNode().isEmpty()) {
+                System.err.println("Error: built-in function concat expects two strings as arguments at file and line : " + fileName +":" + lineNumber);
                 return false;
             } else {
                 // check to see if the first param is a function call or a value
@@ -117,8 +123,9 @@ public class FuncCallNode implements JottTree {
                                         .equals("String")) {
                             firstParamValid = true;
                         } else {
-                            System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
+                            System.err.println("Error: argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
                                     " is not a String value or a variable of type String at file and line: " +fileName + ": " + lineNumber);
+                            return false;
                         }
                     }
                 }
@@ -147,8 +154,9 @@ public class FuncCallNode implements JottTree {
                                         .getType().equals("String")) {
                             secondParamValid = true;
                         } else {
-                            System.err.println("argument " + paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId() +
+                            System.err.println("Error: argument " + paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId() +
                                     " is not a String value or a variable of type String at file and line: " +fileName + ": " + lineNumber);
+                            return false;
                         }
                     }
                 }
@@ -187,11 +195,13 @@ public class FuncCallNode implements JottTree {
 
             // input params can be variables or raw values
             // check if it's a raw value
+
             if (paramsNode.getExpressionNode().getFirstExpr().getId() == null  && paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     firstParamValid = true;
                 } else {
                     System.err.println("Error: the first param for input should be a String at file and line : " + fileName +":" + lineNumber);
+                    return false;
                 }
             } else {
                 if (!paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
@@ -206,10 +216,15 @@ public class FuncCallNode implements JottTree {
                     firstParamValid = true;
                 } else {
                     System.err.println("Error: the first param for input should be a String at file and line : " + fileName +":" + lineNumber);
+                    return false;
                 }
             }
 
             // same checks but for second input
+            if (paramsNode.getParamsTNode().isEmpty()) {
+                System.err.println("Error: the second param for input is empty at file and line : " + fileName + ":" +lineNumber);
+                return false;
+            }
             if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null && paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
                         .equals("Integer")) {

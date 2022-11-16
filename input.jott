@@ -8,5 +8,5 @@ bar[x: String, y: String]:String {
     return concat[x, y];
 }
 main[]:Void{
-    input[concat["x", "y"], foo[256]];
+    input["g", y];
 }

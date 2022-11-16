@@ -26,12 +26,12 @@ public class JottMain {
 
         if (tree != null) {
 
-//            if(tree.validateTree(null, null)){
-//                System.out.println("validated successfully");
-//            }
-//            else{
-//                System.out.println("validation failed...");
-//            }
+            if(tree.validateTree(null, null)){
+                System.out.println("validated successfully");
+            }
+            else{
+                System.out.println("validation failed...");
+            }
 
             String newLanguage;
 

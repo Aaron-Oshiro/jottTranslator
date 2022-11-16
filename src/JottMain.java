@@ -5,6 +5,10 @@ import java.io.IOException;
 
 public class JottMain {
 
+    public static String FILENAME;
+
+    public static int SCANNERINT = 0;
+
     public static void main(String[] args) {
         // java Jott input.jott output.<> <language>
         if (args.length != 3) {
@@ -13,6 +17,7 @@ public class JottMain {
         }
         String inputName = args[0];
         String outputName = args[1];
+        FILENAME = outputName.split("\\.")[0];
         String language = args[2].toLowerCase();
         ArrayList<Token> tokens = new ArrayList<>(JottTokenizer.tokenize(inputName));
 //        System.out.println(tokens);
@@ -21,12 +26,12 @@ public class JottMain {
 
         if (tree != null) {
 
-            if(tree.validateTree(null, null)){
-                System.out.println("validated successfully");
-            }
-            else{
-                System.out.println("validation failed...");
-            }
+//            if(tree.validateTree(null, null)){
+//                System.out.println("validated successfully");
+//            }
+//            else{
+//                System.out.println("validation failed...");
+//            }
 
             String newLanguage;
 

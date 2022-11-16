@@ -38,19 +38,22 @@ public class FunctionListNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        if (!hasFunctionDefinition) return "";
+        if (!hasFunctionDefinition)
+            return "";
         return functionDefNode.convertToJava() + "\n" + functionListNode.convertToJava();
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        if (!hasFunctionDefinition)
+            return "";
+        return functionDefNode.convertToC() + "\n" + functionListNode.convertToC();
     }
 
     @Override
     public String convertToPython(int t) {
-        if (!hasFunctionDefinition) return "";
+        if (!hasFunctionDefinition)
+            return "";
         return functionDefNode.convertToPython(t) + "\n\n" + functionListNode.convertToPython(t);
     }
 
@@ -59,7 +62,8 @@ public class FunctionListNode implements JottTree {
         if (!hasFunctionDefinition) {
             return true;
         }
-        return ((functionDefNode.validateTree(functionTable, symbolTable)) && (functionListNode.validateTree(functionTable, symbolTable)));
+        return ((functionDefNode.validateTree(functionTable, symbolTable))
+                && (functionListNode.validateTree(functionTable, symbolTable)));
     }
 
 }

@@ -1,21 +1,22 @@
 import java.util.*;
-public class MathOpNode implements JottTree{
 
+public class MathOpNode implements JottTree {
 
     private String operation;
 
-    public MathOpNode(ArrayList<Token> tokens)throws Exception{
+    public MathOpNode(ArrayList<Token> tokens) throws Exception {
         Token tokenToCheck = tokens.get(0);
 
-        if(tokenToCheck.getToken().equals("+")||tokenToCheck.getToken().equals("-")||tokenToCheck.getToken().equals("/")||tokenToCheck.getToken().equals("*")){
+        if (tokenToCheck.getToken().equals("+") || tokenToCheck.getToken().equals("-")
+                || tokenToCheck.getToken().equals("/") || tokenToCheck.getToken().equals("*")) {
             operation = tokenToCheck.getToken();
             tokens.remove(0);
-        }
-        else{
-            throw new Exception("Syntax Error: Token "+ tokenToCheck.toString() + " cannot be parsed into a MathOp at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+        } else {
+            throw new Exception("Syntax Error: Token " + tokenToCheck.toString() + " cannot be parsed into a MathOp at "
+                    + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
     }
-    
+
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
@@ -29,8 +30,7 @@ public class MathOpNode implements JottTree{
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        return operation;
     }
 
     @Override
@@ -44,6 +44,4 @@ public class MathOpNode implements JottTree{
         return true;
     }
 
-    
-    
 }

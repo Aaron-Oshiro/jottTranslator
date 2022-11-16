@@ -1,3 +1,4 @@
+
 /**
  * @author Aaron Oshiro
  */
@@ -12,9 +13,11 @@ public class ReturnNode implements JottTree {
 
     public ReturnNode(ArrayList<Token> tokens) throws Exception {
         if (!tokens.get(0).getToken().equals("return")) {
-            throw new Exception("Syntax Error: Return statement must start with \"return\" but instead token " + tokens.get(0).getToken() + " was found at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Return statement must start with \"return\" but instead token "
+                    + tokens.get(0).getToken() + " was found at " + tokens.get(0).getFilename() + " line "
+                    + tokens.get(0).getLineNum());
         }
-        tokens.remove(0);   // removes the 'return'
+        tokens.remove(0); // removes the 'return'
         this.exprNode = new ExprNode(tokens);
         this.endStmtNode = new EndStmtNode(tokens);
     }
@@ -31,7 +34,7 @@ public class ReturnNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        return "\nreturn " + exprNode.convertToC() + endStmtNode.convertToC();
     }
 
     @Override
@@ -43,10 +46,11 @@ public class ReturnNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return exprNode.validateTree(functionTable, symbolTable) && endStmtNode.validateTree(functionTable, symbolTable)                                                      ;
+        return exprNode.validateTree(functionTable, symbolTable)
+                && endStmtNode.validateTree(functionTable, symbolTable);
     }
 
-    public String getReturnedType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable){
+    public String getReturnedType(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         return exprNode.getType(functionTable, symbolTable);
     }
 }

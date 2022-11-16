@@ -1,3 +1,4 @@
+
 /**
  * This is the REL_OP node
  * Contains the relationship operator given
@@ -21,7 +22,8 @@ public class RelOpNode implements JottTree {
             Token newRelOp = tokens.remove(0);
             relationshipOperator = newRelOp.getToken();
         } else {
-            throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " is not of type REL_OP at" + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+            throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " is not of type REL_OP at"
+                    + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
         }
     }
 
@@ -46,7 +48,7 @@ public class RelOpNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        return this.relationshipOperator;
     }
 
     @Override

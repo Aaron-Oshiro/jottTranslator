@@ -96,10 +96,20 @@ public class AsmtNode implements JottTree {
     @Override
     public String convertToJava() {
         // has the same issue as convertToC with type
-        if (hasType) {
-            return type + " " + id.convertToJava() + " = " + expr.convertToJava() + endStmt.convertToJava();
+        String ret = "";
+        if (!expr.getFirstExpr().isFuncCallNull()) {
+            if (expr.getFirstExpr().getFuncCall().getFuncName().equals("input")) {
+                String scannerName = "scanner_" + JottMain.SCANNERINT;
+                String scan = "Scanner " + scannerName + " = new Scanner(System.in);\n" +
+                        "System.out.print(" + expr.getFirstExpr().getFuncCall().getParamsNode().getExpressionNode().convertToJava() + ");\n";
+                ret += scan;
+            }
         }
-        return id.convertToJava() + " = " + expr.convertToJava() + endStmt.convertToJava();
+        if (hasType) {
+            ret += type + " ";
+        }
+        ret += id.convertToJava() + " = " + expr.convertToJava() + endStmt.convertToJava();
+        return ret;
     }
 
     @Override

@@ -14,14 +14,16 @@ public class FuncDefParamsTNode implements JottTree {
     private FuncDefParamsTNode funcDefParamsT;
 
     public FuncDefParamsTNode(ArrayList<Token> tokens) throws Exception {
-        if(!tokens.get(0).getToken().equals(",")) hasParamsT = false;
+        if (!tokens.get(0).getToken().equals(","))
+            hasParamsT = false;
         else {
             hasParamsT = true;
             // remove comma
             tokens.remove(0);
             id = new IdNode(tokens);
-            if(!tokens.get(0).getToken().equals(":")) {
-                throw new Exception("Syntax Error: Token "+ tokens.get(0).getToken() + " cannot be parsed into a : at " + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
+            if (!tokens.get(0).getToken().equals(":")) {
+                throw new Exception("Syntax Error: Token " + tokens.get(0).getToken() + " cannot be parsed into a : at "
+                        + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
             }
             tokens.remove(0);
             type = new TypeNode(tokens);
@@ -58,7 +60,8 @@ public class FuncDefParamsTNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        if(!hasParamsT) return "";
+        if (!hasParamsT)
+            return "";
         else {
             return "," + id.convertToJott() + ":" + type.convertToJott() + funcDefParamsT.convertToJott();
         }
@@ -66,18 +69,22 @@ public class FuncDefParamsTNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        if (!hasParamsT) return "";
+        if (!hasParamsT)
+            return "";
         return ", " + type.convertToJava() + " " + id.convertToJava() + funcDefParamsT.convertToJava();
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if (!hasParamsT)
+            return "";
+        return ", " + type.convertToC() + " " + id.convertToC() + funcDefParamsT.convertToC();
     }
 
     @Override
     public String convertToPython(int t) {
-        if (!hasParamsT) return "";
+        if (!hasParamsT)
+            return "";
         else {
             return ", " + id.convertToPython(t) + funcDefParamsT.convertToPython(t);
         }
@@ -85,9 +92,11 @@ public class FuncDefParamsTNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        if (!hasParamsT) return true;
-        else return id.validateTree(functionTable, symbolTable) && type.validateTree(functionTable, symbolTable) &&
-                funcDefParamsT.validateTree(functionTable, symbolTable);
+        if (!hasParamsT)
+            return true;
+        else
+            return id.validateTree(functionTable, symbolTable) && type.validateTree(functionTable, symbolTable) &&
+                    funcDefParamsT.validateTree(functionTable, symbolTable);
     }
 
 }

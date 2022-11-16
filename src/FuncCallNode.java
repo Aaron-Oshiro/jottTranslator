@@ -96,7 +96,7 @@ public class FuncCallNode implements JottTree {
             } else {
                 // check to see if the first param is a function call or a value
                 // id and func call is null, so we have a value like "foo"
-                if ((paramsNode.getExpressionNode().getFirstExpr().getId() == null) && (paramsNode.getExpressionNode().getFirstExpr().getFuncCall() == null)) {
+                if ((paramsNode.getExpressionNode().getFirstExpr().getId() == null) && (paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull())) {
                     if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                         firstParamValid = true;
                     }
@@ -123,7 +123,7 @@ public class FuncCallNode implements JottTree {
                     }
                 }
                 // same checks for second param
-                if ((paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) && (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getFuncCall() == null)) {;
+                if ((paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) && (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull())) {;
                     if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
                             .equals("String")) {
                         secondParamValid = true;
@@ -136,7 +136,7 @@ public class FuncCallNode implements JottTree {
                             functionTable
                                     .get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
                                     .getFunctionReturnNode().getReturnType().convertToJott().equals("String")) {
-                        secondParamValid = paramsNode.validateTree(functionTable, symbolTable);
+                        secondParamValid = paramsNode.getParamsTNode().validateTree(functionTable, symbolTable);
                     } else {
                         if (symbolTable
                                 .containsKey(
@@ -159,7 +159,7 @@ public class FuncCallNode implements JottTree {
                 System.err.println("Error: built-in function length expects only one parameter");
                 return false;
             }
-            if (paramsNode.getExpressionNode().getFirstExpr().getId() == null) {
+            if (paramsNode.getExpressionNode().getFirstExpr().getId() == null && paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     return true;
                 } else {
@@ -167,6 +167,10 @@ public class FuncCallNode implements JottTree {
                     return false;
                 }
             } else {
+                if (!paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
+                        && functionTable.get(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName()).getFunctionReturnNode().getReturnType().convertToJott().equals("String"))) {
+                    return paramsNode.validateTree(functionTable, symbolTable);
+                }
                 // make sure variable is defined & type is string
                 if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
                         symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType()
@@ -183,13 +187,18 @@ public class FuncCallNode implements JottTree {
 
             // input params can be variables or raw values
             // check if it's a raw value
-            if (paramsNode.getExpressionNode().getFirstExpr().getId() == null) {
+            if (paramsNode.getExpressionNode().getFirstExpr().getId() == null  && paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     firstParamValid = true;
                 } else {
                     System.err.println("Error: the first param for input should be a String");
                 }
             } else {
+                if (!paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
+                        && functionTable.get(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName()).getFunctionReturnNode().getReturnType().convertToJott().equals("String"))) {
+                    return paramsNode.validateTree(functionTable, symbolTable);
+                }
+
                 // make sure variable is defined & type is string
                 if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
                         symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType()
@@ -201,7 +210,7 @@ public class FuncCallNode implements JottTree {
             }
 
             // same checks but for second input
-            if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) {
+            if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null && paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
                         .equals("Integer")) {
                     secondParamValid = true;
@@ -209,6 +218,11 @@ public class FuncCallNode implements JottTree {
                     System.err.println("Error: the second param for input should be an Integer");
                 }
             } else {
+                if (!paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
+                        && functionTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getFuncCall().getFuncName()).getFunctionReturnNode().getReturnType().convertToJott().equals("String"))) {
+                    return paramsNode.getParamsTNode().validateTree(functionTable, symbolTable);
+                }
+
                 if (symbolTable
                         .containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
                         symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())

@@ -1,6 +1,6 @@
 #this will pass phase 3
 
-foo[x:String]:String {
+foo[x:Integer]:Integer {
     return x;
 }
 
@@ -8,8 +8,5 @@ bar[x: String, y: String]:String {
     return concat[x, y];
 }
 main[]:Void{
-    concat[foo[concat["x", "y"]], foo[concat["x", concat["x", y]]]];
-    String s1 = "foo";
-    String s2 = concat["bar", s1];
-    print[foo[bar["x", "y"]]];
+    input[concat["x", "y"], foo[256]];
 }

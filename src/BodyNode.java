@@ -121,6 +121,26 @@ public class BodyNode implements JottTree {
         }
     }
 
+    public boolean hasAnyReturns(){
+        if(rtrnFlag){
+             System.err.println("Semantic Error: Void function has one or more returns at file and line: " + fileName +":" + lineNumber );
+            return true;
+        }
+        else if (bodyStatement.hasAnyReturns()){
+            return true;
+        }
+
+        for (int i = 0; i < bodyArrayList.size(); i++) {
+            if (bodyArrayList.get(i).hasAnyReturns()) {
+                return true;
+            }
+        }
+
+        return false;
+
+
+    }
+
     public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
         // Todo, go through all bodies and body statements checking if there is a single
         // return or not. Use that to determine this result. Used by FuncDef.

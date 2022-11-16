@@ -149,6 +149,11 @@ public class FunctionDefNode implements JottTree{
 
            // }
         }
+        else if (bodyNode.hasAnyReturns()){
+            //it is void but has a return. this is INVALID!
+            //System.err.println("Semantic Error: Function body has one or more returns at " +idNode.getId() + " starting file and line: " + fileName +":" + lineNumber + ". See additional output if return types do not match the expected types.");
+            return false;
+        }
         //}
         return idNode.validateTree(functionTable, this.symbolTable) &&functionReturnNode.validateTree(functionTable, this.symbolTable) &&  funcDefParamsNode.validateTree(functionTable, this.symbolTable) &&bodyNode.validateTree(functionTable, this.symbolTable);
     }

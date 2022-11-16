@@ -91,7 +91,7 @@ public class FuncCallNode implements JottTree {
             boolean firstParamValid = false;
             boolean secondParamValid = false;
             if (!paramsNode.getParamsTNode().getParamsTNode().isEmpty()) {
-                System.err.println("built-in function concat expects two strings as arguments");
+                System.err.println("built-in function concat expects two strings as arguments at file and line : " + fileName +":" + lineNumber);
                 return false;
             } else {
                 // check to see if the first param is a function call or a value
@@ -156,14 +156,14 @@ public class FuncCallNode implements JottTree {
             }
         } else if (funcName.convertToJott().equals("length")) {
             if (!paramsNode.getParamsTNode().isEmpty()) {
-                System.err.println("Error: built-in function length expects only one parameter");
+                System.err.println("Error: built-in function length expects only one parameter at file and line : " + fileName +":" + lineNumber);
                 return false;
             }
             if (paramsNode.getExpressionNode().getFirstExpr().getId() == null && paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     return true;
                 } else {
-                    System.err.println("Error: the input param should be a String for built-in function length");
+                    System.err.println("Error: the input param should be a String for built-in function length at file and line : " + fileName +":" + lineNumber);
                     return false;
                 }
             } else {
@@ -177,7 +177,7 @@ public class FuncCallNode implements JottTree {
                                 .equals("String")) {
                     return true;
                 } else {
-                    System.err.println("Error: the input param should be a String for built-in function length");
+                    System.err.println("Error: the input param should be a String for built-in function length at file and line : " + fileName +":" + lineNumber);
                     return false;
                 }
             }
@@ -191,7 +191,7 @@ public class FuncCallNode implements JottTree {
                 if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                     firstParamValid = true;
                 } else {
-                    System.err.println("Error: the first param for input should be a String");
+                    System.err.println("Error: the first param for input should be a String at file and line : " + fileName +":" + lineNumber);
                 }
             } else {
                 if (!paramsNode.getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
@@ -205,7 +205,7 @@ public class FuncCallNode implements JottTree {
                                 .equals("String")) {
                     firstParamValid = true;
                 } else {
-                    System.err.println("Error: the first param for input should be a String ");
+                    System.err.println("Error: the first param for input should be a String at file and line : " + fileName +":" + lineNumber);
                 }
             }
 
@@ -215,7 +215,7 @@ public class FuncCallNode implements JottTree {
                         .equals("Integer")) {
                     secondParamValid = true;
                 } else {
-                    System.err.println("Error: the second param for input should be an Integer");
+                    System.err.println("Error: the second param for input should be an Integer at file and line : " + fileName +":" + lineNumber);
                 }
             } else {
                 if (!paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getFuncCall().getFuncName())
@@ -229,7 +229,7 @@ public class FuncCallNode implements JottTree {
                                 .getType().equals("Integer")) {
                     secondParamValid = true;
                 } else {
-                    System.err.println("Error: the second param for input should be an Integer");
+                    System.err.println("Error: the second param for input should be an Integer at file and line : " + fileName +":" + lineNumber);
                 }
             }
             return firstParamValid && secondParamValid;

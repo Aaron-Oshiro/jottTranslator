@@ -17,6 +17,13 @@ public class TypeNode implements JottTree {
         }
     }
 
+    /**
+     * for built-in functions
+     * @param input
+     */
+    public TypeNode(String input) {
+        type = input;
+    }
     @Override
     public String convertToJott() {
         return type;

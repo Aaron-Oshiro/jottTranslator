@@ -95,8 +95,8 @@ public class FuncCallNode implements JottTree {
                 return false;
             } else {
                 // check to see if the first param is a function call or a value
-                // id is null, so we have a value like "foo"
-                if (paramsNode.getExpressionNode().getFirstExpr().getId() == null) {
+                // id and func call is null, so we have a value like "foo"
+                if ((paramsNode.getExpressionNode().getFirstExpr().getId() == null) && (paramsNode.getExpressionNode().getFirstExpr().getFuncCall() == null)) {
                     if (paramsNode.getExpressionNode().getFirstExpr().getValue().getType().equals("String")) {
                         firstParamValid = true;
                     }
@@ -115,12 +115,13 @@ public class FuncCallNode implements JottTree {
                                         .equals("String")) {
                             firstParamValid = true;
                         } else {
-                            System.err.println("error occurred when validating first param for concat");
+                            System.err.println("argument " + paramsNode.getExpressionNode().getFirstExpr().getId().getId() +
+                                    " is not a String value or a variable of type String at file and line: " +fileName + ": " + lineNumber);
                         }
                     }
                 }
                 // same checks for second param
-                if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) {
+                if ((paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null) && (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getFuncCall() == null)) {;
                     if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
                             .equals("String")) {
                         secondParamValid = true;
@@ -143,7 +144,8 @@ public class FuncCallNode implements JottTree {
                                         .getType().equals("String")) {
                             secondParamValid = true;
                         } else {
-                            System.err.println("error occurred when validating second param for concat");
+                            System.err.println("argument " + paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId() +
+                                    " is not a String value or a variable of type String at file and line: " +fileName + ": " + lineNumber);
                         }
                     }
                 }

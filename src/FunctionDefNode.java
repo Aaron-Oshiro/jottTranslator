@@ -68,16 +68,21 @@ public class FunctionDefNode implements JottTree{
     public FunctionDefNode(String functionName) throws Exception {
         switch (functionName) {
             case "print":
+                // here the ID type refers to the type of the arguments that can be passed to a function
                 this.idNode = new IdNode("print", "any");
+                this.functionReturnNode = new FunctionReturnNode("Void");
                 break;
             case "concat":
                 this.idNode = new IdNode("concat", "String");
+                this.functionReturnNode = new FunctionReturnNode("String");
                 break;
             case "length":
                 this.idNode = new IdNode("length", "String");
+                this.functionReturnNode = new FunctionReturnNode("Integer");
                 break;
             case "input":
                 this.idNode = new IdNode("input", "String");
+                this.functionReturnNode = new FunctionReturnNode("String");
                 break;
             default:
                 throw new Exception("Unrecognized function " + functionName);

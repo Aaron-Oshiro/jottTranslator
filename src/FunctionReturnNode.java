@@ -18,6 +18,18 @@ public class FunctionReturnNode implements JottTree {
         }
     }
 
+    /**
+     * for built-in functions
+     */
+    public FunctionReturnNode(String type) {
+        if (type.equals("Void")) {
+            voidFlag = true;
+        }
+        else {
+            returnType = new TypeNode(type);
+        }
+    }
+
     public TypeNode getReturnType() {
         return returnType;
     }

@@ -1,21 +1,9 @@
 #this will pass phase 3
 
-foo[x:Integer]:Void{
-    print[x];
-}
-
-baz[]:Void{
-    print["Hello World"];
-}
-
-bar[x:Double]:String{
-    if[x > 5.1]{
-        return "bar";
-    }
-    baz[];
-    return "foo";
+foo[x:Integer]:Integer{
+    return x;
 }
 
 main[]:Void{
-concat[baz, bar];
+    foo[foo];
 }

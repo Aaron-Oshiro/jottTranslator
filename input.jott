@@ -3,9 +3,13 @@
 foo[x:String]:String {
     return x;
 }
+
+bar[x: String, y: String]:String {
+    return concat[x, y];
+}
 main[]:Void{
     concat[foo[concat["x", "y"]], foo[concat["x", concat["x", y]]]];
     String s1 = "foo";
     String s2 = concat["bar", s1];
-    print[s2];
+    print[foo[bar["x", "y"]]];
 }

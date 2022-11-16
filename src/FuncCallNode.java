@@ -111,7 +111,6 @@ public class FuncCallNode implements JottTree {
                     {
                         firstParamValid = paramsNode.validateTree(functionTable, symbolTable);
                     } else {
-                        System.out.println(paramsNode.getExpressionNode().getFirstExpr().getFuncCall().getFuncName());
                         // make sure variable is defined & type is string
                         if (symbolTable.containsKey(paramsNode.getExpressionNode().getFirstExpr().getId().getId()) &&
                                 symbolTable.get(paramsNode.getExpressionNode().getFirstExpr().getId().getId()).getType()

@@ -24,8 +24,7 @@ public class FunctionReturnNode implements JottTree {
     public FunctionReturnNode(String type) {
         if (type.equals("Void")) {
             voidFlag = true;
-        }
-        else {
+        } else {
             returnType = new TypeNode(type);
         }
     }
@@ -49,13 +48,16 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        if (voidFlag) return "void";
+        if (voidFlag)
+            return "void";
         return returnType.convertToJava();
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if (voidFlag)
+            return "void";
+        return returnType.convertToC();
     }
 
     @Override

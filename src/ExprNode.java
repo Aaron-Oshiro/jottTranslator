@@ -62,7 +62,9 @@ public class ExprNode implements JottTree {
             funcCall = new FuncCallNode(tokens);
         }
     }
-
+    public boolean isFuncCallNull() {
+        return funcCall == null;
+    }
     @Override
     public String convertToJott() {
         if (id != null) { // just an id_keyword

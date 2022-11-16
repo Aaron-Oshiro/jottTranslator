@@ -1,9 +1,11 @@
 #this will pass phase 3
 
-foo[x:Integer]:Integer{
+foo[x:String]:String {
     return x;
 }
-
 main[]:Void{
-    foo[foo];
+    concat[foo[concat["x", "y"]], foo[concat["x", concat["x", y]]]];
+    String s1 = "foo";
+    String s2 = concat["bar", s1];
+    print[s2];
 }

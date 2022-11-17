@@ -45,17 +45,17 @@ public class ValueNode implements JottTree {
 
     @Override
     public String convertToJava() {
+        if (type.equals("Boolean")) return value.toLowerCase(); // change True and False to true and False
         return value;
     }
 
     @Override
     public String convertToC() {
-        return null;
+        return value;
     }
 
     @Override
     public String convertToPython(int t) {
-        // System.out.println(value);
         return value;
     }
 

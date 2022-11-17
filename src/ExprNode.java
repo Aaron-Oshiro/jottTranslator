@@ -49,9 +49,11 @@ public class ExprNode implements JottTree {
         TokenType tt1 = (tokens.get(1).getTokenType());
 
         if (tt0 == TokenType.ID_KEYWORD && tt1 != TokenType.L_BRACKET) { // if it's not a function call
-            id = new IdNode(tokens);
-            // System.out.println(id.convertToJott());
-            // System.out.println(tt0);
+            if (t0.getToken().equals("True") || t0.getToken().equals("False")) {    // if it's a boolean
+                value = new ValueNode(tokens);
+            } else {
+                id = new IdNode(tokens);    // it's just an IdNode
+            }
 
         } else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
             value = new ValueNode(tokens);

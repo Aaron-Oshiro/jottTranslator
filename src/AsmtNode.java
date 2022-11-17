@@ -17,6 +17,7 @@ public class AsmtNode implements JottTree {
     private ArrayList<String> types = new ArrayList<>(Arrays.asList("Double", "String", "Integer", "Boolean"));
     private boolean hasType = false;
     private String type;
+    private TypeNode typeNode;
 
     private EndStmtNode endStmt;
 
@@ -29,6 +30,7 @@ public class AsmtNode implements JottTree {
         if (types.contains(currentTokenStr)) {
             hasType = true;
             type = tokens.get(0).getToken();
+            typeNode = new TypeNode(type);
             fileName = tokens.get(0).getFilename();
             lineNumber = tokens.get(0).getLineNum();
 
@@ -87,7 +89,7 @@ public class AsmtNode implements JottTree {
     @Override
     public String convertToJott() {
         if (hasType) {
-            return type + " " + id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
+            return typeNode.convertToJott() + " " + id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
         } else {
             return id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
         }
@@ -95,7 +97,6 @@ public class AsmtNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        // has the same issue as convertToC with type
         String ret = "";
         if (!expr.getFirstExpr().isFuncCallNull()) {
             if (expr.getFirstExpr().getFuncCall().getFuncName().equals("input")) {
@@ -106,7 +107,7 @@ public class AsmtNode implements JottTree {
             }
         }
         if (hasType) {
-            ret += type + " ";
+            ret += typeNode.convertToJava() + " ";
         }
         ret += id.convertToJava() + " = " + expr.convertToJava() + endStmt.convertToJava();
         return ret;
@@ -119,7 +120,7 @@ public class AsmtNode implements JottTree {
             // cannot call convertToC. if this can't change,
             // will have to include several if statements.
             // (because the type in C is written differently)
-            return type + " " + id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
+            return typeNode.convertToC() + " " + id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
         } else {
             return id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
         }

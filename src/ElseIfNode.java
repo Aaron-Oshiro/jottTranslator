@@ -119,7 +119,7 @@ public class ElseIfNode implements JottTree {
             return true;
         }
 
-        if(exprNode.getType(functionTable, symbolTable) != "Boolean"){
+        if(!exprNode.getType(functionTable, symbolTable).equals("Boolean")){
             System.err.println("Semantic Error: Elseif statement does not have a boolean type expression in its condition at file and line: " + fileName + ":" + lineNumber);
             return false;
 

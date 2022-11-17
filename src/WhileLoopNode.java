@@ -76,7 +76,7 @@ public class WhileLoopNode implements JottTree {
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
-        if(expr.getType(functionTable, symbolTable) != "Boolean"){
+        if(!expr.getType(functionTable, symbolTable).equals("Boolean")){
             System.err.println("Semantic Error: While statement does not have a boolean type expression in its condition at file and line: " + fileName + ":" + lineNumber);
             return false;
 

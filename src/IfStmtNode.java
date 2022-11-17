@@ -7,8 +7,13 @@ public class IfStmtNode implements JottTree {
     private ElseIfNode elseIfLst;
     private ElseNode lse;
 
+    private String fileName;
+    private int lineNumber;
     public IfStmtNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         Token t0 = tokens.get(0);
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
+
         if (!t0.getToken().equals("if")) {
             throw new Exception("Syntax Error: Token " + t0.getToken() + " cannot be parsed into 'if' at "
                     + tokens.get(0).getFilename() + " line " + tokens.get(0).getLineNum());
@@ -73,7 +78,13 @@ public class IfStmtNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        return true;
+
+        if(expr.getType(functionTable, symbolTable) != "Boolean"){
+            System.err.println("Semantic Error: If statement does not have a boolean type expression in its condition at file and line: " + fileName + ":" + lineNumber);
+            return false;
+
+        }
+        return body.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable) && lse.validateTree(functionTable, symbolTable) && elseIfLst.validateTree(functionTable, symbolTable);
     }
 
     public boolean hasAnyReturns() {

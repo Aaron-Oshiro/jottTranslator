@@ -9,10 +9,12 @@ public class ElseIfNode implements JottTree {
     private ExprNode exprNode;
 
     private ElseIfNode elseIfNode;
-
+    private String fileName;
+    private int lineNumber;
     public ElseIfNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         Token tokenToCheck = tokens.get(0);
-
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
         if (tokenToCheck.getToken().equals("elseif")) {
             // get rid of the else
             tokens.remove(0);
@@ -116,6 +118,13 @@ public class ElseIfNode implements JottTree {
         if (!hasElse) {
             return true;
         }
+
+        if(exprNode.getType(functionTable, symbolTable) != "Boolean"){
+            System.err.println("Semantic Error: Elseif statement does not have a boolean type expression in its condition at file and line: " + fileName + ":" + lineNumber);
+            return false;
+
+        }
+
         return (bodyNode.validateTree(functionTable, symbolTable) & exprNode.validateTree(functionTable, symbolTable)
                 && elseIfNode.validateTree(functionTable, symbolTable));
 

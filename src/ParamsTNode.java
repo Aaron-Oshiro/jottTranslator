@@ -56,6 +56,12 @@ public class ParamsTNode implements JottTree {
         return ", " + this.expressionNode.convertToJava() + this.paramsTNode.convertToJava();
     }
 
+    public String convertToCPrint() {
+        if (this.isEmpty)
+            return "";
+        return this.expressionNode.convertToCPrint() + this.paramsTNode.convertToCPrint();
+    }
+
     @Override
     public String convertToC() {
         if (this.isEmpty)

@@ -71,6 +71,16 @@ public class IdNode implements JottTree {
         return id;
     }
 
+    public String convertToCPrint() {
+        if (type.equals("Integer") || type.equals("Double")) {
+            return "%d";
+        } else if (type.equals("String")) {
+            return "%s";
+        } else {
+            return "%b";
+        }
+    }
+
     @Override
     public String convertToC() {
         return id;

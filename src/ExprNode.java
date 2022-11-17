@@ -49,10 +49,10 @@ public class ExprNode implements JottTree {
         TokenType tt1 = (tokens.get(1).getTokenType());
 
         if (tt0 == TokenType.ID_KEYWORD && tt1 != TokenType.L_BRACKET) { // if it's not a function call
-            if (t0.getToken().equals("True") || t0.getToken().equals("False")) {    // if it's a boolean
+            if (t0.getToken().equals("True") || t0.getToken().equals("False")) { // if it's a boolean
                 value = new ValueNode(tokens);
             } else {
-                id = new IdNode(tokens);    // it's just an IdNode
+                id = new IdNode(tokens); // it's just an IdNode
             }
 
         } else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
@@ -64,9 +64,11 @@ public class ExprNode implements JottTree {
             funcCall = new FuncCallNode(tokens);
         }
     }
+
     public boolean isFuncCallNull() {
         return funcCall == null;
     }
+
     @Override
     public String convertToJott() {
         if (id != null) { // just an id_keyword
@@ -84,9 +86,12 @@ public class ExprNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        if (id != null) return id.convertToJava();
-        else if (value != null) return value.convertToJava();
-        else if (funcCall != null) return funcCall.convertToJava();
+        if (id != null)
+            return id.convertToJava();
+        else if (value != null)
+            return value.convertToJava();
+        else if (funcCall != null)
+            return funcCall.convertToJava();
         else if (secondExpr != null) {
             return firstExpr.convertToJava() + " " + op.convertToJava() + " " + secondExpr.convertToJava();
         } else {
@@ -99,6 +104,21 @@ public class ExprNode implements JottTree {
     // used as helper function for convertToC
     public Boolean isOperationExpression() {
         return !(secondExpr == null);
+    }
+
+    // Prints the appropriate ?% for the first argument in C's printf
+    public String convertToCPrint() {
+        if (id != null) {
+            return id.convertToCPrint();
+        } else if (value != null) {
+            return value.convertToCPrint();
+        } else if (funcCall != null) {
+            return funcCall.convertToCPrint();
+        } else if (secondExpr != null) {
+            return firstExpr.convertToCPrint() + " " + op.convertToC() + " " + secondExpr.convertToCPrint();
+        } else {
+            return firstExpr.convertToCPrint();
+        }
     }
 
     @Override
@@ -166,7 +186,8 @@ public class ExprNode implements JottTree {
 
             if (!isSameType) {
                 System.err.println(
-                        "Semantic Error: Two expressions are operated upon, but have different types at file and line: " + fileName +":" + lineNumber);
+                        "Semantic Error: Two expressions are operated upon, but have different types at file and line: "
+                                + fileName + ":" + lineNumber);
                 return false;
             }
 
@@ -184,7 +205,8 @@ public class ExprNode implements JottTree {
 
             if (!symbolTable.containsKey(id.getId())) {
 
-                System.err.println("Semantic error: variable " + id.getId() + " was not found to be defined at file and line: " + fileName + ":" + lineNumber);
+                System.err.println("Semantic error: variable " + id.getId()
+                        + " was not found to be defined at file and line: " + fileName + ":" + lineNumber);
                 System.out.println(symbolTable.keySet());
                 // todo uncomment this once others add exceptions?
                 // throw new Exception("Semantic Error\nid " + id.getId() + " has not yet been

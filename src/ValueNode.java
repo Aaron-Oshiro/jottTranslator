@@ -11,18 +11,15 @@ public class ValueNode implements JottTree {
 
         TokenType typeToCheck = tokens.get(0).getTokenType();
 
-        if(typeToCheck == TokenType.STRING){
+        if (typeToCheck == TokenType.STRING) {
             type = "String";
-        }
-        else if (typeToCheck == TokenType.ID_KEYWORD){
-            //i think it can only be a boolean if the token is a keyword... right?!?
+        } else if (typeToCheck == TokenType.ID_KEYWORD) {
+            // i think it can only be a boolean if the token is a keyword... right?!?
             type = "Boolean";
-        }
-        else{
-            if(value.contains(".")){
+        } else {
+            if (value.contains(".")) {
                 type = "Double";
-            }
-            else{
+            } else {
                 type = "Integer";
             }
 
@@ -30,7 +27,7 @@ public class ValueNode implements JottTree {
         tokens.remove(0);
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -45,8 +42,19 @@ public class ValueNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        if (type.equals("Boolean")) return value.toLowerCase(); // change True and False to true and False
+        if (type.equals("Boolean"))
+            return value.toLowerCase(); // change True and False to true and False
         return value;
+    }
+
+    public String convertToCPrint() {
+        if (type.equals("Integer") || type.equals("Double")) {
+            return "%d";
+        } else if (type.equals("String")) {
+            return "%s";
+        } else {
+            return "%b";
+        }
     }
 
     @Override

@@ -75,6 +75,11 @@ public class FuncCallNode implements JottTree {
         }
     }
 
+    // NEED TO KNOW THE RETURN TYPE OF THE FUNCTION BEING CALLED
+    public String convertToCPrint() {
+        return null;
+    }
+
     @Override
     public String convertToC() {
         if (funcName.isPrint()) {

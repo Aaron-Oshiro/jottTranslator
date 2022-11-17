@@ -29,7 +29,7 @@ public class BodyStmtNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return bodyStmtNode.convertToJott();
+        return bodyStmtNode.convertToC();
     }
 
     @Override
@@ -44,18 +44,17 @@ public class BodyStmtNode implements JottTree {
         return bodyStmtNode.validateTree(functionTable, symbolTable);
     }
 
-    public boolean hasAnyReturns(){
+    public boolean hasAnyReturns() {
         if (bodyStmtNode instanceof IfStmtNode) {
 
             IfStmtNode testReturnable = (IfStmtNode) bodyStmtNode;
             return testReturnable.hasAnyReturns();
 
-        }
-        else if (bodyStmtNode instanceof WhileLoopNode){
+        } else if (bodyStmtNode instanceof WhileLoopNode) {
 
-            //i want somewhere to check the returns in a while loop. TODO.
+            // i want somewhere to check the returns in a while loop. TODO.
 
-            //just have logic if it matches
+            // just have logic if it matches
             WhileLoopNode testReturnable = (WhileLoopNode) bodyStmtNode;
             return testReturnable.hasAnyReturns();
 
@@ -64,7 +63,8 @@ public class BodyStmtNode implements JottTree {
 
     }
 
-    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+    public boolean isReturnable(String type, HashMap<String, FunctionDefNode> functionTable,
+            HashMap<String, IdNode> symbolTable) {
 
         // func call can while make no difference in the returnable status. we only need
         // check the if node.
@@ -73,14 +73,13 @@ public class BodyStmtNode implements JottTree {
             IfStmtNode testReturnable = (IfStmtNode) bodyStmtNode;
             return testReturnable.isReturnable(type, functionTable, symbolTable);
 
-        }
-        else if (bodyStmtNode instanceof WhileLoopNode){
+        } else if (bodyStmtNode instanceof WhileLoopNode) {
 
             WhileLoopNode testReturnable = (WhileLoopNode) bodyStmtNode;
-            if(!testReturnable.isReturnable(type, functionTable, symbolTable)){
+            if (!testReturnable.isReturnable(type, functionTable, symbolTable)) {
                 return false;
             }
-            //i want somewhere to check the returns in a while loop. TODO.
+            // i want somewhere to check the returns in a while loop. TODO.
 
         }
         return false;

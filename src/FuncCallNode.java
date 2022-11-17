@@ -84,7 +84,16 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToPython(int t) {
-        return funcName.convertToPython(t) + "(" + paramsNode.convertToPython(t) + ")";
+        switch (funcName.getId()){
+            case "length":  // length gets shortened to len
+                return "len(" + paramsNode.convertToPython(t) + ")";
+            case "input":   // only need first param
+                return funcName.convertToPython(t) + "(" + paramsNode.getExpressionNode().convertToPython(t) + ")";
+            case "concat":
+                return paramsNode.getExpressionNode().convertToPython(t) + " + " + paramsNode.getParamsTNode().getExpressionNode().convertToPython(t);
+            default:    // print is still print
+                return funcName.convertToPython(t) + "(" + paramsNode.convertToPython(t) + ")";
+        }
     }
 
     public boolean validateBuiltIn(HashMap<String, FunctionDefNode> functionTable,

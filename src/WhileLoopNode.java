@@ -8,6 +8,7 @@ public class WhileLoopNode implements JottTree {
 
     private String fileName;
     private int lineNumber;
+
     public WhileLoopNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         fileName = tokens.get(0).getFilename();
         lineNumber = tokens.get(0).getLineNum();
@@ -56,19 +57,20 @@ public class WhileLoopNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return null;
+        return "while (" + expr.convertToC() + ") {" + body.convertToC() + "}";
     }
 
     @Override
     public String convertToPython(int t) {
-        return "while " + expr.convertToPython(t) + ": " + body.convertToPython(t+1);
+        return "while " + expr.convertToPython(t) + ": " + body.convertToPython(t + 1);
     }
 
-    public boolean hasAnyReturns(){
+    public boolean hasAnyReturns() {
         return body.hasAnyReturns();
     }
 
-    public boolean isReturnable(String type,HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
+    public boolean isReturnable(String type, HashMap<String, FunctionDefNode> functionTable,
+            HashMap<String, IdNode> symbolTable) {
 
         return body.isReturnable(type, functionTable, symbolTable);
     }
@@ -76,8 +78,10 @@ public class WhileLoopNode implements JottTree {
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
 
-        if(!expr.getType(functionTable, symbolTable).equals("Boolean")){
-            System.err.println("Semantic Error: While statement does not have a boolean type expression in its condition at file and line: " + fileName + ":" + lineNumber);
+        if (!expr.getType(functionTable, symbolTable).equals("Boolean")) {
+            System.err.println(
+                    "Semantic Error: While statement does not have a boolean type expression in its condition at file and line: "
+                            + fileName + ":" + lineNumber);
             return false;
 
         }

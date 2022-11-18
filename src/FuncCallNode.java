@@ -91,14 +91,14 @@ public class FuncCallNode implements JottTree {
         switch (funcName.getId()) {
             case "length": // length gets changed to strlen
                 return "strlen(" + paramsNode.convertToC() + ")";
-            case "input": // TODO
-                return null;
             case "concat":
                 return "strcat(" + paramsNode.convertToC() + ")";
             case "print":
                 return "printf" + "(" + paramsNode.convertToCPrint() + ")";
             default:
                 return funcName.convertToC() + "(" + paramsNode.convertToC() + ")";
+
+            // input call is handled at a higher level (AstmtNode)
         }
     }
 

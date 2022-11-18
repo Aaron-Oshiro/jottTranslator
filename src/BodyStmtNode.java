@@ -29,7 +29,7 @@ public class BodyStmtNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return bodyStmtNode.convertToC();
+        return "\n" + bodyStmtNode.convertToC();
     }
 
     @Override

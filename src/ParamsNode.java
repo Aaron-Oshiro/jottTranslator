@@ -47,6 +47,13 @@ public class ParamsNode implements JottTree {
         return 1 + paramsTNode.getLength();
     }
 
+    // Used with convertToC -->
+    // returns the prompt given asking for user input
+    // (returns to first parameter)
+    public String getScanPrompt() {
+        return this.expressionNode.convertToC();
+    }
+
     @Override
     public String convertToJott() {
         if (this.isEmpty) {

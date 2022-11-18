@@ -51,6 +51,15 @@ public class IdNode implements JottTree {
         return isNull;
     }
 
+    // USED with convertToC functionality.
+    // when scanning, we want to acess the adress
+    // of the varibale where the input is going.
+    // however, when that varibale is already a char *
+    // we don't want a double-pointer
+    public boolean isCharPointer() {
+        return type.equals("String");
+    }
+
     // returns true if the id is the string "print"
     // used as helper function for convertToC
     public boolean isPrint() {
@@ -72,6 +81,7 @@ public class IdNode implements JottTree {
     }
 
     public String convertToCPrint() {
+        if(type == null){return null;}
         if (type.equals("Integer") || type.equals("Double")) {
             return "%d";
         } else if (type.equals("String")) {

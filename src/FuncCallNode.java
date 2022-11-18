@@ -43,6 +43,12 @@ public class FuncCallNode implements JottTree {
         tokens.remove(0); // removes the ']'
     }
 
+    // Used with convertToC -->
+    // returns the prompt given asking for user input
+    public String getScanPrompt() {
+        return paramsNode.getScanPrompt();
+    }
+
     public ParamsNode getParamsNode() {
         return paramsNode;
     }

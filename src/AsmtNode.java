@@ -89,7 +89,8 @@ public class AsmtNode implements JottTree {
     @Override
     public String convertToJott() {
         if (hasType) {
-            return typeNode.convertToJott() + " " + id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
+            return typeNode.convertToJott() + " " + id.convertToJott() + " = " + expr.convertToJott()
+                    + endStmt.convertToJott();
         } else {
             return id.convertToJott() + " = " + expr.convertToJott() + endStmt.convertToJott();
         }
@@ -102,7 +103,9 @@ public class AsmtNode implements JottTree {
             if (expr.getFirstExpr().getFuncCall().getFuncName().equals("input")) {
                 String scannerName = "scanner_" + JottMain.SCANNERINT;
                 String scan = "Scanner " + scannerName + " = new Scanner(System.in);\n" +
-                        "System.out.print(" + expr.getFirstExpr().getFuncCall().getParamsNode().getExpressionNode().convertToJava() + ");\n";
+                        "System.out.print("
+                        + expr.getFirstExpr().getFuncCall().getParamsNode().getExpressionNode().convertToJava()
+                        + ");\n";
                 ret += scan;
             }
         }
@@ -115,15 +118,25 @@ public class AsmtNode implements JottTree {
 
     @Override
     public String convertToC() {
-        if (hasType) {
-            // ISSUE! because 'type' here is a string and not a typeNode
-            // cannot call convertToC. if this can't change,
-            // will have to include several if statements.
-            // (because the type in C is written differently)
-            return typeNode.convertToC() + " " + id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
-        } else {
-            return id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
+        String ret = ""; // ret = 'return'
+        if (!expr.getFirstExpr().isFuncCallNull()) {
+            if (expr.getFirstExpr().getFuncCall().getFuncName().equals("input")) {
+                if (hasType) {
+                    ret += typeNode.convertToC() + " " + id.convertToC() + ";\n";
+                }
+                ret += "printf(" + expr.getFirstExpr().getFuncCall().getScanPrompt() + ");\n";
+                ret += "scanf(\"" + id.convertToCPrint() + "\", ";
+                if (!id.isCharPointer()) {
+                    ret += "&";
+                }
+                ret += id.convertToC() + ");\n";
+                return ret;
+            }
+        } else if (hasType) {
+            ret += typeNode.convertToC() + " ";
         }
+        ret += id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
+        return ret;
     }
 
     @Override
@@ -137,41 +150,40 @@ public class AsmtNode implements JottTree {
         if (!hasType) {
             if (!symbolTable.containsKey(id.getId())) {
                 System.err.println("Semantic Error: Symbol '" + id
-                        + "' was not found in the Symbol Table at File and Line: "  + fileName +":" + lineNumber);
+                        + "' was not found in the Symbol Table at File and Line: " + fileName + ":" + lineNumber);
                 return false;
             } else {
                 // Aaron asked for this
                 // System.out.println(id.getType());
                 id.setType(expr.getType(functionTable, symbolTable));
-                if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable)){
+                if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable)) {
 
-                    if(id.getType().equals(expr.getType(functionTable, symbolTable))){
-                    return true;
-                }
-                    else{
+                    if (id.getType().equals(expr.getType(functionTable, symbolTable))) {
+                        return true;
+                    } else {
                         System.err.println(
-                            "Semantic Error: The types of the two parts of the asmt did not match at File and Line: " + fileName +":" + lineNumber);
-                            return false;
+                                "Semantic Error: The types of the two parts of the asmt did not match at File and Line: "
+                                        + fileName + ":" + lineNumber);
+                        return false;
                     }
-                }
-                else {
-                   // System.err.println(
-                    //        "Semantic Error: Either id or the expression were invalid, OR the types of the two did not match at File and Line: ");
+                } else {
+                    // System.err.println(
+                    // "Semantic Error: Either id or the expression were invalid, OR the types of
+                    // the two did not match at File and Line: ");
                     return false;
                 }
             }
         } else {
-            if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable)){
-                if(type.equals(expr.getType(functionTable, symbolTable))){
-                return true;
-            }
-            else{
-                System.err.println(
-                    "Semantic Error: The types of the two parts of the asmt did not match at File and Line: "  + fileName +":" + lineNumber);
+            if (id.validateTree(functionTable, symbolTable) && expr.validateTree(functionTable, symbolTable)) {
+                if (type.equals(expr.getType(functionTable, symbolTable))) {
+                    return true;
+                } else {
+                    System.err.println(
+                            "Semantic Error: The types of the two parts of the asmt did not match at File and Line: "
+                                    + fileName + ":" + lineNumber);
                     return false;
-            }
-            }
-            else {
+                }
+            } else {
                 return false;
             }
         }

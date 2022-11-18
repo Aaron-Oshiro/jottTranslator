@@ -1,6 +1,8 @@
-#this will pass phase 2 and phase 3
+#this should pass parsing but fail sematic analysis (phase3)
+#return <id> is not allowed from void
 
-main[]:Integer{
-    print["Hello World"];
-    return 1;
+main[]:Void{
+    Double x = -5.0;
+    Integer z = 1 * -2;
 }
+

@@ -6,8 +6,15 @@ public class ValueNode implements JottTree {
     private String value;
     private String type;
 
+    private boolean negative;
+
     public ValueNode(ArrayList<Token> tokens) throws Exception {
-        this.value = tokens.get(0).getToken();
+        negative = false;
+        if (tokens.get(0).getToken().equals("-")) {
+            this.value = "-"  + tokens.get(1).getToken();
+            negative = true;
+        }
+        else this.value = tokens.get(0).getToken();
 
         TokenType typeToCheck = tokens.get(0).getTokenType();
 
@@ -17,14 +24,19 @@ public class ValueNode implements JottTree {
             // i think it can only be a boolean if the token is a keyword... right?!?
             type = "Boolean";
         } else {
-            if (value.contains(".")) {
-                type = "Double";
-            } else {
-                type = "Integer";
-            }
+                if (value.contains(".")) {
+                    type = "Double";
+                } else {
+                    type = "Integer";
+                }
 
         }
         tokens.remove(0);
+        if (negative) tokens.remove(0);
+    }
+
+    public boolean isNegative() {
+        return negative;
     }
 
     public String getType() {

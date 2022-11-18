@@ -17,7 +17,8 @@ public class ParamsNode implements JottTree {
     public ParamsNode(ArrayList<Token> tokens) throws Exception {
 
         TokenType thisToken = tokens.get(0).getTokenType();
-        if (thisToken == TokenType.STRING || thisToken == TokenType.NUMBER || thisToken == TokenType.ID_KEYWORD) {
+        // also check if value is negative
+        if (thisToken == TokenType.STRING || thisToken == TokenType.NUMBER || thisToken == TokenType.ID_KEYWORD || tokens.get(0).getToken().equals("-") && tokens.get(1).getTokenType() == TokenType.NUMBER) {
             this.isEmpty = false;
             this.expressionNode = new ExprNode(tokens);
 

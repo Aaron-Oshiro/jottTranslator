@@ -19,8 +19,9 @@ public class ExprNode implements JottTree {
 
         Token t0 = tokens.get(0);
         TokenType tt0 = (tokens.get(0).getTokenType());
-
-        if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
+        if ((tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING)
+                // not a negative value
+                && !(t0.getToken().equals("-") && tokens.get(1).getTokenType() == TokenType.NUMBER)) {
             throw new Exception(
                     "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at "
                             + t0.getFilename() + " line "
@@ -40,7 +41,9 @@ public class ExprNode implements JottTree {
         Token t0 = tokens.get(0);
         TokenType tt0 = (tokens.get(0).getTokenType());
 
-        if (tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING) {
+        if ((tt0 != TokenType.ID_KEYWORD && tt0 != TokenType.NUMBER && tt0 != TokenType.STRING)
+                // not a negative value
+                && !(t0.getToken().equals("-") && tokens.get(1).getTokenType() == TokenType.NUMBER)) {
             throw new Exception(
                     "Syntax Error: Token " + t0.getToken() + " cannot be parsed into a value or id at "
                             + t0.getFilename() + " line "
@@ -55,7 +58,7 @@ public class ExprNode implements JottTree {
                 id = new IdNode(tokens); // it's just an IdNode
             }
 
-        } else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER)) {
+        } else if ((tt0 == TokenType.STRING) || (tt0 == TokenType.NUMBER) || (t0.getToken().equals("-") && tokens.get(1).getTokenType() == TokenType.NUMBER)) {
             value = new ValueNode(tokens);
             // System.out.println(value.convertToJott());
             // System.out.println(tt0);

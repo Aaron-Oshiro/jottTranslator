@@ -316,10 +316,10 @@ public class FuncCallNode implements JottTree {
             if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null
                     && paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
-                        .equals("Integer")) {
+                        .equals("Integer") && !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {
                     secondParamValid = true;
                 } else {
-                    System.err.println("Error: the second param for input should be an Integer at file and line : "
+                    System.err.println("Error: the second param for input should be a positive Integer at file and line : "
                             + fileName + ":" + lineNumber);
                 }
             } else {
@@ -336,10 +336,11 @@ public class FuncCallNode implements JottTree {
                 if (symbolTable
                         .containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
                         symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
-                                .getType().equals("Integer")) {
+                                .getType().equals("Integer") &&
+                        !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {
                     secondParamValid = true;
                 } else {
-                    System.err.println("Error: the second param for input should be an Integer at file and line : "
+                    System.err.println("Error: the second param for input should be a positive Integer at file and line : "
                             + fileName + ":" + lineNumber);
                 }
             }

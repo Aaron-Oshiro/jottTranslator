@@ -82,10 +82,18 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToC() {
-        if (funcName.isPrint()) {
-            return "printf" + "(" + paramsNode.convertToCPrint() + ")";
+        switch (funcName.getId()) {
+            case "length": // length gets changed to strlen
+                return "strlen(" + paramsNode.convertToC() + ")";
+            case "input": // TODO
+                return null;
+            case "concat":
+                return "strcat(" + paramsNode.convertToC() + ")";
+            case "print":
+                return "printf" + "(" + paramsNode.convertToCPrint() + ")";
+            default:
+                return funcName.convertToC() + "(" + paramsNode.convertToC() + ")";
         }
-        return funcName.convertToC() + "(" + paramsNode.convertToC() + ")";
     }
 
     @Override

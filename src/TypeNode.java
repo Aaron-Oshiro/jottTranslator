@@ -52,7 +52,7 @@ public class TypeNode implements JottTree {
         } else if (type.equals("Double")) {
             return "double";
         } else if (type.equals("String")) {
-            return "char const*";
+            return "char *";
         } else {
             return "bool";
         }

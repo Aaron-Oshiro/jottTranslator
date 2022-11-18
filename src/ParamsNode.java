@@ -74,7 +74,7 @@ public class ParamsNode implements JottTree {
         if (this.isEmpty) {
             return "";
         }
-        return "\"" + this.expressionNode.convertToCPrint() + this.paramsTNode.convertToCPrint() + "\", "
+        return "\"" + this.expressionNode.convertToCPrint() + this.paramsTNode.convertToCPrint() + "\\n\", "
                 + this.expressionNode.convertToC() + this.paramsTNode.convertToC();
 
     }

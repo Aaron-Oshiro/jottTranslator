@@ -1,13 +1,6 @@
-#this will pass phase 3
+#this will pass phase 2 and phase 3
 
-#this will pass phase 2 but fail phase 3 for foo return type not matching
-
-foo[y:Double]:Integer{
-    print[y];
-	return 3;
-}
-
-main[]:Void{
-    Integer x = foo[5.0];
-	print[foo[5.0]];
+main[]:Integer{
+    print["Hello World"];
+    return 1;
 }

@@ -31,6 +31,7 @@ public class JottMain {
             }
             else{
                 System.out.println("validation failed...");
+                return;
             }
 
             String newLanguage;

@@ -400,8 +400,12 @@ public class FuncCallNode implements JottTree {
                             + fileName + ":" + lineNumber);
             return false;
         }
-        this.funcName
-                .setType(functionTable.get(this.funcName.getId()).getFunctionReturnNode().getReturnType().getType());
+        if (functionTable.get(this.funcName.getId()).getFunctionReturnNode().isVoid()) {
+            this.funcName.setNull(true);
+        } else {
+            this.funcName
+                    .setType(functionTable.get(this.funcName.getId()).getFunctionReturnNode().getReturnType().getType());
+        }
         return true;
     }
 }

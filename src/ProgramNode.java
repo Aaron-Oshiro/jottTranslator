@@ -52,6 +52,9 @@ public class ProgramNode implements JottTree {
         if (!this.functionTable.get("main").getFunctionReturnNode().isVoid()) {
             System.err.println("Semantic Error\nmain function does not return Void");
             return false;
+        } else if (this.functionTable.get("main").getFuncDefParamsNode().getLength() != 0) {
+            System.err.println("Semantic Error\nmain function can not take in parameters");
+            return false;
         }
         return true;
     }

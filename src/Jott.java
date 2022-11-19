@@ -26,7 +26,7 @@ public class Jott {
 
         if (tree != null) {
 
-            if(!tree.validateTree(functionTable: null, symbolTable: null)){
+            if (!tree.validateTree(null, null)) {
                 return;
             }
 

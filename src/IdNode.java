@@ -81,7 +81,6 @@ public class IdNode implements JottTree {
     }
 
     public String convertToCPrint() {
-        if(type == null){return null;}
         if (type.equals("Integer") || type.equals("Double")) {
             return "%d";
         } else if (type.equals("String")) {
@@ -89,6 +88,7 @@ public class IdNode implements JottTree {
         } else {
             return "%b";
         }
+
     }
 
     @Override
@@ -107,6 +107,7 @@ public class IdNode implements JottTree {
             System.err.println("Error: undefined id " + id + " at file and line : " + fileName + ":" + lineNumber);
             return false;
         }
+        this.setType(symbolTable.get(id).getType());
         return true;
     }
 

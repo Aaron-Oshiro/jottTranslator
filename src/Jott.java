@@ -11,32 +11,29 @@ public class Jott {
 
     public static void main(String[] args) {
         // java Jott input.jott output.<> <language>
-        if (args.length != 3) {
+        String[] bargs = new String[3];
+        bargs[0] = "helloWorld.jott";
+        bargs[1] = "helloWorld.java";
+        bargs[2] = "java";
+
+        if (bargs.length != 3) {
             System.err.println("Jott arguments must include an input file, output file, and translation language");
             return;
         }
-        String inputName = args[0];
-        String outputName = args[1];
+        String inputName = bargs[0];
+        String outputName = bargs[1];
         FILENAME = outputName.split("\\.")[0];
-        String language = args[2].toLowerCase();
+        String language = bargs[2].toLowerCase();
         ArrayList<Token> tokens = new ArrayList<>(JottTokenizer.tokenize(inputName));
-//        System.out.println(tokens);
+        // System.out.println(tokens);
         // tokenizer takes care of if the input.jott file does not exist
-        JottTree tree= JottParser.parse(tokens);
+        JottTree tree = JottParser.parse(tokens);
 
         if (tree != null) {
 
-            if(tree.validateTree(null, null)){
-                System.out.println("validated successfully");
-            }
-            else{
-                System.out.println("validation failed...");
-                return;
-            }
-
             String newLanguage;
 
-            switch (language){
+            switch (language) {
                 case "jott":
                     newLanguage = tree.convertToJott();
                     break;
@@ -54,7 +51,7 @@ public class Jott {
                     newLanguage = null;
             }
 
-            try{
+            try {
                 File outputFile = new File(outputName);
                 outputFile.createNewFile();
 

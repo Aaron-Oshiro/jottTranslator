@@ -26,6 +26,10 @@ public class TypeNode implements JottTree {
         type = input;
     }
 
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String convertToJott() {
         return type;

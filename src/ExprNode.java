@@ -193,6 +193,17 @@ public class ExprNode implements JottTree {
                                 + fileName + ":" + lineNumber);
                 return false;
             }
+            if (secondExpr.getValue() != null && op.getOperator().equals("/")) {    // If you are dividing
+                ValueNode valueNode = secondExpr.getValue();
+                if (valueNode.getType().equals("Integer") || valueNode.getType().equals("Double")) { // by a number
+                    double zero = Double.parseDouble(valueNode.convertToJott());
+                    if (zero == 0){ // and that number is 0, return false
+                        System.err.println("Sematnic error: can not divide by 0 at file and line: "
+                                + fileName + ":" + lineNumber);
+                        return false;
+                    }
+                }
+            }
 
             return (firstExpr.validateTree(functionTable, symbolTable) && op.validateTree(functionTable, symbolTable)
                     && secondExpr.validateTree(functionTable, symbolTable));

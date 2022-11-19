@@ -126,6 +126,7 @@ public class AsmtNode implements JottTree {
                     ret += typeNode.convertToC() + " " + id.convertToC() + ";\n";
                 }
                 ret += "printf(" + expr.getFirstExpr().getFuncCall().getScanPrompt() + ");\n";
+                ret += "printf(\"\\n\");\n";
                 ret += "scanf(\"" + id.convertToCPrint() + "\", ";
                 if (!id.isCharPointer()) {
                     ret += "&";
@@ -138,6 +139,7 @@ public class AsmtNode implements JottTree {
         }
         ret += id.convertToC() + " = " + expr.convertToC() + endStmt.convertToC();
         return ret;
+
     }
 
     @Override

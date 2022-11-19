@@ -83,7 +83,7 @@ public class FuncCallNode implements JottTree {
 
     // NEED TO KNOW THE RETURN TYPE OF THE FUNCTION BEING CALLED
     public String convertToCPrint() {
-        return null;
+        return funcName.convertToCPrint();
     }
 
     @Override
@@ -316,11 +316,13 @@ public class FuncCallNode implements JottTree {
             if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId() == null
                     && paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull()) {
                 if (paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().getType()
-                        .equals("Integer") && !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {
+                        .equals("Integer")
+                        && !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {
                     secondParamValid = true;
                 } else {
-                    System.err.println("Error: the second param for input should be a positive Integer at file and line : "
-                            + fileName + ":" + lineNumber);
+                    System.err.println(
+                            "Error: the second param for input should be a positive Integer at file and line : "
+                                    + fileName + ":" + lineNumber);
                 }
             } else {
                 if (!paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().isFuncCallNull() && (functionTable
@@ -336,12 +338,14 @@ public class FuncCallNode implements JottTree {
                 if (symbolTable
                         .containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
                         symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
-                                .getType().equals("Integer") &&
+                                .getType().equals("Integer")
+                        &&
                         !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {
                     secondParamValid = true;
                 } else {
-                    System.err.println("Error: the second param for input should be a positive Integer at file and line : "
-                            + fileName + ":" + lineNumber);
+                    System.err.println(
+                            "Error: the second param for input should be a positive Integer at file and line : "
+                                    + fileName + ":" + lineNumber);
                 }
             }
             return firstParamValid && secondParamValid;
@@ -397,6 +401,8 @@ public class FuncCallNode implements JottTree {
                             + fileName + ":" + lineNumber);
             return false;
         }
+        this.funcName
+                .setType(functionTable.get(this.funcName.getId()).getFunctionReturnNode().getReturnType().getType());
         return true;
     }
 }

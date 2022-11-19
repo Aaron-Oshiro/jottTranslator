@@ -6,12 +6,20 @@ public class VarDecNode implements JottTree {
     private IdNode id;
     private EndStmtNode endStmt;
 
+    private String fileName;
+    private int lineNumber;
+
     public VarDecNode(ArrayList<Token> tokens, HashMap<String, IdNode> symbolTable) throws Exception {
         type = new TypeNode(tokens);
+
+        fileName = tokens.get(0).getFilename();
+        lineNumber = tokens.get(0).getLineNum();
+
         id = new IdNode(tokens);
         endStmt = new EndStmtNode(tokens);
         if (symbolTable.containsKey(id.convertToJott())) {
-            throw new Exception("VARIABLE IS ALREADY DEFINED");
+            throw new Exception("Semantic Error: variable " + id.getId() +
+                    " is already declared and line: \"" + fileName + "\":" + lineNumber);
         } else {
             id.setType(type.convertToJott());
             id.setNull(true);

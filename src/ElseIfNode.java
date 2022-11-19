@@ -27,8 +27,6 @@ public class ElseIfNode implements JottTree {
             }
             tokens.remove(0);
 
-            // TODO KEEP IN MIND THIS SHOULD BE A BOOLEAN - DO WE NEED TO CHECK THIS IN THIS
-            // PHASE?
             exprNode = new ExprNode(tokens);
 
             // get rid of rbracket
@@ -103,7 +101,6 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        // TODO Auto-generated method stub
 
         /*
          * 

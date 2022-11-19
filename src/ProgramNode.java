@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.function.Function;
 
 public class ProgramNode implements JottTree {
 
@@ -24,7 +23,7 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        String fileName = JottMain.FILENAME;
+        String fileName = Jott.FILENAME;
         return "import java.util.Scanner;\n\npublic class " + fileName + " {\n" + functionListNode.convertToJava()
                 + "\n}";
     }

@@ -52,7 +52,8 @@ public class AsmtNode implements JottTree {
             id.setType(type);
             endStmt = new EndStmtNode(tokens);
             if (symbolTable.containsKey(id.convertToJott())) {
-                throw new Exception("VARIABLE ALREADY IN SYMBOL TABLE");
+                throw new Exception("Semantic Error: variable " + id.getId() +
+                        " is already declared and line: \"" + fileName + "\":" + lineNumber);
             } else {
                 symbolTable.put(id.convertToJott(), id);
             }
@@ -101,7 +102,7 @@ public class AsmtNode implements JottTree {
         String ret = "";
         if (!expr.getFirstExpr().isFuncCallNull()) {
             if (expr.getFirstExpr().getFuncCall().getFuncName().equals("input")) {
-                String scannerName = "scanner_" + JottMain.SCANNERINT;
+                String scannerName = "scanner_" + Jott.SCANNERINT;
                 String scan = "Scanner " + scannerName + " = new Scanner(System.in);\n" +
                         "System.out.print("
                         + expr.getFirstExpr().getFuncCall().getParamsNode().getExpressionNode().convertToJava()

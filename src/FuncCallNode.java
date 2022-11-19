@@ -64,7 +64,7 @@ public class FuncCallNode implements JottTree {
 
     @Override
     public String convertToJava() {
-        switch (funcName.getId()) {
+        switch (funcName.getId()) { // deal with built-in functions
             case "print": // should only have 1 expression
                 return "System.out.println(" + paramsNode.convertToJava() + ")";
             case "concat": // should only have 2 expressions in params
@@ -73,8 +73,8 @@ public class FuncCallNode implements JottTree {
             case "length": // should only have 1 expression in the params
                 return "(" + paramsNode.getExpressionNode().convertToJava() + ").length()";
             case "input":
-                String scannerName = "scanner_" + JottMain.SCANNERINT;
-                JottMain.SCANNERINT++;
+                String scannerName = "scanner_" + Jott.SCANNERINT;
+                Jott.SCANNERINT++;
                 return scannerName + ".nextLine()";
             default:
                 return funcName.convertToJava() + "(" + paramsNode.convertToJava() + ")";

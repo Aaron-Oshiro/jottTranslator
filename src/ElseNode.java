@@ -71,7 +71,6 @@ public class ElseNode implements JottTree {
 
     @Override
     public boolean validateTree(HashMap<String, FunctionDefNode> functionTable, HashMap<String, IdNode> symbolTable) {
-        // TODO Auto-generated method stub
         if (!hasElse) {
             return true;
         }

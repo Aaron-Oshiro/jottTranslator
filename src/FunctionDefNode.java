@@ -160,7 +160,6 @@ public class FunctionDefNode implements JottTree {
                                 + idNode.getId() + " at file and line: " + fileName + ":" + lineNumber
                                 + ". See additional output if return types do not match the expected types.");
                 return false;
-                // THROW ERROR HERE WITH MESSAGE? OR NO?
             }
             // else{
             // if(functionReturnNode.isVoid()){

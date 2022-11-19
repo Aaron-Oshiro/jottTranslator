@@ -335,12 +335,11 @@ public class FuncCallNode implements JottTree {
                     return paramsNode.getParamsTNode().validateTree(functionTable, symbolTable);
                 }
 
-                if (symbolTable
-                        .containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
+                if ((symbolTable.containsKey(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId()) &&
                         symbolTable.get(paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getId().getId())
-                                .getType().equals("Integer")
-                        &&
-                        !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {
+                                .getType().equals("Integer"))   // if the second param is an id
+                        ||
+                        !paramsNode.getParamsTNode().getExpressionNode().getFirstExpr().getValue().isNegative()) {  // if 2 param is value
                     secondParamValid = true;
                 } else {
                     System.err.println(
